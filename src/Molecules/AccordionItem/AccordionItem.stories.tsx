@@ -5,30 +5,40 @@ import { AccordionItem, Accordion } from './AccordionItem'
 const meta: Meta<typeof AccordionItem> = {
   title: 'Molecules/AccordionItem',
   component: AccordionItem,
-  tags: ['autodocs'],
+  parameters: { layout: 'fullscreen' },
+  argTypes: {
+    question: { control: 'text' },
+    answer: { control: 'text' },
+    defaultOpen: { control: 'boolean' },
+  },
 }
 export default meta
 type Story = StoryObj<typeof AccordionItem>
 
-export const Default: Story = {
-  args: {
-    question: 'Combien coûte une réparation ?',
-    answer: 'Le tarif de déplacement est de 49€. Le coût total dépend de la panne et des pièces nécessaires. Nos techniciens établissent un devis avant toute intervention.',
-  },
-}
+// ─── Layout helper ────────────────────────────────────────────────────────────
 
-export const DefaultOpen: Story = {
-  args: {
-    question: 'Quelle est la zone d\'intervention ?',
-    answer: 'Nous intervenons dans plus de 200 villes en France métropolitaine. Entrez votre code postal pour vérifier la disponibilité dans votre secteur.',
-    defaultOpen: true,
-  },
+function DocRow({ title, description, children }: {
+  title: string
+  description: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 border-t border-border">
+      <div>
+        <h4 className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{title}</h4>
+        <p className="text-sm mt-1 leading-relaxed opacity-60" style={{ color: 'var(--text)' }}>{description}</p>
+      </div>
+      <div className="md:col-span-2">
+        {children}
+      </div>
+    </div>
+  )
 }
 
 const faqItems = [
   {
     question: 'Combien coûte une réparation ?',
-    answer: 'Le tarif de déplacement est de 49€. Le coût total dépend de la panne et des pièces nécessaires.',
+    answer: 'Le tarif de déplacement est de 49€. Le coût total dépend de la panne et des pièces nécessaires. Nos techniciens établissent un devis avant toute intervention.',
   },
   {
     question: 'Quelle est la durée d\'intervention ?',
@@ -44,6 +54,64 @@ const faqItems = [
   },
 ]
 
-export const FAQGroup: Story = {
-  render: () => <Accordion items={faqItems} />,
+// ─── Overview ─────────────────────────────────────────────────────────────────
+
+export const Overview: Story = {
+  render: () => (
+    <div className="p-8 max-w-3xl space-y-12">
+
+      <div>
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>AccordionItem</h2>
+        <p className="text-sm mt-1 max-w-xl opacity-60" style={{ color: 'var(--text)' }}>
+          FAQ dropdown component. Each item is a self-contained card with a full border and rounded corners.
+          Switch the Theme toolbar to see it adapt across light, dark, and pink themes.
+        </p>
+      </div>
+
+      <section>
+        <h3 className="text-base font-bold mb-1" style={{ color: 'var(--text)' }}>States</h3>
+        <p className="text-sm mb-4 opacity-60" style={{ color: 'var(--text)' }}>
+          Closed and open states of a single accordion item.
+        </p>
+
+        <DocRow title="Closed" description="Default resting state — question visible, answer hidden.">
+          <AccordionItem
+            question="Combien coûte une réparation ?"
+            answer="Le tarif de déplacement est de 49€. Le coût total dépend de la panne et des pièces nécessaires."
+          />
+        </DocRow>
+
+        <DocRow title="Open" description="Answer is expanded below the question.">
+          <AccordionItem
+            question="Y a-t-il une garantie sur la réparation ?"
+            answer="Oui, toutes nos réparations sont garanties 6 mois pièces et main-d'œuvre."
+            defaultOpen
+          />
+        </DocRow>
+      </section>
+
+      <section>
+        <h3 className="text-base font-bold mb-4" style={{ color: 'var(--text)' }}>FAQ Group</h3>
+        <Accordion items={faqItems} />
+      </section>
+
+    </div>
+  ),
+}
+
+// ─── Playground ───────────────────────────────────────────────────────────────
+
+export const Playground: Story = {
+  args: {
+    question: 'Combien coûte une réparation ?',
+    answer: 'Le tarif de déplacement est de 49€. Le coût total dépend de la panne et des pièces nécessaires. Nos techniciens établissent un devis avant toute intervention.',
+    defaultOpen: false,
+  },
+  decorators: [
+    (Story) => (
+      <div className="p-8 max-w-xl">
+        <Story />
+      </div>
+    ),
+  ],
 }

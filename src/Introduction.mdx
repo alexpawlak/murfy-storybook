@@ -11,12 +11,32 @@ designers and developers to document, test, and iterate on every UI component be
 
 Murfy is expanding beyond its core **électroménager repair** activity into two new verticals:
 
-| Activity | Accent |
-|---|---|
-| ⚙️ Électroménager (réparation) | Default — brand teal / pink |
-| 🔥 Chauffage | Fuschia |
-| ☀️ Solaire | Yellow |
-| 🔮 Premium / Highlight | Violet |
+<table style={{borderCollapse:'collapse',width:'100%',marginBottom:'1rem'}}>
+  <thead>
+    <tr style={{borderBottom:'2px solid #e5e7eb'}}>
+      <th style={{textAlign:'left',padding:'8px 12px',fontSize:'0.875rem'}}>Activity</th>
+      <th style={{textAlign:'left',padding:'8px 12px',fontSize:'0.875rem'}}>Accent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style={{borderBottom:'1px solid #e5e7eb'}}>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>⚙️ Électroménager (réparation)</td>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>Violet</td>
+    </tr>
+    <tr style={{borderBottom:'1px solid #e5e7eb'}}>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>🔥 Chauffage</td>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>Fuschia</td>
+    </tr>
+    <tr style={{borderBottom:'1px solid #e5e7eb'}}>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>☀️ Solaire</td>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>Yellow</td>
+    </tr>
+    <tr>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>—</td>
+      <td style={{padding:'8px 12px',fontSize:'0.875rem'}}>Default (pink) — brand baseline, not activity-specific</td>
+    </tr>
+  </tbody>
+</table>
 
 Each activity gets its own **accent color** applied via the `data-accent` attribute. The same component — a
 button, a hero section, a CTA band — adapts its highlight colors automatically depending on which vertical
@@ -48,7 +68,7 @@ placeholder text.
 Components follow atomic design:
 
 - **Foundation** — tokens, colors, typography, spacing, theme × accent matrix
-- **Atoms** — Button, Input, Tag, Typography
+- **Atoms** — Button, Input, Tag
 - **Molecules** — NavBar, ServiceCard, PostalCodeForm, AccordionItem
 - **Organisms** — Hero, Header, Footer, FAQSection, CTABand, BenefitsGrid
 - **Templates** — slot-based page shells

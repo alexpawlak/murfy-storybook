@@ -68,6 +68,15 @@ export default {
         'text-main': ['var(--font-size-text-main)', { lineHeight: '1.5' }],
         'text-small': ['var(--font-size-text-small)', { lineHeight: '1.5' }],
         'text-xsmall': ['var(--font-size-text-xsmall)', { lineHeight: '1.5' }],
+        'text-large-semibold': ['var(--font-size-text-large-semibold)', { lineHeight: '1.5' }],
+        'text-main-semibold': ['var(--font-size-text-main-semibold)', { lineHeight: '1.5' }],
+        'text-small-semibold': ['var(--font-size-text-small-semibold)', { lineHeight: '1.5' }],
+        'text-xsmall-semibold': ['var(--font-size-text-xsmall-semibold)', { lineHeight: '1.5' }],
+        'label': ['var(--font-size-label)', { lineHeight: '1.5', letterSpacing: '0.08em' }],
+      },
+      fontFamily: {
+        brand: ['Murfy A2', 'sans-serif'],
+        sans: ['Murfy A2', 'sans-serif'],
       },
       spacing: {
         'section-y': 'var(--spacing-section-y)',

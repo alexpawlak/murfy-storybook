@@ -1,93 +1,180 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
-const primitives = {
-  'pink-500': '#f59bbb',
-  'pink-accent': '#fd6c9f',
-  'pink-600': '#c47c96',
-  'yellow-500': '#ffd800',
-  'yellow-600': '#ccad00',
-  'dark-800': '#073331',
-  'dark-900': '#032524',
+// ─── Primitive groups ────────────────────────────────────────────────────────
+
+const brandNeutral = {
+  'dark-900':   '#032524',
+  'dark-800':   '#073331',
   'brand-text': '#0b4744',
-  'light-100': '#ffffff',
-  'light-200': '#f3f3f3',
-  'purple-navy': '#180d4d',
-  'purple-500': '#9e8cf8',
-  'purple-700': '#543bce',
-  'purple-800': '#432fa5',
-  'pink-vivid': '#ffadd6',
-  'pink-vivid-light': '#ffdeef',
-  'pink-mist': '#FFF3F9',
-  'fuschia-highlight': '#ff6492',
-  'fuschia-text': '#3a121e',
-  'yellow-highlight': '#ffde73',
-  'yellow-hover': '#e0be00',
-  'brand-hover': '#093c3a',
+  'brand-hover':'#093c3a',
+  'light-200':  '#f3f3f3',
+  'light-100':  '#ffffff',
 }
 
-const themes = ['light', 'dark', 'light-pink', 'pink-mist', 'pink-vivid'] as const
-const semanticTokens = ['bg', 'bg-2', 'bg-3', 'text', 'text-2', 'border', 'heading-accent', 'btn-bg', 'btn-text', 'btn2-bg', 'btn2-text', 'btn2-border']
+const accentGroups = [
+  {
+    label: 'Default — Brand baseline',
+    accent: 'default',
+    description: 'Pink tones used as the brand baseline. Not tied to a specific activity — appears in global UI elements, marketing surfaces, and anywhere no vertical accent applies.',
+    primitives: {
+      'pink-mist':        '#FFF3F9',
+      'pink-vivid-light': '#ffdeef',
+      'pink-vivid':       '#ffadd6',
+      'pink-500':         '#f59bbb',
+      'pink-600':         '#c47c96',
+      'pink-accent':      '#fd6c9f',
+    },
+  },
+  {
+    label: 'Violet — Électroménager',
+    accent: 'violet',
+    description: 'Purple tones for the appliance repair vertical.',
+    primitives: {
+      'purple-500': '#9e8cf8',
+      'purple-700': '#543bce',
+      'purple-800': '#432fa5',
+      'purple-navy':'#180d4d',
+    },
+  },
+  {
+    label: 'Yellow — Solaire',
+    accent: 'yellow',
+    description: 'Yellow tones for the solar energy vertical. Warm and energetic — communicates sun and sustainability.',
+    primitives: {
+      'yellow-highlight': '#ffde73',
+      'yellow-500':       '#ffd800',
+      'yellow-hover':     '#e0be00',
+      'yellow-600':       '#ccad00',
+    },
+  },
+  {
+    label: 'Fuschia — Chauffage',
+    accent: 'fuschia',
+    description: 'High-saturation pink for the heating vertical.',
+    primitives: {
+      'fuschia-highlight': '#ff6492',
+      'fuschia-text':      '#3a121e',
+    },
+  },
+]
+
+const accentTokens = ['btn-bg', 'btn-text', 'btn-bg-hover', 'btn-text-hover', 'accent-highlight', 'accent-pill-active']
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function Swatch({ name, value }: { name: string; value: string }) {
+  const isLight = parseInt(value.slice(1, 3), 16) > 200
   return (
-    <div className="flex flex-col items-start gap-1">
+    <div className="flex flex-col items-start gap-1 min-w-[80px]">
       <div
-        className="w-16 h-16 rounded-card border border-gray-200 shadow-sm"
+        className="w-14 h-14 rounded-lg border border-black/10 shadow-sm"
         style={{ backgroundColor: value }}
       />
-      <span className="text-xs font-mono text-gray-700">{name}</span>
-      <span className="text-xs text-gray-400">{value}</span>
+      <span className="text-xs font-mono leading-tight" style={{ color: '#073331' }}>{name}</span>
+      <span className="text-xs" style={{ color: '#6b7280' }}>{value}</span>
     </div>
   )
 }
 
+function AccentTokenRow({ accent }: { accent: string }) {
+  return (
+    <div className="flex flex-wrap gap-3 mt-3">
+      {accentTokens.map(token => (
+        <div key={token} className="flex flex-col items-start gap-1 min-w-[80px]">
+          <div
+            data-accent={accent}
+            className="w-14 h-14 rounded-lg border border-black/10 shadow-sm"
+            style={{ backgroundColor: `var(--accent-${token})` }}
+          />
+          <span className="text-xs font-mono leading-tight" style={{ color: '#073331' }}>{token}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function AccentButtonPreview({ accent }: { accent: string }) {
+  return (
+    <div data-accent={accent} className="flex items-center gap-3 mt-4 flex-wrap">
+      <button
+        className="px-6 py-3 rounded-full text-sm font-medium"
+        style={{ backgroundColor: 'var(--accent-btn-bg)', color: 'var(--accent-btn-text)' }}
+      >
+        Default
+      </button>
+      <button
+        className="px-6 py-3 rounded-full text-sm font-medium"
+        style={{ backgroundColor: 'var(--accent-btn-bg-hover)', color: 'var(--accent-btn-text-hover)' }}
+      >
+        Hover
+      </button>
+      <div
+        className="px-4 py-1.5 rounded-full text-xs font-medium"
+        style={{ backgroundColor: 'var(--accent-accent-highlight)', color: 'var(--accent-accent-text, #073331)' }}
+      >
+        Highlight pill
+      </div>
+    </div>
+  )
+}
+
+// ─── Main doc component ───────────────────────────────────────────────────────
+
 function ColorsDoc() {
   return (
-    <div className="p-6 space-y-10">
+    <div className="p-8 space-y-14 max-w-5xl" style={{ color: '#073331' }}>
+
+      {/* Brand & Neutral */}
       <section>
-        <h2 className="text-2xl font-bold mb-4">Primitive Colors</h2>
-        <div className="flex flex-wrap gap-4">
-          {Object.entries(primitives).map(([name, value]) => (
+        <h2 className="text-xl font-bold mb-1">Brand & Neutral</h2>
+        <p className="text-sm mb-4" style={{ color: '#6b7280' }}>
+          Core dark greens and whites shared across all themes and verticals.
+        </p>
+        <div className="flex flex-wrap gap-5">
+          {Object.entries(brandNeutral).map(([name, value]) => (
             <Swatch key={name} name={name} value={value} />
           ))}
         </div>
       </section>
 
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Semantic Tokens by Theme</h2>
-        <div className="overflow-x-auto">
-          <table className="text-sm border-collapse w-full">
-            <thead>
-              <tr>
-                <th className="text-left p-2 border border-gray-200 bg-gray-50">Token</th>
-                {themes.map(t => (
-                  <th key={t} className="text-left p-2 border border-gray-200 bg-gray-50 capitalize">{t}</th>
+      <hr style={{ borderColor: '#e5e7eb' }} />
+
+      {/* Accent groups */}
+      {accentGroups.map(({ label, accent, description, primitives }) => (
+        <section key={accent}>
+          <h2 className="text-xl font-bold mb-1">{label}</h2>
+          <p className="text-sm mb-5" style={{ color: '#6b7280' }}>{description}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Primitives */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#9ca3af' }}>
+                Primitives
+              </h3>
+              <div className="flex flex-wrap gap-4">
+                {Object.entries(primitives).map(([name, value]) => (
+                  <Swatch key={name} name={name} value={value} />
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {semanticTokens.map(token => (
-                <tr key={token}>
-                  <td className="p-2 border border-gray-200 font-mono text-xs">{token}</td>
-                  {themes.map(theme => (
-                    <td key={theme} className="p-2 border border-gray-200">
-                      <div
-                        data-theme={theme}
-                        className="w-8 h-8 rounded border border-gray-200 inline-block"
-                        style={{ backgroundColor: `var(--${token})` }}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </div>
+            </div>
+
+            {/* Accent tokens + preview */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#9ca3af' }}>
+                Accent Tokens
+              </h3>
+              <AccentTokenRow accent={accent} />
+              <AccentButtonPreview accent={accent} />
+            </div>
+          </div>
+        </section>
+      ))}
     </div>
   )
 }
+
+// ─── Story ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
   title: 'Foundation/Colors',
@@ -97,4 +184,4 @@ const meta: Meta = {
 export default meta
 
 type Story = StoryObj
-export const Primitives: Story = {}
+export const Overview: Story = {}

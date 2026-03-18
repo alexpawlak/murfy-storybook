@@ -23,7 +23,9 @@ npm run dev                # Start Vite dev server
 
 - `src/Foundation/` — Design token documentation stories (Colors, Typography, Spacing, ThemePlayground)
 - `src/Atoms/` — Primitive components: Button, Input, Tag, Typography
-- `src/Molecules/` — Composite components: NavItem/NavBar, ServiceCard, PostalCodeForm, AccordionItem
+- `src/Molecules/` — Functional units combining 2–3 atoms: NavItem/NavBar, ServiceCard, PostalCodeForm, AccordionItem
+- `src/Organisms/` — Self-contained sections built from molecules/atoms: Navbar, ProductCard, PricingTable, ReviewList
+- `src/Templates/` — Full page layout scaffolds wiring organisms together (no real content). Pages are out of scope.
 
 ### Token Pipeline
 
@@ -102,7 +104,9 @@ When adding or redesigning components, always consider how they behave across al
 ### Component placement
 
 - Primitive/single-purpose UI → `src/Atoms/ComponentName/`
-- Composed from multiple atoms → `src/Molecules/ComponentName/`
+- Functional unit combining 2–3 atoms → `src/Molecules/ComponentName/`
+- Self-contained section built from molecules/atoms → `src/Organisms/ComponentName/`
+- Full page layout scaffold → `src/Templates/ComponentName/`
 - Each directory must contain `ComponentName.tsx` and `ComponentName.stories.tsx`
 - Export the component as a named export (not default)
 

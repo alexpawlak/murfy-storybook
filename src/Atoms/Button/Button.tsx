@@ -6,9 +6,11 @@ interface ButtonProps {
   children: React.ReactNode
   disabled?: boolean
   onClick?: () => void
+  className?: string
+  type?: 'button' | 'submit' | 'reset'
 }
 
-export function Button({ variant = 'primary', size = 'md', children, disabled, onClick }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'md', children, disabled, onClick, className = '', type = 'button' }: ButtonProps) {
   const base = 'inline-flex items-center justify-center font-bold transition-colors rounded-pill border cursor-pointer'
   const sizes = {
     sm: 'px-4 py-2 text-text-small',
@@ -26,10 +28,11 @@ export function Button({ variant = 'primary', size = 'md', children, disabled, o
     : {}
   return (
     <button
-      className={`${base} ${sizes[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`${base} ${sizes[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
       style={accentStyle}
       disabled={disabled}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>

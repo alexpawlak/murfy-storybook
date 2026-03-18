@@ -25,6 +25,9 @@
   --yellow-hover: #e0be00;
   --brand-hover: #093c3a;
 
+  /* Font Families */
+  --font-family-brand: "Murfy A2", sans-serif;
+
   /* Typography */
   --font-size-display: 112px;
   --font-weight-display: 700;
@@ -64,6 +67,22 @@
   --font-size-text-xsmall: 14px;
   --font-weight-text-xsmall: 400;
   --line-height-text-xsmall: 1.5;
+  --font-size-text-large-semibold: 20px;
+  --font-weight-text-large-semibold: 600;
+  --line-height-text-large-semibold: 1.5;
+  --font-size-text-main-semibold: 18px;
+  --font-weight-text-main-semibold: 600;
+  --line-height-text-main-semibold: 1.5;
+  --font-size-text-small-semibold: 16px;
+  --font-weight-text-small-semibold: 600;
+  --line-height-text-small-semibold: 1.5;
+  --font-size-text-xsmall-semibold: 14px;
+  --font-weight-text-xsmall-semibold: 600;
+  --line-height-text-xsmall-semibold: 1.5;
+  --font-size-label: 12px;
+  --font-weight-label: 600;
+  --line-height-label: 1.5;
+  --letter-spacing-label: 0.08em;
 
   /* Dimensions */
   --radius-section: 48px;
