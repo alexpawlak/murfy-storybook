@@ -1,0 +1,224 @@
+/* Auto-generated from tokens.json — do not edit manually */
+
+:root {
+  /* Primitives */
+  --pink-500: #f59bbb;
+  --pink-accent: #fd6c9f;
+  --pink-600: #c47c96;
+  --yellow-500: #ffd800;
+  --yellow-600: #ccad00;
+  --dark-800: #073331;
+  --dark-900: #032524;
+  --brand-text: #0b4744;
+  --light-100: #ffffff;
+  --light-200: #f3f3f3;
+  --purple-navy: #180d4d;
+  --purple-500: #9e8cf8;
+  --purple-700: #543bce;
+  --purple-800: #432fa5;
+  --pink-vivid: #ffadd6;
+  --pink-vivid-light: #ffdeef;
+  --pink-mist: #FFF3F9;
+  --fuschia-highlight: #ff6492;
+  --fuschia-text: #3a121e;
+  --yellow-highlight: #ffde73;
+  --yellow-hover: #e0be00;
+  --brand-hover: #093c3a;
+
+  /* Typography */
+  --font-size-display: 112px;
+  --font-weight-display: 700;
+  --line-height-display: 1;
+  --letter-spacing-display: -0.05em;
+  --font-size-h1: 61px;
+  --font-weight-h1: 900;
+  --line-height-h1: 1;
+  --letter-spacing-h1: -0.05em;
+  --font-size-h2: 46px;
+  --font-weight-h2: 700;
+  --line-height-h2: 1;
+  --letter-spacing-h2: -0.05em;
+  --font-size-h3: 32px;
+  --font-weight-h3: 700;
+  --line-height-h3: 1.3;
+  --letter-spacing-h3: -0.05em;
+  --font-size-h4: 24px;
+  --font-weight-h4: 700;
+  --line-height-h4: 1.3;
+  --letter-spacing-h4: -0.05em;
+  --font-size-h5: 20px;
+  --font-weight-h5: 700;
+  --line-height-h5: 1.3;
+  --font-size-h6: 18px;
+  --font-weight-h6: 700;
+  --line-height-h6: 1.3;
+  --font-size-text-large: 20px;
+  --font-weight-text-large: 400;
+  --line-height-text-large: 1.5;
+  --font-size-text-main: 18px;
+  --font-weight-text-main: 400;
+  --line-height-text-main: 1.5;
+  --font-size-text-small: 16px;
+  --font-weight-text-small: 400;
+  --line-height-text-small: 1.5;
+  --font-size-text-xsmall: 14px;
+  --font-weight-text-xsmall: 400;
+  --line-height-text-xsmall: 1.5;
+
+  /* Dimensions */
+  --radius-section: 48px;
+  --radius-card: 24px;
+  --radius-small: 8px;
+  --radius-pill: 9999px;
+  --radius-dropdown: 16px;
+  --spacing-section-y: 64px; /* mobile default */
+}
+
+[data-theme="light"], :root {
+  --bg: var(--light-100);
+  --bg-2: var(--light-200);
+  --bg-3: var(--light-100);
+  --text: var(--brand-text);
+  --text-2: #ffffff;
+  --border: var(--dark-900);
+  --heading-accent: var(--pink-600);
+  --btn-bg: var(--pink-500);
+  --btn-text: var(--brand-text);
+  --btn-bg-hover: var(--pink-accent);
+  --btn-text-hover: var(--brand-text);
+  --btn2-bg: #00000000;
+  --btn2-text: var(--dark-800);
+  --btn2-border: var(--dark-800);
+  --btn2-bg-hover: var(--light-200);
+  --btn2-text-hover: var(--dark-800);
+}
+
+[data-theme="dark"] {
+  --bg: var(--dark-800);
+  --bg-2: var(--dark-900);
+  --bg-3: var(--dark-800);
+  --text: var(--light-100);
+  --text-2: var(--light-100);
+  --border: var(--light-100);
+  --heading-accent: var(--light-100);
+  --btn-bg: var(--pink-500);
+  --btn-text: var(--brand-text);
+  --btn-bg-hover: var(--light-200);
+  --btn-text-hover: var(--brand-text);
+  --btn2-bg: #00000000;
+  --btn2-text: var(--light-100);
+  --btn2-border: var(--light-100);
+  --btn2-bg-hover: var(--light-100);
+  --btn2-text-hover: var(--dark-800);
+}
+
+[data-theme="light-pink"] {
+  --bg: var(--pink-vivid-light);
+  --bg-2: var(--light-100);
+  --bg-3: var(--pink-vivid);
+  --text: var(--brand-text);
+  --text-2: var(--light-100);
+  --border: var(--brand-text);
+  --heading-accent: var(--purple-500);
+  --btn-bg: var(--brand-text);
+  --btn-text: var(--light-100);
+  --btn-bg-hover: var(--brand-hover);
+  --btn-text-hover: var(--light-100);
+  --btn2-bg: #00000000;
+  --btn2-text: var(--dark-800);
+  --btn2-border: var(--dark-800);
+  --btn2-bg-hover: var(--light-200);
+  --btn2-text-hover: var(--dark-800);
+}
+
+[data-theme="pink-mist"] {
+  --bg: var(--pink-mist);
+  --bg-2: var(--light-100);
+  --bg-3: var(--pink-mist);
+  --text: var(--brand-text);
+  --text-2: var(--light-100);
+  --border: var(--brand-text);
+  --heading-accent: var(--purple-500);
+  --btn-bg: var(--brand-text);
+  --btn-text: var(--light-100);
+  --btn-bg-hover: var(--brand-hover);
+  --btn-text-hover: var(--light-100);
+  --btn2-bg: #00000000;
+  --btn2-text: var(--dark-800);
+  --btn2-border: var(--dark-800);
+  --btn2-bg-hover: var(--light-200);
+  --btn2-text-hover: var(--dark-800);
+}
+
+[data-theme="pink-vivid"] {
+  --bg: var(--pink-vivid);
+  --bg-2: var(--light-100);
+  --bg-3: var(--pink-vivid);
+  --text: var(--brand-text);
+  --text-2: var(--light-100);
+  --border: var(--brand-text);
+  --heading-accent: var(--purple-500);
+  --btn-bg: var(--brand-text);
+  --btn-text: var(--light-100);
+  --btn-bg-hover: var(--brand-hover);
+  --btn-text-hover: var(--light-100);
+  --btn2-bg: #00000000;
+  --btn2-text: var(--dark-800);
+  --btn2-border: var(--dark-800);
+  --btn2-bg-hover: var(--light-200);
+  --btn2-text-hover: var(--dark-800);
+}
+
+[data-accent="default"] {
+  --accent-btn-bg: var(--brand-text);
+  --accent-btn-text: #ffffff;
+  --accent-btn-bg-hover: var(--brand-hover);
+  --accent-btn-text-hover: #ffffff;
+  --accent-accent-highlight: var(--light-100);
+  --accent-accent-pill-active: var(--light-100);
+  --accent-accent-text: var(--brand-text);
+}
+
+[data-accent="violet"] {
+  --accent-btn-bg: var(--purple-700);
+  --accent-btn-text: var(--light-100);
+  --accent-btn-bg-hover: var(--purple-800);
+  --accent-btn-text-hover: var(--light-100);
+  --accent-accent-highlight: var(--purple-500);
+  --accent-accent-pill-active: var(--light-100);
+  --accent-accent-text: var(--purple-navy);
+}
+
+[data-accent="yellow"] {
+  --accent-btn-bg: var(--yellow-500);
+  --accent-btn-text: var(--dark-900);
+  --accent-btn-bg-hover: var(--yellow-hover);
+  --accent-btn-text-hover: var(--dark-900);
+  --accent-accent-highlight: var(--yellow-highlight);
+  --accent-accent-pill-active: var(--yellow-highlight);
+  --accent-accent-text: var(--yellow-600);
+}
+
+[data-accent="fuschia"] {
+  --accent-btn-bg: #e8006f;
+  --accent-btn-text: #ffffff;
+  --accent-btn-bg-hover: #cc0062;
+  --accent-btn-text-hover: #ffffff;
+  --accent-accent-highlight: var(--fuschia-highlight);
+  --accent-accent-pill-active: var(--fuschia-highlight);
+  --accent-accent-text: var(--fuschia-text);
+}
+
+:root {
+  --accent-btn-bg: var(--brand-text);
+  --accent-btn-text: #ffffff;
+  --accent-btn-bg-hover: var(--brand-hover);
+  --accent-btn-text-hover: #ffffff;
+  --accent-accent-highlight: var(--light-100);
+  --accent-accent-pill-active: var(--light-100);
+  --accent-accent-text: var(--brand-text);
+}
+
+@media (min-width: 1024px) {
+  :root { --spacing-section-y: 112px; }
+}

@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murfy — Button Components</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      /* Primitives */
+      --pink-500: #f59bbb;
+      --pink-accent: #fd6c9f;
+      --pink-600: #c47c96;
+      --yellow-500: #ffd800;
+      --yellow-hover: #e0be00;
+      --dark-800: #073331;
+      --dark-900: #032524;
+      --brand-text: #0b4744;
+      --brand-hover: #093c3a;
+      --light-100: #ffffff;
+      --light-200: #f3f3f3;
+      --purple-navy: #180d4d;
+      --purple-500: #9e8cf8;
+      --purple-700: #543bce;
+      --purple-800: #432fa5;
+      --pink-vivid: #ffadd6;
+      --pink-vivid-light: #ffdeef;
+      --pink-mist: #FFF3F9;
+      --fuschia-highlight: #ff6492;
+      --fuschia-btn: #e8006f;
+      --fuschia-hover: #cc0062;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      background: #EBEBEB;
+      padding: 80px;
+    }
+
+    /* ── CANVAS SECTIONS ── */
+    .canvas-section {
+      margin-bottom: 120px;
+    }
+    .canvas-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 24px;
+    }
+
+    /* ── COMPONENT FRAME ── */
+    .component-frame {
+      background: white;
+      border-radius: 4px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .component-frame-inner {
+      padding: 32px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      background: white;
+      padding: 48px 64px 40px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pink-600);
+      margin-bottom: 8px;
+    }
+    .section-heading {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--brand-text);
+      line-height: 1;
+    }
+    .section-desc {
+      font-size: 15px;
+      color: var(--brand-text);
+      opacity: 0.55;
+      max-width: 520px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+    .section-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .meta-item {
+      font-size: 11px;
+      color: var(--brand-text);
+      opacity: 0.4;
+      margin-bottom: 4px;
+      font-family: 'SF Mono', monospace;
+    }
+
+    /* ── THE BUTTON ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px 0 18px;
+      height: 48px;
+      border-radius: 9999px;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: inherit;
+      transition: none;
+    }
+    .btn-lg { height: 56px; font-size: 17px; padding: 0 12px 0 22px; gap: 12px; }
+    .btn-sm { height: 40px; font-size: 13px; padding: 0 8px 0 14px; gap: 8px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px 0 18px;
+      height: 48px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      cursor: pointer;
+      background: transparent;
+      font-family: inherit;
+    }
+    .btn-ghost-lg { height: 56px; font-size: 17px; padding: 0 12px 0 22px; gap: 12px; }
+    .btn-ghost-sm { height: 40px; font-size: 13px; padding: 0 8px 0 14px; gap: 8px; }
+
+    /* Icon circle */
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      flex-shrink: 0;
+    }
+    .icon-md { width: 26px; height: 26px; }
+    .icon-lg { width: 32px; height: 32px; }
+    .icon-sm { width: 21px; height: 21px; }
+
+    /* Disabled state */
+    .btn-disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── VARIANT CHIP LABEL ── */
+    .variant-chip {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: 'SF Mono', monospace;
+      letter-spacing: 0.04em;
+      color: white;
+      background: #9EA3B0;
+      padding: 3px 7px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .variant-chip.primary { background: var(--brand-text); }
+    .variant-chip.secondary { background: #6B7280; }
+    .variant-chip.violet { background: var(--purple-700); }
+    .variant-chip.yellow { background: #B5900A; }
+    .variant-chip.fuschia { background: var(--fuschia-btn); }
+
+    /* ── VARIANT CELL ── */
+    .variant-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    /* ── GRID LAYOUTS ── */
+    .grid-cols { display: flex; gap: 32px; align-items: flex-start; }
+    .grid-rows { display: flex; flex-direction: column; gap: 24px; }
+    .inline-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+    /* ── MATRIX TABLE ── */
+    .matrix {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .matrix th {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-text);
+      opacity: 0.4;
+      padding: 0 20px 16px 0;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .matrix th:first-child { width: 80px; }
+    .matrix td {
+      padding: 16px 20px 16px 0;
+      border-top: 1px solid rgba(11,71,68,0.06);
+      vertical-align: middle;
+    }
+    .matrix td:first-child {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-text);
+      opacity: 0.35;
+      width: 80px;
+    }
+
+    /* ── ANATOMY ── */
+    .anatomy-diagram {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .anatomy-label {
+      position: absolute;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--brand-text);
+      font-family: 'SF Mono', monospace;
+      white-space: nowrap;
+    }
+    .anatomy-line {
+      position: absolute;
+      background: var(--pink-600);
+      opacity: 0.6;
+    }
+    .anatomy-dot {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--pink-600);
+    }
+
+    /* ── PROPERTY TABLE ── */
+    .prop-table { width: 100%; border-collapse: collapse; }
+    .prop-table th {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-text);
+      opacity: 0.35;
+      padding: 0 16px 10px 0;
+      text-align: left;
+      border-bottom: 1px solid rgba(11,71,68,0.08);
+    }
+    .prop-table td {
+      padding: 8px 16px 8px 0;
+      font-size: 11px;
+      color: var(--brand-text);
+      border-bottom: 1px solid rgba(11,71,68,0.05);
+      vertical-align: top;
+    }
+    .prop-table td:first-child { font-weight: 700; width: 120px; }
+    .prop-table td code {
+      font-family: 'SF Mono', monospace;
+      font-size: 10px;
+      background: rgba(11,71,68,0.06);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--brand-text);
+    }
+    .prop-value-row { display: flex; flex-wrap: wrap; gap: 4px; }
+    .prop-value-chip {
+      font-size: 9px;
+      font-family: 'SF Mono', monospace;
+      background: rgba(11,71,68,0.06);
+      color: var(--brand-text);
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    /* ── THEME CONTEXT CARD ── */
+    .theme-ctx {
+      padding: 28px;
+      border-radius: 16px;
+      min-width: 220px;
+    }
+    .theme-ctx-name {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+    .theme-ctx-btns { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+
+    /* ── DO / DON'T ── */
+    .do-dont-grid { display: flex; gap: 24px; }
+    .do-card {
+      flex: 1;
+      padding: 28px;
+      border-radius: 12px;
+      border-top: 3px solid #16A34A;
+      background: #F0FDF4;
+    }
+    .dont-card {
+      flex: 1;
+      padding: 28px;
+      border-radius: 12px;
+      border-top: 3px solid #DC2626;
+      background: #FEF2F2;
+    }
+    .do-dont-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .do-label { color: #16A34A; }
+    .dont-label { color: #DC2626; }
+    .do-dont-desc {
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 12px;
+      color: var(--brand-text);
+      opacity: 0.7;
+    }
+
+    /* ── DIVIDER ── */
+    .vr { width: 1px; background: rgba(11,71,68,0.08); align-self: stretch; }
+
+    /* ── FIGMA ANNOTATION ── */
+    .figma-note {
+      background: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 11px;
+      color: #3730A3;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+    .figma-note strong { font-weight: 700; }
+
+    /* ── USAGE RULE ── */
+    .usage-rule {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(11,71,68,0.06);
+    }
+    .usage-rule:last-child { border-bottom: none; }
+    .rule-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brand-text);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .rule-text { font-size: 12px; line-height: 1.6; color: var(--brand-text); }
+    .rule-text strong { font-weight: 700; }
+
+    /* loading spinner */
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .spinner-dark {
+      border-color: rgba(11,71,68,0.2);
+      border-top-color: var(--brand-text);
+    }
+
+    /* contrast badge */
+    .contrast-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', monospace;
+    }
+    .aa { background: #D1FAE5; color: #065F46; }
+    .aaa { background: #BBF7D0; color: #064E3B; }
+    .fail { background: #FEE2E2; color: #991B1B; }
+  </style>
+</head>
+<body>
+
+<!-- ╔═══════════════════════════════════════════════════════════
+     PAGE 1 — COMPONENT ANATOMY & PROPERTIES
+═══════════════════════════════════════════════════════════╗ -->
+<div class="canvas-section">
+  <div class="canvas-title">Page 1 · Component Anatomy &amp; Properties</div>
+
+  <div style="display:flex; flex-direction:column; gap:2px;">
+
+    <!-- HEADER -->
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">Murfy Design System · Atoms</div>
+        <div class="section-heading">Button</div>
+        <div class="section-desc">Pill-shaped CTA component. Supports 3 types × 3 sizes × 4 states × 5 themes × 4 accent overrides. Always includes a directional icon to reinforce action affordance.</div>
+      </div>
+      <div class="section-meta">
+        <div class="meta-item">Component: Button</div>
+        <div class="meta-item">Version: 1.0</div>
+        <div class="meta-item">Updated: 2026-03-17</div>
+        <div class="meta-item">Source: tokens.json</div>
+      </div>
+    </div>
+
+    <!-- ANATOMY + PROPERTIES ROW -->
+    <div style="display:flex; gap:2px;">
+
+      <!-- ANATOMY -->
+      <div class="component-frame" style="flex:1;">
+        <div class="component-frame-inner" style="width:100%;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:28px;">Anatomy</div>
+
+          <!-- Diagram -->
+          <div style="padding: 40px 60px; display:flex; justify-content:center;">
+            <div style="position:relative; display:inline-block;">
+              <!-- The button -->
+              <button class="btn" style="background:var(--pink-500); color:var(--brand-text); position:relative; z-index:1; pointer-events:none;">
+                Button label
+                <span class="icon icon-md" style="background:white;">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </button>
+
+              <!-- Annotation: Container -->
+              <div style="position:absolute; top:-36px; left:0; right:0; text-align:center;">
+                <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); letter-spacing:0.06em;">① Container</div>
+                <div style="width:1px; height:20px; background:var(--pink-600); opacity:0.4; margin:0 auto;"></div>
+              </div>
+
+              <!-- Annotation: Label -->
+              <div style="position:absolute; bottom:-48px; left:20px;">
+                <div style="width:1px; height:22px; background:var(--pink-600); opacity:0.4; margin:0 auto;"></div>
+                <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); letter-spacing:0.06em; white-space:nowrap;">② Label</div>
+              </div>
+
+              <!-- Annotation: Icon -->
+              <div style="position:absolute; bottom:-48px; right:4px;">
+                <div style="width:1px; height:22px; background:var(--pink-600); opacity:0.4; margin:0 auto;"></div>
+                <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); letter-spacing:0.06em; white-space:nowrap;">③ Icon pill</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part descriptions -->
+          <div style="margin-top:56px; display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:11px;">
+              <span style="width:18px; height:18px; border-radius:50%; background:var(--pink-600); color:white; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span>
+              <span style="color:var(--brand-text); line-height:1.5;"><strong>Container</strong> — Pill shape, border-radius: 9999px. Height is fixed per size. Background = btn-bg token.</span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:11px;">
+              <span style="width:18px; height:18px; border-radius:50%; background:var(--pink-600); color:white; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</span>
+              <span style="color:var(--brand-text); line-height:1.5;"><strong>Label</strong> — 1 line max. Medium weight (500). Color = btn-text token.</span>
+            </div>
+            <div style="display:flex; gap:10px; align-items:flex-start; font-size:11px;">
+              <span style="width:18px; height:18px; border-radius:50%; background:var(--pink-600); color:white; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</span>
+              <span style="color:var(--brand-text); line-height:1.5;"><strong>Icon pill</strong> — Always white background. Arrow SVG inherits text color for visual consistency. Size scales with button size.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPERTIES TABLE -->
+      <div class="component-frame" style="width:320px; flex-shrink:0;">
+        <div class="component-frame-inner">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:20px;">Figma Properties</div>
+          <table class="prop-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Values</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Type</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">Primary</span>
+                    <span class="prop-value-chip">Secondary</span>
+                    <span class="prop-value-chip">Accent</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">Large</span>
+                    <span class="prop-value-chip">Medium</span>
+                    <span class="prop-value-chip">Small</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>State</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">Default</span>
+                    <span class="prop-value-chip">Hover</span>
+                    <span class="prop-value-chip">Disabled</span>
+                    <span class="prop-value-chip">Loading</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Theme</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">Light</span>
+                    <span class="prop-value-chip">Dark</span>
+                    <span class="prop-value-chip">Light-Pink</span>
+                    <span class="prop-value-chip">Pink-Mist</span>
+                    <span class="prop-value-chip">Pink-Vivid</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Accent</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">Default</span>
+                    <span class="prop-value-chip">Violet</span>
+                    <span class="prop-value-chip">Yellow</span>
+                    <span class="prop-value-chip">Fuschia</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Label</td>
+                <td><code>string</code></td>
+              </tr>
+              <tr>
+                <td>Icon</td>
+                <td>
+                  <div class="prop-value-row">
+                    <span class="prop-value-chip">true</span>
+                    <span class="prop-value-chip">false</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="figma-note" style="margin-top:24px;">
+            <strong>→ How to make this a component set in Figma:</strong><br>
+            Select all button variants in a section → Right-click → "Create component" on each, then select all → "Combine as variants". Figma auto-reads the <code>Type=X, Size=Y, State=Z</code> naming.
+          </div>
+        </div>
+      </div>
+
+      <!-- SIZES REFERENCE -->
+      <div class="component-frame" style="width:280px; flex-shrink:0;">
+        <div class="component-frame-inner">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:20px;">Size Specs</div>
+
+          <div style="display:flex; flex-direction:column; gap:24px;">
+
+            <div>
+              <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); margin-bottom:10px; letter-spacing:0.08em;">SIZE=LARGE</div>
+              <button class="btn btn-lg" style="background:var(--pink-500); color:var(--brand-text);">
+                Prendre RDV
+                <span class="icon icon-lg" style="background:white;">
+                  <svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </button>
+              <div style="margin-top:8px; font-size:10px; font-family:monospace; color:var(--brand-text); opacity:0.4; line-height:1.7;">
+                H: 56px · Font: 17px/500<br>
+                Padding: 22px 12px<br>
+                Icon: 32px
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(11,71,68,0.06); padding-top:20px;">
+              <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); margin-bottom:10px; letter-spacing:0.08em;">SIZE=MEDIUM (default)</div>
+              <button class="btn" style="background:var(--pink-500); color:var(--brand-text);">
+                Prendre RDV
+                <span class="icon icon-md" style="background:white;">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </button>
+              <div style="margin-top:8px; font-size:10px; font-family:monospace; color:var(--brand-text); opacity:0.4; line-height:1.7;">
+                H: 48px · Font: 15px/500<br>
+                Padding: 18px 10px<br>
+                Icon: 26px
+              </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(11,71,68,0.06); padding-top:20px;">
+              <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--pink-600); margin-bottom:10px; letter-spacing:0.08em;">SIZE=SMALL</div>
+              <button class="btn btn-sm" style="background:var(--pink-500); color:var(--brand-text);">
+                Prendre RDV
+                <span class="icon icon-sm" style="background:white;">
+                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </button>
+              <div style="margin-top:8px; font-size:10px; font-family:monospace; color:var(--brand-text); opacity:0.4; line-height:1.7;">
+                H: 40px · Font: 13px/500<br>
+                Padding: 14px 8px<br>
+                Icon: 21px
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════════════════════════
+     PAGE 2 — PRIMARY BUTTON · ALL VARIANTS
+═══════════════════════════════════════════════════════════╗ -->
+<div class="canvas-section">
+  <div class="canvas-title">Page 2 · Type=Primary · All Sizes × States</div>
+
+  <div class="component-frame" style="width:100%;">
+    <div style="padding:40px 48px;">
+
+      <div style="font-size:13px; font-weight:700; color:var(--brand-text); margin-bottom:4px;">Type=Primary</div>
+      <div style="font-size:12px; color:var(--brand-text); opacity:0.5; margin-bottom:32px;">Background = btn-bg · Text = btn-text · Hover = btn-bg-hover · Used for main CTA actions</div>
+
+      <!-- MATRIX: rows=states, cols=sizes -->
+      <table class="matrix" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th>State ↓ / Size →</th>
+            <th>Size=Large (56px)</th>
+            <th>Size=Medium (48px)</th>
+            <th>Size=Small (40px)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- DEFAULT -->
+          <tr>
+            <td>State=Default</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Large · State=Default</span>
+                <button class="btn btn-lg" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-lg" style="background:white;"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Medium · State=Default</span>
+                <button class="btn" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Small · State=Default</span>
+                <button class="btn btn-sm" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-sm" style="background:white;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- HOVER -->
+          <tr>
+            <td>State=Hover</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Large · State=Hover</span>
+                <button class="btn btn-lg" style="background:var(--pink-accent); color:var(--brand-text);">Prendre RDV<span class="icon icon-lg" style="background:white;"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Medium · State=Hover</span>
+                <button class="btn" style="background:var(--pink-accent); color:var(--brand-text);">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Small · State=Hover</span>
+                <button class="btn btn-sm" style="background:var(--pink-accent); color:var(--brand-text);">Prendre RDV<span class="icon icon-sm" style="background:white;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- DISABLED -->
+          <tr>
+            <td>State=Disabled</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Large · State=Disabled</span>
+                <button class="btn btn-lg btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled>Prendre RDV<span class="icon icon-lg" style="background:white;"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Medium · State=Disabled</span>
+                <button class="btn btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled>Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Small · State=Disabled</span>
+                <button class="btn btn-sm btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled>Prendre RDV<span class="icon icon-sm" style="background:white;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+          <!-- LOADING -->
+          <tr>
+            <td>State=Loading</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Large · State=Loading</span>
+                <button class="btn btn-lg btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled><div class="spinner spinner-dark"></div>Chargement…<span class="icon icon-lg" style="background:white; opacity:0.4;"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Medium · State=Loading</span>
+                <button class="btn btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled><div class="spinner spinner-dark" style="width:12px;height:12px;"></div>Chargement…<span class="icon icon-md" style="background:white; opacity:0.4;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip primary">Type=Primary · Size=Small · State=Loading</span>
+                <button class="btn btn-sm btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled><div class="spinner spinner-dark" style="width:10px;height:10px;"></div>Chargement…<span class="icon icon-sm" style="background:white; opacity:0.4;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- On dark theme (same Primary on dark bg) -->
+      <div style="margin-top:32px; padding:28px; background:var(--dark-800); border-radius:12px;">
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.4); margin-bottom:16px;">Primary on Dark theme background — same btn-bg token, naturally adapts</div>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-lg" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-lg" style="background:white;"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="btn" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="btn btn-sm" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-sm" style="background:white;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="btn btn-disabled" style="background:var(--pink-500); color:var(--brand-text);" disabled>Disabled<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════════════════════════
+     PAGE 3 — SECONDARY (GHOST) BUTTON · ALL VARIANTS
+═══════════════════════════════════════════════════════════╗ -->
+<div class="canvas-section">
+  <div class="canvas-title">Page 3 · Type=Secondary · All Sizes × States</div>
+
+  <div class="component-frame" style="width:100%;">
+    <div style="padding:40px 48px;">
+
+      <div style="font-size:13px; font-weight:700; color:var(--brand-text); margin-bottom:4px;">Type=Secondary</div>
+      <div style="font-size:12px; color:var(--brand-text); opacity:0.5; margin-bottom:32px;">Outlined/ghost style · Background = transparent · Border = btn2-border · Used for secondary actions alongside a Primary</div>
+
+      <table class="matrix" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th>State ↓ / Size →</th>
+            <th>Size=Large (56px)</th>
+            <th>Size=Medium (48px)</th>
+            <th>Size=Small (40px)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>State=Default</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Large · State=Default</span>
+                <button class="btn-ghost btn-ghost-lg" style="border:1.5px solid var(--dark-900); color:var(--brand-text);">En savoir plus<span class="icon icon-lg" style="background:rgba(11,71,68,0.08);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Medium · State=Default</span>
+                <button class="btn-ghost" style="border:1.5px solid var(--dark-900); color:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.08);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Small · State=Default</span>
+                <button class="btn-ghost btn-ghost-sm" style="border:1.5px solid var(--dark-900); color:var(--brand-text);">En savoir plus<span class="icon icon-sm" style="background:rgba(11,71,68,0.08);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>State=Hover</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Large · State=Hover</span>
+                <button class="btn-ghost btn-ghost-lg" style="border:1.5px solid var(--dark-900); color:white; background:var(--brand-text);">En savoir plus<span class="icon icon-lg" style="background:rgba(255,255,255,0.15);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Medium · State=Hover</span>
+                <button class="btn-ghost" style="border:1.5px solid var(--dark-900); color:white; background:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Small · State=Hover</span>
+                <button class="btn-ghost btn-ghost-sm" style="border:1.5px solid var(--dark-900); color:white; background:var(--brand-text);">En savoir plus<span class="icon icon-sm" style="background:rgba(255,255,255,0.15);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>State=Disabled</td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Large · State=Disabled</span>
+                <button class="btn-ghost btn-ghost-lg btn-disabled" style="border:1.5px solid var(--dark-900); color:var(--brand-text);" disabled>En savoir plus<span class="icon icon-lg" style="background:rgba(11,71,68,0.06);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Medium · State=Disabled</span>
+                <button class="btn-ghost btn-disabled" style="border:1.5px solid var(--dark-900); color:var(--brand-text);" disabled>En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.06);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+            <td>
+              <div class="variant-cell">
+                <span class="variant-chip secondary">Type=Secondary · Size=Small · State=Disabled</span>
+                <button class="btn-ghost btn-ghost-sm btn-disabled" style="border:1.5px solid var(--dark-900); color:var(--brand-text);" disabled>En savoir plus<span class="icon icon-sm" style="background:rgba(11,71,68,0.06);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- On dark bg -->
+      <div style="margin-top:24px; padding:28px; background:var(--dark-800); border-radius:12px;">
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.4); margin-bottom:16px;">Secondary on Dark — border becomes white (btn2-border = light-100)</div>
+        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+          <button class="btn-ghost btn-ghost-lg" style="border:1.5px solid white; color:white;">En savoir plus<span class="icon icon-lg" style="background:rgba(255,255,255,0.1);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="btn-ghost" style="border:1.5px solid white; color:white;">En savoir plus<span class="icon icon-md" style="background:rgba(255,255,255,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="btn-ghost btn-ghost-sm" style="border:1.5px solid white; color:white;">En savoir plus<span class="icon icon-sm" style="background:rgba(255,255,255,0.1);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <!-- Hover on dark -->
+          <button class="btn-ghost" style="border:1.5px solid white; color:var(--dark-800); background:white;">Hover state<span class="icon icon-md" style="background:rgba(7,51,49,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#073331" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════════════════════════
+     PAGE 4 — ACCENT BUTTONS (TYPE=ACCENT)
+═══════════════════════════════════════════════════════════╗ -->
+<div class="canvas-section">
+  <div class="canvas-title">Page 4 · Type=Accent · 4 Verticals × Sizes × States</div>
+
+  <div class="component-frame" style="width:100%;">
+    <div style="padding:40px 48px;">
+
+      <div style="font-size:13px; font-weight:700; color:var(--brand-text); margin-bottom:4px;">Type=Accent</div>
+      <div style="font-size:12px; color:var(--brand-text); opacity:0.5; margin-bottom:32px;">Vertical-specific override · Replaces Primary on per-vertical sections · data-accent attribute on parent</div>
+
+      <!-- 4 accent columns -->
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px;">
+
+        <!-- DEFAULT (Électroménager) -->
+        <div style="background:#f8f8f8; padding:28px 24px; border-radius:8px;">
+          <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--brand-text); opacity:0.5; letter-spacing:0.1em; margin-bottom:4px;">ACCENT=DEFAULT</div>
+          <div style="font-size:12px; font-weight:700; color:var(--brand-text); margin-bottom:20px;">Électroménager</div>
+          <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+            <div class="variant-cell">
+              <span class="variant-chip primary">Type=Accent · Accent=Default · Size=Large · State=Default</span>
+              <button class="btn btn-lg" style="background:var(--brand-text); color:white;">Réparer<span class="icon icon-lg" style="background:rgba(255,255,255,0.15);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip primary">Type=Accent · Accent=Default · Size=Medium · State=Default</span>
+              <button class="btn" style="background:var(--brand-text); color:white;">Réparer<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip primary">Type=Accent · Accent=Default · Size=Medium · State=Hover</span>
+              <button class="btn" style="background:var(--brand-hover); color:white;">Réparer<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip primary">Type=Accent · Accent=Default · Size=Small · State=Default</span>
+              <button class="btn btn-sm" style="background:var(--brand-text); color:white;">Réparer<span class="icon icon-sm" style="background:rgba(255,255,255,0.15);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip primary">Type=Accent · Accent=Default · Size=Medium · State=Disabled</span>
+              <button class="btn btn-disabled" style="background:var(--brand-text); color:white;" disabled>Réparer<span class="icon icon-md" style="background:rgba(255,255,255,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIOLET -->
+        <div style="background:#F5F3FF; padding:28px 24px; border-radius:8px;">
+          <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--purple-700); opacity:0.7; letter-spacing:0.1em; margin-bottom:4px;">ACCENT=VIOLET</div>
+          <div style="font-size:12px; font-weight:700; color:var(--purple-navy); margin-bottom:20px;">Premium</div>
+          <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+            <div class="variant-cell">
+              <span class="variant-chip violet">Type=Accent · Accent=Violet · Size=Large · State=Default</span>
+              <button class="btn btn-lg" style="background:var(--purple-700); color:white;">Découvrir<span class="icon icon-lg" style="background:rgba(255,255,255,0.15);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip violet">Type=Accent · Accent=Violet · Size=Medium · State=Default</span>
+              <button class="btn" style="background:var(--purple-700); color:white;">Découvrir<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip violet">Type=Accent · Accent=Violet · Size=Medium · State=Hover</span>
+              <button class="btn" style="background:var(--purple-800); color:white;">Découvrir<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip violet">Type=Accent · Accent=Violet · Size=Small · State=Default</span>
+              <button class="btn btn-sm" style="background:var(--purple-700); color:white;">Découvrir<span class="icon icon-sm" style="background:rgba(255,255,255,0.15);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip violet">Type=Accent · Accent=Violet · Size=Medium · State=Disabled</span>
+              <button class="btn btn-disabled" style="background:var(--purple-700); color:white;" disabled>Découvrir<span class="icon icon-md" style="background:rgba(255,255,255,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- YELLOW (Solaire) -->
+        <div style="background:#FFFBEB; padding:28px 24px; border-radius:8px;">
+          <div style="font-size:9px; font-weight:700; font-family:monospace; color:#92660A; opacity:0.8; letter-spacing:0.1em; margin-bottom:4px;">ACCENT=YELLOW</div>
+          <div style="font-size:12px; font-weight:700; color:var(--dark-900); margin-bottom:20px;">Solaire ☀️</div>
+          <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+            <div class="variant-cell">
+              <span class="variant-chip yellow">Type=Accent · Accent=Yellow · Size=Large · State=Default</span>
+              <button class="btn btn-lg" style="background:var(--yellow-500); color:var(--dark-900);">Simuler<span class="icon icon-lg" style="background:rgba(3,37,36,0.1);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#032524" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip yellow">Type=Accent · Accent=Yellow · Size=Medium · State=Default</span>
+              <button class="btn" style="background:var(--yellow-500); color:var(--dark-900);">Simuler<span class="icon icon-md" style="background:rgba(3,37,36,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#032524" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip yellow">Type=Accent · Accent=Yellow · Size=Medium · State=Hover</span>
+              <button class="btn" style="background:var(--yellow-hover); color:var(--dark-900);">Simuler<span class="icon icon-md" style="background:rgba(3,37,36,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#032524" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip yellow">Type=Accent · Accent=Yellow · Size=Small · State=Default</span>
+              <button class="btn btn-sm" style="background:var(--yellow-500); color:var(--dark-900);">Simuler<span class="icon icon-sm" style="background:rgba(3,37,36,0.1);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#032524" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip yellow">Type=Accent · Accent=Yellow · Size=Medium · State=Disabled</span>
+              <button class="btn btn-disabled" style="background:var(--yellow-500); color:var(--dark-900);" disabled>Simuler<span class="icon icon-md" style="background:rgba(3,37,36,0.06);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#032524" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FUSCHIA (Chauffage) -->
+        <div style="background:#FFF1F7; padding:28px 24px; border-radius:8px;">
+          <div style="font-size:9px; font-weight:700; font-family:monospace; color:var(--fuschia-btn); opacity:0.9; letter-spacing:0.1em; margin-bottom:4px;">ACCENT=FUSCHIA</div>
+          <div style="font-size:12px; font-weight:700; color:var(--brand-text); margin-bottom:20px;">Chauffage 🔥</div>
+          <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+            <div class="variant-cell">
+              <span class="variant-chip fuschia">Type=Accent · Accent=Fuschia · Size=Large · State=Default</span>
+              <button class="btn btn-lg" style="background:var(--fuschia-btn); color:white;">RDV chauffage<span class="icon icon-lg" style="background:rgba(255,255,255,0.15);"><svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip fuschia">Type=Accent · Accent=Fuschia · Size=Medium · State=Default</span>
+              <button class="btn" style="background:var(--fuschia-btn); color:white;">RDV chauffage<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip fuschia">Type=Accent · Accent=Fuschia · Size=Medium · State=Hover</span>
+              <button class="btn" style="background:var(--fuschia-hover); color:white;">RDV chauffage<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip fuschia">Type=Accent · Accent=Fuschia · Size=Small · State=Default</span>
+              <button class="btn btn-sm" style="background:var(--fuschia-btn); color:white;">RDV<span class="icon icon-sm" style="background:rgba(255,255,255,0.15);"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+            <div class="variant-cell">
+              <span class="variant-chip fuschia">Type=Accent · Accent=Fuschia · Size=Medium · State=Disabled</span>
+              <button class="btn btn-disabled" style="background:var(--fuschia-btn); color:white;" disabled>RDV chauffage<span class="icon icon-md" style="background:rgba(255,255,255,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔═══════════════════════════════════════════════════════════
+     PAGE 5 — THEME COMPATIBILITY MATRIX + DO / DON'TS
+═══════════════════════════════════════════════════════════╗ -->
+<div class="canvas-section">
+  <div class="canvas-title">Page 5 · Theme Compatibility &amp; Usage Rules</div>
+
+  <div style="display:flex; gap:2px;">
+
+    <!-- THEME COMPATIBILITY -->
+    <div class="component-frame" style="flex:1;">
+      <div style="padding:40px 40px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:20px;">Button pairs in theme context</div>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <!-- LIGHT -->
+          <div class="theme-ctx" style="background:white; border:1.5px solid var(--dark-900);">
+            <div class="theme-ctx-name" style="color:var(--brand-text);">Theme=Light</div>
+            <div class="theme-ctx-btns">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-md" style="background:white; box-shadow:0 0 0 1px rgba(0,0,0,0.08);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                <button class="btn-ghost" style="border:1.5px solid var(--dark-900); color:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.08);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DARK -->
+          <div class="theme-ctx" style="background:var(--dark-800);">
+            <div class="theme-ctx-name" style="color:rgba(255,255,255,0.5);">Theme=Dark</div>
+            <div class="theme-ctx-btns">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--pink-500); color:var(--brand-text);">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                <button class="btn-ghost" style="border:1.5px solid white; color:white;">En savoir plus<span class="icon icon-md" style="background:rgba(255,255,255,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LIGHT-PINK -->
+          <div class="theme-ctx" style="background:var(--pink-vivid-light); border:1.5px solid var(--brand-text);">
+            <div class="theme-ctx-name" style="color:var(--brand-text);">Theme=Light-Pink</div>
+            <div class="theme-ctx-btns">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--brand-text); color:white;">Prendre RDV<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                <button class="btn-ghost" style="border:1.5px solid var(--brand-text); color:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PINK-MIST -->
+          <div class="theme-ctx" style="background:var(--pink-mist); border:1.5px solid var(--brand-text);">
+            <div class="theme-ctx-name" style="color:var(--brand-text);">Theme=Pink-Mist</div>
+            <div class="theme-ctx-btns">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--brand-text); color:white;">Prendre RDV<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                <button class="btn-ghost" style="border:1.5px solid var(--brand-text); color:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.08);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PINK-VIVID -->
+          <div class="theme-ctx" style="background:var(--pink-vivid); border:1.5px solid var(--brand-text);">
+            <div class="theme-ctx-name" style="color:var(--brand-text);">Theme=Pink-Vivid</div>
+            <div class="theme-ctx-btns">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn" style="background:var(--brand-text); color:white;">Prendre RDV<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                <button class="btn-ghost" style="border:1.5px solid var(--brand-text); color:var(--brand-text);">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.1);"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- USAGE RULES + DO/DON'T -->
+    <div style="flex:1.4; display:flex; flex-direction:column; gap:2px;">
+
+      <!-- USAGE RULES -->
+      <div class="component-frame" style="width:100%;">
+        <div style="padding:36px 40px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:20px;">Usage Rules</div>
+          <div>
+            <div class="usage-rule">
+              <div class="rule-num">1</div>
+              <div class="rule-text"><strong>One Primary per visual section.</strong> Never stack two Primary buttons side by side without clear hierarchy. The Primary draws the eye — diluting it with two equals kills conversion.</div>
+            </div>
+            <div class="usage-rule">
+              <div class="rule-num">2</div>
+              <div class="rule-text"><strong>Primary + Secondary pairing.</strong> When two actions coexist (e.g. "Prendre RDV" + "En savoir plus"), use Primary for the goal action and Secondary for the escape. Never use Accent as a secondary.</div>
+            </div>
+            <div class="usage-rule">
+              <div class="rule-num">3</div>
+              <div class="rule-text"><strong>Accent overrides vertical identity.</strong> Use Accent only when the parent section has <code>data-accent</code> set. Don't mix accents on the same page section — one vertical = one accent.</div>
+            </div>
+            <div class="usage-rule">
+              <div class="rule-num">4</div>
+              <div class="rule-text"><strong>Size matches context.</strong> Large (56px) for hero sections. Medium (48px) for cards, forms, nav CTA. Small (40px) for inline, tags, and filters. Never use Large inside a card.</div>
+            </div>
+            <div class="usage-rule">
+              <div class="rule-num">5</div>
+              <div class="rule-text"><strong>Icon is mandatory on Primary &amp; Accent.</strong> The arrow circle reinforces action affordance. It can be hidden on Secondary when space is very tight (mobile navigation only).</div>
+            </div>
+            <div class="usage-rule">
+              <div class="rule-num">6</div>
+              <div class="rule-text"><strong>Disabled ≠ Hidden.</strong> Show disabled state when an action is temporarily unavailable (form validation). If an action will never be available in context, hide the button entirely.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DO / DON'T -->
+      <div class="component-frame" style="width:100%;">
+        <div style="padding:36px 40px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:20px;">Do / Don't</div>
+
+          <div class="do-dont-grid">
+
+            <div class="do-card">
+              <div class="do-dont-label do-label">✓ Do</div>
+              <div style="display:flex; gap:8px; flex-direction:column;">
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <button class="btn" style="background:var(--pink-500); color:var(--brand-text); font-size:13px; height:44px;">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <button class="btn-ghost" style="border:1.5px solid var(--dark-900); color:var(--brand-text); font-size:13px; height:44px;">En savoir plus<span class="icon icon-md" style="background:rgba(11,71,68,0.08);"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                </div>
+              </div>
+              <div class="do-dont-desc">Clear hierarchy: one Primary for the main CTA, one Secondary for the alternative action.</div>
+            </div>
+
+            <div class="dont-card">
+              <div class="do-dont-label dont-label">✗ Don't</div>
+              <div style="display:flex; gap:8px; flex-direction:column;">
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                  <button class="btn" style="background:var(--pink-500); color:var(--brand-text); font-size:13px; height:44px;">Prendre RDV<span class="icon icon-md" style="background:white;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                  <button class="btn" style="background:var(--fuschia-btn); color:white; font-size:13px; height:44px;">En savoir plus<span class="icon icon-md" style="background:rgba(255,255,255,0.15);"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+                </div>
+              </div>
+              <div class="do-dont-desc">Two competing Primary-weight buttons with different accent colors — confuses hierarchy and vertical identity.</div>
+            </div>
+
+          </div>
+
+          <div class="do-dont-grid" style="margin-top:16px;">
+
+            <div class="do-card">
+              <div class="do-dont-label do-label">✓ Do</div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-sm" style="background:var(--pink-500); color:var(--brand-text); font-size:12px;">Prendre RDV<span class="icon icon-sm" style="background:white;"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+              <div class="do-dont-desc">Use Small (40px) inside nav or compact cards — right-sized for the context.</div>
+            </div>
+
+            <div class="dont-card">
+              <div class="do-dont-label dont-label">✗ Don't</div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button class="btn btn-lg" style="background:var(--pink-500); color:var(--brand-text); font-size:14px;">Nav<span class="icon icon-lg" style="background:white;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5l3.5 3.5-3.5 3.5" stroke="#0b4744" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+              </div>
+              <div class="do-dont-desc">Large (56px) button in the navigation bar — disproportionate and competes with content.</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CONTRAST / ACCESSIBILITY -->
+      <div class="component-frame" style="width:100%;">
+        <div style="padding:28px 40px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-text); opacity:0.4; margin-bottom:16px;">Accessibility — Contrast Ratios</div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+            <div style="font-size:10px; color:var(--brand-text); display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:24px; height:16px; border-radius:4px; background:var(--pink-500);"></div>
+                <span style="opacity:0.6;">pink-500</span>
+              </div>
+              <div style="font-size:9px; font-family:monospace; opacity:0.5;">on white · 2.7:1</div>
+              <span class="contrast-badge fail">AA fail</span>
+              <div style="font-size:9px; line-height:1.4; opacity:0.5; margin-top:4px;">Use only with brand-text (#0b4744) label — the dark text on pink reaches 3.9:1 which passes UI components threshold.</div>
+            </div>
+            <div style="font-size:10px; color:var(--brand-text); display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:24px; height:16px; border-radius:4px; background:var(--brand-text);"></div>
+                <span style="opacity:0.6;">brand-text</span>
+              </div>
+              <div style="font-size:9px; font-family:monospace; opacity:0.5;">on white · 8.1:1</div>
+              <span class="contrast-badge aaa">AAA ✓</span>
+            </div>
+            <div style="font-size:10px; color:var(--brand-text); display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:24px; height:16px; border-radius:4px; background:var(--purple-700);"></div>
+                <span style="opacity:0.6;">purple-700</span>
+              </div>
+              <div style="font-size:9px; font-family:monospace; opacity:0.5;">white on violet · 5.3:1</div>
+              <span class="contrast-badge aa">AA ✓</span>
+            </div>
+            <div style="font-size:10px; color:var(--brand-text); display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:24px; height:16px; border-radius:4px; background:var(--yellow-500);"></div>
+                <span style="opacity:0.6;">yellow-500</span>
+              </div>
+              <div style="font-size:9px; font-family:monospace; opacity:0.5;">dark-900 on yellow · 11.3:1</div>
+              <span class="contrast-badge aaa">AAA ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

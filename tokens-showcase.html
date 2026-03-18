@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murfy — Design Tokens Foundations</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      background: #f7f7f7;
+      color: #0b4744;
+      padding: 64px 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* PAGE TITLE */
+    .page-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c47c96;
+      margin-bottom: 8px;
+    }
+    .page-heading {
+      font-size: 46px;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: #0b4744;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 16px;
+      color: #0b4744;
+      opacity: 0.6;
+      margin-bottom: 72px;
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 80px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #c47c96;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #0b4744;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1.5px solid #032524;
+    }
+
+    /* ─── PRIMITIVES ─── */
+    .primitives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .swatch {
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .swatch-color {
+      height: 72px;
+      width: 100%;
+    }
+    .swatch-info {
+      padding: 10px 12px;
+    }
+    .swatch-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0b4744;
+      margin-bottom: 2px;
+    }
+    .swatch-hex {
+      font-size: 10px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: #0b4744;
+      opacity: 0.5;
+    }
+
+    /* ─── THEMES ─── */
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .theme-card {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .theme-header {
+      padding: 14px 16px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .theme-chips {
+      padding: 0 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .chip-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.15);
+    }
+    .chip-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .chip-label {
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* btn preview inside theme card */
+    .theme-btn-preview {
+      margin: 0 12px 14px;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* ─── ACCENTS ─── */
+    .accents-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .accent-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .accent-band {
+      height: 8px;
+    }
+    .accent-body {
+      padding: 16px;
+    }
+    .accent-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b4744;
+      margin-bottom: 14px;
+    }
+    .accent-chip-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .accent-chip-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .accent-chip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .accent-chip-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #0b4744;
+    }
+    .accent-chip-hex {
+      font-size: 9px;
+      font-family: 'SF Mono', monospace;
+      color: #0b4744;
+      opacity: 0.5;
+    }
+    .accent-btn-preview {
+      margin-top: 12px;
+      border-radius: 9999px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      border: none;
+      width: 100%;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    .type-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .type-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 60px 80px 60px 100px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(3,37,36,0.1);
+      gap: 24px;
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta-name {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c47c96;
+    }
+    .type-sample {
+      color: #0b4744;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .type-attr {
+      font-size: 10px;
+      font-family: 'SF Mono', monospace;
+      color: #0b4744;
+      opacity: 0.5;
+      text-align: right;
+    }
+    .type-header-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 60px 80px 60px 100px;
+      gap: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #032524;
+      margin-bottom: 4px;
+    }
+    .type-header-cell {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #0b4744;
+      opacity: 0.4;
+      text-align: right;
+    }
+    .type-header-cell:nth-child(1),
+    .type-header-cell:nth-child(2) {
+      text-align: left;
+    }
+
+    /* ─── DIMENSIONS ─── */
+    .dim-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .dim-group-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b4744;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.6;
+    }
+    /* Radius */
+    .radius-items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .radius-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .radius-box {
+      background: #f59bbb;
+      flex-shrink: 0;
+    }
+    .radius-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .radius-token {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0b4744;
+    }
+    .radius-value {
+      font-size: 10px;
+      font-family: 'SF Mono', monospace;
+      color: #0b4744;
+      opacity: 0.5;
+    }
+    /* Spacing */
+    .spacing-items {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .spacing-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .spacing-bar {
+      background: #0b4744;
+      height: 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .spacing-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .spacing-token {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0b4744;
+    }
+    .spacing-value {
+      font-size: 10px;
+      font-family: 'SF Mono', monospace;
+      color: #0b4744;
+      opacity: 0.5;
+    }
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(3,37,36,0.1);
+      margin: 0 0 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE HEADER -->
+  <div class="page-title">Murfy Design System</div>
+  <div class="page-heading">Foundations &amp; Tokens</div>
+  <div class="page-sub">Source of truth — generated from tokens.json · 2026-03-17</div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1 — PRIMITIVES
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 01</div>
+    <div class="section-title">Primitive Colors</div>
+    <div class="primitives-grid">
+
+      <!-- Pinks -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f59bbb"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-500</div>
+          <div class="swatch-hex">#f59bbb</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#fd6c9f"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-accent</div>
+          <div class="swatch-hex">#fd6c9f</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#c47c96"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-600</div>
+          <div class="swatch-hex">#c47c96</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffadd6"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-vivid</div>
+          <div class="swatch-hex">#ffadd6</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffdeef"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-vivid-light</div>
+          <div class="swatch-hex">#ffdeef</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFF3F9"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">pink-mist</div>
+          <div class="swatch-hex">#FFF3F9</div>
+        </div>
+      </div>
+
+      <!-- Yellows -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffd800"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">yellow-500</div>
+          <div class="swatch-hex">#ffd800</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ccad00"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">yellow-600</div>
+          <div class="swatch-hex">#ccad00</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffde73"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">yellow-highlight</div>
+          <div class="swatch-hex">#ffde73</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#e0be00"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">yellow-hover</div>
+          <div class="swatch-hex">#e0be00</div>
+        </div>
+      </div>
+
+      <!-- Brand / Darks -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0b4744"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">brand-text</div>
+          <div class="swatch-hex">#0b4744</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#093c3a"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">brand-hover</div>
+          <div class="swatch-hex">#093c3a</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#073331"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">dark-800</div>
+          <div class="swatch-hex">#073331</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#032524"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">dark-900</div>
+          <div class="swatch-hex">#032524</div>
+        </div>
+      </div>
+
+      <!-- Lights -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ffffff; border:1px solid #e8e8e8"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">light-100</div>
+          <div class="swatch-hex">#ffffff</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#f3f3f3"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">light-200</div>
+          <div class="swatch-hex">#f3f3f3</div>
+        </div>
+      </div>
+
+      <!-- Purples -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#180d4d"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">purple-navy</div>
+          <div class="swatch-hex">#180d4d</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#9e8cf8"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">purple-500</div>
+          <div class="swatch-hex">#9e8cf8</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#543bce"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">purple-700</div>
+          <div class="swatch-hex">#543bce</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#432fa5"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">purple-800</div>
+          <div class="swatch-hex">#432fa5</div>
+        </div>
+      </div>
+
+      <!-- Fuschia -->
+      <div class="swatch">
+        <div class="swatch-color" style="background:#ff6492"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">fuschia-highlight</div>
+          <div class="swatch-hex">#ff6492</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3a121e"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">fuschia-text</div>
+          <div class="swatch-hex">#3a121e</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2 — THEMES
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 02</div>
+    <div class="section-title">Theme Palettes</div>
+    <div class="themes-grid">
+
+      <!-- LIGHT -->
+      <div class="theme-card" style="background:#ffffff; border: 1.5px solid #032524;">
+        <div class="theme-header" style="color:#0b4744;">Light</div>
+        <div class="theme-chips">
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <span class="chip-label" style="color:#0b4744">bg · #ffffff</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#f3f3f3"></div>
+            <span class="chip-label" style="color:#0b4744">bg-2 · #f3f3f3</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">text · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#032524"></div>
+            <span class="chip-label" style="color:#0b4744">border</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#c47c96"></div>
+            <span class="chip-label" style="color:#0b4744">heading-accent</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#f59bbb"></div>
+            <span class="chip-label" style="color:#0b4744">btn-bg · pink-500</span>
+          </div>
+        </div>
+        <div class="theme-btn-preview" style="background:#f59bbb; color:#0b4744;">Primary Button</div>
+      </div>
+
+      <!-- DARK -->
+      <div class="theme-card" style="background:#073331;">
+        <div class="theme-header" style="color:#ffffff;">Dark</div>
+        <div class="theme-chips">
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#073331; border:1.5px solid rgba(255,255,255,0.2)"></div>
+            <span class="chip-label" style="color:#ffffff">bg · dark-800</span>
+          </div>
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#032524; border:1.5px solid rgba(255,255,255,0.2)"></div>
+            <span class="chip-label" style="color:#ffffff">bg-2 · dark-900</span>
+          </div>
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#ffffff"></div>
+            <span class="chip-label" style="color:#ffffff">text · white</span>
+          </div>
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#ffffff"></div>
+            <span class="chip-label" style="color:#ffffff">border · white</span>
+          </div>
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#ffffff"></div>
+            <span class="chip-label" style="color:#ffffff">heading-accent</span>
+          </div>
+          <div class="chip-row">
+            <div class="chip-dot" style="background:#f59bbb"></div>
+            <span class="chip-label" style="color:#ffffff">btn-bg · pink-500</span>
+          </div>
+        </div>
+        <div class="theme-btn-preview" style="background:#f59bbb; color:#0b4744;">Primary Button</div>
+      </div>
+
+      <!-- LIGHT-PINK -->
+      <div class="theme-card" style="background:#ffdeef; border:1.5px solid #0b4744;">
+        <div class="theme-header" style="color:#0b4744;">Light Pink</div>
+        <div class="theme-chips">
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffdeef"></div>
+            <span class="chip-label" style="color:#0b4744">bg · vivid-light</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <span class="chip-label" style="color:#0b4744">bg-2 · white</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffadd6"></div>
+            <span class="chip-label" style="color:#0b4744">bg-3 · vivid</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#9e8cf8"></div>
+            <span class="chip-label" style="color:#0b4744">heading-accent</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">btn-bg · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <span class="chip-label" style="color:#0b4744">btn-text · white</span>
+          </div>
+        </div>
+        <div class="theme-btn-preview" style="background:#0b4744; color:#ffffff;">Primary Button</div>
+      </div>
+
+      <!-- PINK-MIST -->
+      <div class="theme-card" style="background:#FFF3F9; border:1.5px solid #0b4744;">
+        <div class="theme-header" style="color:#0b4744;">Pink Mist</div>
+        <div class="theme-chips">
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#FFF3F9"></div>
+            <span class="chip-label" style="color:#0b4744">bg · mist</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <span class="chip-label" style="color:#0b4744">bg-2 · white</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#9e8cf8"></div>
+            <span class="chip-label" style="color:#0b4744">heading-accent</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">border · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">btn-bg · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.06)">
+            <div class="chip-dot" style="background:#093c3a"></div>
+            <span class="chip-label" style="color:#0b4744">btn-hover</span>
+          </div>
+        </div>
+        <div class="theme-btn-preview" style="background:#0b4744; color:#ffffff;">Primary Button</div>
+      </div>
+
+      <!-- PINK-VIVID -->
+      <div class="theme-card" style="background:#ffadd6; border:1.5px solid #0b4744;">
+        <div class="theme-header" style="color:#0b4744;">Pink Vivid</div>
+        <div class="theme-chips">
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#ffadd6"></div>
+            <span class="chip-label" style="color:#0b4744">bg · vivid</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <span class="chip-label" style="color:#0b4744">bg-2 · white</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#9e8cf8"></div>
+            <span class="chip-label" style="color:#0b4744">heading-accent</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">border · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#0b4744"></div>
+            <span class="chip-label" style="color:#0b4744">btn-bg · brand</span>
+          </div>
+          <div class="chip-row" style="background:rgba(11,71,68,0.1)">
+            <div class="chip-dot" style="background:#093c3a"></div>
+            <span class="chip-label" style="color:#0b4744">btn-hover</span>
+          </div>
+        </div>
+        <div class="theme-btn-preview" style="background:#0b4744; color:#ffffff;">Primary Button</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3 — ACCENTS
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 03</div>
+    <div class="section-title">Accent Palettes</div>
+    <div class="accents-grid">
+
+      <!-- DEFAULT -->
+      <div class="accent-card">
+        <div class="accent-band" style="background:#0b4744"></div>
+        <div class="accent-body">
+          <div class="accent-name">Default · Électroménager</div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#0b4744"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-bg</span>
+              <span class="accent-chip-hex">#0b4744 · brand-text</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#093c3a"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-hover</span>
+              <span class="accent-chip-hex">#093c3a · brand-hover</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#ffffff; border:1.5px solid #ddd"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-highlight</span>
+              <span class="accent-chip-hex">#ffffff · light-100</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#0b4744"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-text</span>
+              <span class="accent-chip-hex">#0b4744</span>
+            </div>
+          </div>
+          <div class="accent-btn-preview" style="background:#0b4744; color:#ffffff;">Réparer à domicile</div>
+        </div>
+      </div>
+
+      <!-- VIOLET -->
+      <div class="accent-card">
+        <div class="accent-band" style="background:#543bce"></div>
+        <div class="accent-body">
+          <div class="accent-name">Violet · Premium</div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#543bce"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-bg</span>
+              <span class="accent-chip-hex">#543bce · purple-700</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#432fa5"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-hover</span>
+              <span class="accent-chip-hex">#432fa5 · purple-800</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#9e8cf8"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-highlight</span>
+              <span class="accent-chip-hex">#9e8cf8 · purple-500</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#180d4d"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-text</span>
+              <span class="accent-chip-hex">#180d4d · navy</span>
+            </div>
+          </div>
+          <div class="accent-btn-preview" style="background:#543bce; color:#ffffff;">Offre premium</div>
+        </div>
+      </div>
+
+      <!-- YELLOW -->
+      <div class="accent-card">
+        <div class="accent-band" style="background:#ffd800"></div>
+        <div class="accent-body">
+          <div class="accent-name">Yellow · Solaire ☀️</div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#ffd800"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-bg</span>
+              <span class="accent-chip-hex">#ffd800 · yellow-500</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#e0be00"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-hover</span>
+              <span class="accent-chip-hex">#e0be00 · yellow-hover</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#ffde73"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-highlight</span>
+              <span class="accent-chip-hex">#ffde73 · yellow-highlight</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#ccad00"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-text</span>
+              <span class="accent-chip-hex">#ccad00 · yellow-600</span>
+            </div>
+          </div>
+          <div class="accent-btn-preview" style="background:#ffd800; color:#032524;">Simuler économies</div>
+        </div>
+      </div>
+
+      <!-- FUSCHIA -->
+      <div class="accent-card">
+        <div class="accent-band" style="background:#e8006f"></div>
+        <div class="accent-body">
+          <div class="accent-name">Fuschia · Chauffage 🔥</div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#e8006f"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-bg</span>
+              <span class="accent-chip-hex">#e8006f</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#cc0062"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">btn-hover</span>
+              <span class="accent-chip-hex">#cc0062</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#ff6492"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-highlight</span>
+              <span class="accent-chip-hex">#ff6492 · fuschia-highlight</span>
+            </div>
+          </div>
+          <div class="accent-chip-row">
+            <div class="accent-chip-dot" style="background:#3a121e"></div>
+            <div class="accent-chip-info">
+              <span class="accent-chip-label">accent-text</span>
+              <span class="accent-chip-hex">#3a121e · fuschia-text</span>
+            </div>
+          </div>
+          <div class="accent-btn-preview" style="background:#e8006f; color:#ffffff;">RDV entretien</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 4 — TYPOGRAPHY
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 04</div>
+    <div class="section-title">Type Scale</div>
+
+    <div class="type-header-row">
+      <div class="type-header-cell">Token</div>
+      <div class="type-header-cell">Sample</div>
+      <div class="type-header-cell">Size</div>
+      <div class="type-header-cell">Weight</div>
+      <div class="type-header-cell">LH</div>
+      <div class="type-header-cell">LS</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">display</div>
+      <div class="type-sample" style="font-size:112px; font-weight:700; line-height:1; letter-spacing:-0.05em; color:#0b4744;">Murfy</div>
+      <div class="type-attr">112</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1</div>
+      <div class="type-attr">−0.05em</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h1</div>
+      <div class="type-sample" style="font-size:61px; font-weight:900; line-height:1; letter-spacing:-0.05em;">Réparer, c'est malin.</div>
+      <div class="type-attr">61</div>
+      <div class="type-attr">900</div>
+      <div class="type-attr">1</div>
+      <div class="type-attr">−0.05em</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h2</div>
+      <div class="type-sample" style="font-size:46px; font-weight:700; line-height:1; letter-spacing:-0.05em;">Nos offres de réparation</div>
+      <div class="type-attr">46</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1</div>
+      <div class="type-attr">−0.05em</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h3</div>
+      <div class="type-sample" style="font-size:32px; font-weight:700; line-height:1.3; letter-spacing:-0.05em;">Électroménager à domicile</div>
+      <div class="type-attr">32</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1.3</div>
+      <div class="type-attr">−0.05em</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h4</div>
+      <div class="type-sample" style="font-size:24px; font-weight:700; line-height:1.3; letter-spacing:-0.05em;">Intervention rapide garantie</div>
+      <div class="type-attr">24</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1.3</div>
+      <div class="type-attr">−0.05em</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h5</div>
+      <div class="type-sample" style="font-size:20px; font-weight:700; line-height:1.3; letter-spacing:0;">Bonus réparation disponible</div>
+      <div class="type-attr">20</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1.3</div>
+      <div class="type-attr">0</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">h6</div>
+      <div class="type-sample" style="font-size:18px; font-weight:700; line-height:1.3; letter-spacing:0;">Catégorie · Label · Section</div>
+      <div class="type-attr">18</div>
+      <div class="type-attr">700</div>
+      <div class="type-attr">1.3</div>
+      <div class="type-attr">0</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">text-large</div>
+      <div class="type-sample" style="font-size:20px; font-weight:400; line-height:1.5; letter-spacing:0;">Faites réparer vos appareils plutôt que de les remplacer.</div>
+      <div class="type-attr">20</div>
+      <div class="type-attr">400</div>
+      <div class="type-attr">1.5</div>
+      <div class="type-attr">0</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">text-main</div>
+      <div class="type-sample" style="font-size:18px; font-weight:400; line-height:1.5; letter-spacing:0;">Un technicien qualifié intervient à votre domicile sous 48h.</div>
+      <div class="type-attr">18</div>
+      <div class="type-attr">400</div>
+      <div class="type-attr">1.5</div>
+      <div class="type-attr">0</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">text-small</div>
+      <div class="type-sample" style="font-size:16px; font-weight:400; line-height:1.5; letter-spacing:0;">Diagnostic offert · Pièces certifiées · Garantie 6 mois</div>
+      <div class="type-attr">16</div>
+      <div class="type-attr">400</div>
+      <div class="type-attr">1.5</div>
+      <div class="type-attr">0</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta-name">text-xsmall</div>
+      <div class="type-sample" style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0;">Conditions générales · Mentions légales · Politique de confidentialité</div>
+      <div class="type-attr">14</div>
+      <div class="type-attr">400</div>
+      <div class="type-attr">1.5</div>
+      <div class="type-attr">0</div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 5 — DIMENSIONS
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 05</div>
+    <div class="section-title">Dimensions</div>
+
+    <div class="dim-section">
+
+      <!-- RADIUS -->
+      <div>
+        <div class="dim-group-title">Border Radius</div>
+        <div class="radius-items">
+
+          <div class="radius-item">
+            <div class="radius-box" style="width:96px; height:72px; border-radius:48px;"></div>
+            <div class="radius-meta">
+              <div class="radius-token">radius-section</div>
+              <div class="radius-value">48px</div>
+            </div>
+          </div>
+
+          <div class="radius-item">
+            <div class="radius-box" style="width:80px; height:60px; border-radius:24px;"></div>
+            <div class="radius-meta">
+              <div class="radius-token">radius-card</div>
+              <div class="radius-value">24px</div>
+            </div>
+          </div>
+
+          <div class="radius-item">
+            <div class="radius-box" style="width:64px; height:48px; border-radius:16px;"></div>
+            <div class="radius-meta">
+              <div class="radius-token">radius-dropdown</div>
+              <div class="radius-value">16px</div>
+            </div>
+          </div>
+
+          <div class="radius-item">
+            <div class="radius-box" style="width:56px; height:40px; border-radius:8px;"></div>
+            <div class="radius-meta">
+              <div class="radius-token">radius-small</div>
+              <div class="radius-value">8px</div>
+            </div>
+          </div>
+
+          <div class="radius-item">
+            <div class="radius-box" style="width:120px; height:40px; border-radius:9999px;"></div>
+            <div class="radius-meta">
+              <div class="radius-token">radius-pill</div>
+              <div class="radius-value">9999px</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SPACING -->
+      <div>
+        <div class="dim-group-title">Section Spacing</div>
+        <div class="spacing-items">
+
+          <div class="spacing-item">
+            <div class="spacing-bar" style="width:112px;"></div>
+            <div class="spacing-meta">
+              <div class="spacing-token">spacing-section-y-desktop</div>
+              <div class="spacing-value">112px · top &amp; bottom</div>
+            </div>
+          </div>
+
+          <div class="spacing-item">
+            <div class="spacing-bar" style="width:64px;"></div>
+            <div class="spacing-meta">
+              <div class="spacing-token">spacing-section-y-mobile</div>
+              <div class="spacing-value">64px · top &amp; bottom</div>
+            </div>
+          </div>
+
+          <!-- Visual scale comparison -->
+          <div style="margin-top:20px; background:white; border-radius:16px; padding:20px; border:1.5px solid rgba(3,37,36,0.1)">
+            <div style="font-size:11px; font-weight:700; color:#0b4744; opacity:0.5; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">Section padding comparison</div>
+            <div style="position:relative; height:180px; display:flex; align-items:center; justify-content:center;">
+              <!-- Desktop frame -->
+              <div style="width:200px; background:#f3f3f3; border-radius:12px; border:1.5px solid #032524; position:relative; display:flex; flex-direction:column; align-items:center; padding:0;">
+                <div style="background:rgba(11,71,68,0.12); width:100%; height:112px; border-radius:10px 10px 0 0; display:flex; align-items:center; justify-content:center;">
+                  <span style="font-size:10px; font-weight:700; color:#0b4744; opacity:0.6;">112px desktop</span>
+                </div>
+                <div style="background:#0b4744; width:100%; height:32px; display:flex; align-items:center; justify-content:center;">
+                  <span style="font-size:10px; font-weight:600; color:white;">Section content</span>
+                </div>
+                <div style="background:rgba(11,71,68,0.12); width:100%; height:36px; border-radius:0 0 10px 10px; display:flex; align-items:center; justify-content:center;">
+                  <span style="font-size:9px; font-weight:700; color:#0b4744; opacity:0.6;">112px</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="border-top:1.5px solid rgba(3,37,36,0.15); padding-top:24px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:12px; color:#0b4744; opacity:0.4;">Murfy Design System · tokens.json v1 · Generated 2026-03-17</div>
+    <div style="display:flex; gap:8px;">
+      <div style="background:#0b4744; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Électroménager</div>
+      <div style="background:#543bce; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Premium</div>
+      <div style="background:#ffd800; color:#032524; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Solaire</div>
+      <div style="background:#e8006f; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Chauffage</div>
+    </div>
+  </div>
+
+</body>
+</html>

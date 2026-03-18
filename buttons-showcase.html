@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murfy — Buttons</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      background: #f7f7f7;
+      color: #0b4744;
+      padding: 64px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* PAGE HEADER */
+    .page-label { font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #c47c96; margin-bottom: 8px; }
+    .page-heading { font-size: 46px; font-weight: 700; letter-spacing: -0.05em; color: #0b4744; margin-bottom: 8px; }
+    .page-sub { font-size: 16px; color: #0b4744; opacity: 0.6; margin-bottom: 72px; }
+
+    /* SECTION */
+    .section { margin-bottom: 72px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #c47c96; margin-bottom: 6px; }
+    .section-title { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; color: #0b4744; margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1.5px solid #032524; }
+    .section-desc { font-size: 13px; color: #0b4744; opacity: 0.55; margin-bottom: 28px; }
+
+    /* BUTTON ROW */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+
+    /* BUTTON CARD — shows button on its natural theme bg */
+    .btn-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-card-bg {
+      padding: 20px 24px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      min-width: 180px;
+    }
+    .btn-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .btn-card-sublabel {
+      font-size: 9px;
+      font-weight: 500;
+      opacity: 0.55;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    /* THE BUTTON ITSELF */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 0 20px;
+      height: 48px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-outlined {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 0 20px;
+      height: 48px;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+      background: transparent;
+    }
+
+    /* ICON CIRCLE */
+    .btn-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 9999px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-icon svg { display: block; }
+
+    /* DIVIDER */
+    .subsection-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(3,37,36,0.08);
+      margin: 48px 0 36px;
+    }
+    .subsection-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0b4744;
+      opacity: 0.45;
+      margin-bottom: 20px;
+    }
+
+    /* SIZE VARIANTS */
+    .btn-lg { height: 56px; font-size: 18px; padding: 0 14px 0 24px; gap: 14px; }
+    .btn-sm { height: 40px; font-size: 14px; padding: 0 10px 0 16px; gap: 10px; }
+    .btn-sm .btn-icon { width: 20px; height: 20px; }
+    .btn-lg .btn-icon { width: 28px; height: 28px; }
+
+    /* STATES GRID */
+    .states-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .state-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #0b4744; opacity: 0.4; width: 64px; text-align: right; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE HEADER -->
+  <div class="page-label">Murfy Design System</div>
+  <div class="page-heading">Buttons</div>
+  <div class="page-sub">Pill-shaped CTA components — primary, secondary &amp; accent variants · all 5 themes · all 4 accents</div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1 — PRIMARY BUTTONS BY THEME
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 01</div>
+    <div class="section-title">Primary Buttons — by Theme</div>
+    <div class="section-desc">btn-bg / btn-text tokens · each shown on its natural theme background</div>
+
+    <div class="btn-row">
+
+      <!-- LIGHT THEME -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffffff; border:1.5px solid #032524;">
+          <button class="btn" style="background:#f59bbb; color:#0b4744;">
+            Prendre RDV
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#fd6c9f; color:#0b4744; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Light</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">pink-500 · brand-text</div>
+      </div>
+
+      <!-- DARK THEME -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#073331;">
+          <button class="btn" style="background:#f59bbb; color:#0b4744;">
+            Prendre RDV
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#f3f3f3; color:#0b4744; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Dark</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">pink-500 · brand-text</div>
+      </div>
+
+      <!-- LIGHT-PINK THEME -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffdeef; border:1.5px solid #0b4744;">
+          <button class="btn" style="background:#0b4744; color:#ffffff;">
+            Prendre RDV
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#093c3a; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#093c3a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Light Pink</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">brand-text · white</div>
+      </div>
+
+      <!-- PINK-MIST THEME -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#FFF3F9; border:1.5px solid #0b4744;">
+          <button class="btn" style="background:#0b4744; color:#ffffff;">
+            Prendre RDV
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#093c3a; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#093c3a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Pink Mist</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">brand-text · white</div>
+      </div>
+
+      <!-- PINK-VIVID THEME -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffadd6; border:1.5px solid #0b4744;">
+          <button class="btn" style="background:#0b4744; color:#ffffff;">
+            Prendre RDV
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#093c3a; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#093c3a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Pink Vivid</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">brand-text · white</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2 — SECONDARY BUTTONS BY THEME
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 02</div>
+    <div class="section-title">Secondary Buttons — by Theme</div>
+    <div class="section-desc">btn2-bg (transparent) / btn2-text / btn2-border · outlined ghost style</div>
+
+    <div class="btn-row">
+
+      <!-- LIGHT — outlined dark -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffffff; border:1.5px solid #032524;">
+          <button class="btn-outlined" style="border:1.5px solid #032524; color:#0b4744;">
+            En savoir plus
+            <span class="btn-icon" style="background:rgba(3,37,36,0.08);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn-outlined" style="border:1.5px solid #032524; background:#0b4744; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Light</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">border: dark-900</div>
+      </div>
+
+      <!-- DARK — outlined white -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#073331;">
+          <button class="btn-outlined" style="border:1.5px solid #ffffff; color:#ffffff;">
+            En savoir plus
+            <span class="btn-icon" style="background:rgba(255,255,255,0.15);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn-outlined" style="border:1.5px solid #ffffff; background:#ffffff; color:#073331; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px; background:rgba(7,51,49,0.12);">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#073331" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Dark</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">border: white</div>
+      </div>
+
+      <!-- LIGHT-PINK — outlined brand -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffdeef; border:1.5px solid #0b4744;">
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; color:#0b4744;">
+            En savoir plus
+            <span class="btn-icon" style="background:rgba(11,71,68,0.1);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; background:#0b4744; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Light Pink</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">border: brand-text</div>
+      </div>
+
+      <!-- PINK-MIST — outlined brand -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#FFF3F9; border:1.5px solid #0b4744;">
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; color:#0b4744;">
+            En savoir plus
+            <span class="btn-icon" style="background:rgba(11,71,68,0.08);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; background:#0b4744; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Pink Mist</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">border: brand-text</div>
+      </div>
+
+      <!-- PINK-VIVID — outlined brand -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#ffadd6; border:1.5px solid #0b4744;">
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; color:#0b4744;">
+            En savoir plus
+            <span class="btn-icon" style="background:rgba(11,71,68,0.1);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn-outlined" style="border:1.5px solid #0b4744; background:#0b4744; color:#ffffff; opacity:0.7; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover state
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Pink Vivid</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">border: brand-text</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3 — ACCENT BUTTONS
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 03</div>
+    <div class="section-title">Accent Buttons — by Vertical</div>
+    <div class="section-desc">accent-btn-bg / accent-btn-text · overrides the theme primary button per vertical</div>
+
+    <div class="btn-row">
+
+      <!-- DEFAULT (Électroménager) -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#f3f3f3; border:1.5px solid rgba(3,37,36,0.1);">
+          <button class="btn" style="background:#0b4744; color:#ffffff;">
+            Réparer à domicile
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#093c3a; color:#ffffff; opacity:0.75; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover · brand-hover
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#093c3a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <!-- Highlight chip -->
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(11,71,68,0.06);border-radius:8px;width:100%;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#ffffff;border:1px solid #ddd;flex-shrink:0;"></div>
+            <span style="font-size:9px;font-weight:600;color:#0b4744;opacity:0.7;">highlight · white</span>
+          </div>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Default</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">Électroménager · brand-text</div>
+      </div>
+
+      <!-- VIOLET -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#f3f3f3; border:1.5px solid rgba(3,37,36,0.1);">
+          <button class="btn" style="background:#543bce; color:#ffffff;">
+            Offre premium
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#543bce" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#432fa5; color:#ffffff; opacity:0.75; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover · purple-800
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#432fa5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <!-- Highlight chip -->
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(84,59,206,0.06);border-radius:8px;width:100%;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#9e8cf8;flex-shrink:0;"></div>
+            <span style="font-size:9px;font-weight:600;color:#0b4744;opacity:0.7;">highlight · purple-500</span>
+          </div>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Violet</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">Premium · purple-700</div>
+      </div>
+
+      <!-- YELLOW (Solaire) -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#f3f3f3; border:1.5px solid rgba(3,37,36,0.1);">
+          <button class="btn" style="background:#ffd800; color:#032524;">
+            Simuler économies
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#032524" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#e0be00; color:#032524; opacity:0.75; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover · yellow-hover
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#032524" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <!-- Highlight chip -->
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,216,0,0.1);border-radius:8px;width:100%;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#ffde73;flex-shrink:0;border:1px solid rgba(0,0,0,0.06);"></div>
+            <span style="font-size:9px;font-weight:600;color:#0b4744;opacity:0.7;">highlight · yellow-highlight</span>
+          </div>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Yellow</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">Solaire ☀️ · yellow-500</div>
+      </div>
+
+      <!-- FUSCHIA (Chauffage) -->
+      <div class="btn-card">
+        <div class="btn-card-bg" style="background:#f3f3f3; border:1.5px solid rgba(3,37,36,0.1);">
+          <button class="btn" style="background:#e8006f; color:#ffffff;">
+            RDV entretien
+            <span class="btn-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#e8006f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <button class="btn" style="background:#cc0062; color:#ffffff; opacity:0.75; font-size:11px; height:32px; padding: 0 10px 0 14px;">
+            Hover · #cc0062
+            <span class="btn-icon" style="width:18px;height:18px;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#cc0062" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <!-- Highlight chip -->
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(232,0,111,0.06);border-radius:8px;width:100%;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#ff6492;flex-shrink:0;"></div>
+            <span style="font-size:9px;font-weight:600;color:#0b4744;opacity:0.7;">highlight · fuschia-highlight</span>
+          </div>
+        </div>
+        <div class="btn-card-label" style="color:#0b4744;">Fuschia</div>
+        <div class="btn-card-sublabel" style="color:#0b4744;">Chauffage 🔥 · #e8006f</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 4 — SIZES
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 04</div>
+    <div class="section-title">Button Sizes</div>
+    <div class="section-desc">Three sizes — same pill shape, same icon ratio</div>
+
+    <div style="display:flex; flex-direction:column; gap:20px; background:white; padding:28px 32px; border-radius:16px; border:1.5px solid rgba(3,37,36,0.08); display:inline-flex;">
+
+      <div class="states-row">
+        <div class="state-label">Large</div>
+        <button class="btn btn-lg" style="background:#f59bbb; color:#0b4744;">
+          Prendre RDV
+          <span class="btn-icon" style="width:28px;height:28px;">
+            <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <button class="btn-outlined btn-lg" style="border:1.5px solid #0b4744; color:#0b4744;">
+          En savoir plus
+          <span class="btn-icon" style="width:28px;height:28px; background:rgba(11,71,68,0.08);">
+            <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <span style="font-size:11px; font-family:monospace; color:#0b4744; opacity:0.4;">56px · 18px</span>
+      </div>
+
+      <div class="states-row">
+        <div class="state-label">Default</div>
+        <button class="btn" style="background:#f59bbb; color:#0b4744;">
+          Prendre RDV
+          <span class="btn-icon">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <button class="btn-outlined" style="border:1.5px solid #0b4744; color:#0b4744;">
+          En savoir plus
+          <span class="btn-icon" style="background:rgba(11,71,68,0.08);">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <span style="font-size:11px; font-family:monospace; color:#0b4744; opacity:0.4;">48px · 16px</span>
+      </div>
+
+      <div class="states-row">
+        <div class="state-label">Small</div>
+        <button class="btn btn-sm" style="background:#f59bbb; color:#0b4744;">
+          Prendre RDV
+          <span class="btn-icon" style="width:20px;height:20px;">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <button class="btn-outlined btn-sm" style="border:1.5px solid #0b4744; color:#0b4744;">
+          En savoir plus
+          <span class="btn-icon" style="width:20px;height:20px; background:rgba(11,71,68,0.08);">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#0b4744" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <span style="font-size:11px; font-family:monospace; color:#0b4744; opacity:0.4;">40px · 14px</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="border-top:1.5px solid rgba(3,37,36,0.15); padding-top:24px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:12px; color:#0b4744; opacity:0.4;">Murfy Design System · Buttons · tokens.json v1 · 2026-03-17</div>
+    <div style="display:flex; gap:8px;">
+      <div style="background:#0b4744; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Électroménager</div>
+      <div style="background:#543bce; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Premium</div>
+      <div style="background:#ffd800; color:#032524; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Solaire</div>
+      <div style="background:#e8006f; color:white; padding:4px 12px; border-radius:9999px; font-size:11px; font-weight:700;">Chauffage</div>
+    </div>
+  </div>
+
+</body>
+</html>
