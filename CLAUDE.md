@@ -78,6 +78,45 @@ When adding or redesigning components, always consider how they behave across al
 
 **Design system Figma file:** `mAUdca2csMWlBqyQI0fIVl` (`Design-system-new-claude`)
 
+### Component map (design system page)
+
+> Before adding a component, place it at y ≥ 3000 to avoid overlap.
+
+| Component | y position |
+|---|---|
+| Accordion | 0 |
+| Footer-mobile | 0 |
+| Tag | 430 |
+| Button | 1106 |
+| VerticalSelector | 2500 |
+| MurfyNavbar | 2750 |
+| **Next slot** | **3000+** |
+
+### Figma variables — skip re-fetching, use these directly
+
+Theme vars (pass to `figma.variables.getVariableByIdAsync()`):
+- `bg` → `VariableID:1:30`, `bg-2` → `VariableID:1:31`, `text` → `VariableID:1:33`
+- `border` → `VariableID:1:35`, `btn-bg` → `VariableID:1:37`, `btn-text` → `VariableID:1:38`
+
+Accent modes (use with `setExplicitVariableModeForCollection(accentCol, modeId)`):
+- `fuschia` → `1:9`, `violet` → `1:7`, `yellow` → `1:8`, `default` → `1:6`
+
+Label text style ID: `S:479da77ce6b4ab1fe07a3aea3d5ef221b582e83a,`
+
+Always load fonts before creating text nodes:
+```js
+await figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
+await figma.loadFontAsync({ family: 'Murfy A2', style: 'SemiBold' })
+```
+
+### Vertical → accent mapping
+
+| Vertical | data-accent | Figma mode |
+|---|---|---|
+| Électroménager | fuschia | `1:9` |
+| Chauffage | violet | `1:7` |
+| Solaire | yellow | `1:8` |
+
 ### Required workflow for every Figma-driven task
 
 1. Call `get_design_context` with the node ID and file key from the Figma URL
