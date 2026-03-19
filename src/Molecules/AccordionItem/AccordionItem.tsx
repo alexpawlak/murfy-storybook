@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AddSquare, MinusCirlce } from 'iconsax-react'
+import { Add } from 'iconsax-react'
 
 interface AccordionItemProps {
   question: string
@@ -12,7 +12,9 @@ export function AccordionItem({ question, answer, defaultOpen = false }: Accordi
 
   return (
     <div
-      className="rounded-[10px] border border-border bg-bg overflow-hidden"
+      className={`rounded-[10px] overflow-hidden transition-colors ${
+        isOpen ? '' : 'border border-border bg-bg'
+      }`}
     >
       <button
         className="w-full flex items-center justify-between gap-2 px-4 py-4 text-left transition-opacity hover:opacity-80"
@@ -25,10 +27,11 @@ export function AccordionItem({ question, answer, defaultOpen = false }: Accordi
         >
           {question}
         </span>
-        {isOpen
-          ? <MinusCirlce size={20} color="var(--text)" className="shrink-0" />
-          : <AddSquare size={20} color="var(--text)" className="shrink-0" />
-        }
+        <Add
+          size={20}
+          color="var(--text)"
+          className={`shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`}
+        />
       </button>
       {isOpen && (
         <div

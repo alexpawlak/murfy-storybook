@@ -63,8 +63,8 @@ export const Overview: Story = {
       <div>
         <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>AccordionItem</h2>
         <p className="text-sm mt-1 max-w-xl opacity-60" style={{ color: 'var(--text)' }}>
-          FAQ dropdown component. Each item is a self-contained card with a full border and rounded corners.
-          Switch the Theme toolbar to see it adapt across light, dark, and pink themes.
+          FAQ dropdown component. Closed state shows a full card with border; open state goes flat (no card).
+          Icon is a "+" that rotates 45° to "×" when expanded. Switch the Theme toolbar to test across themes.
         </p>
       </div>
 

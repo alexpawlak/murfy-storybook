@@ -60,6 +60,8 @@ Each component lives in its own directory with:
 
 Components use Tailwind utility classes for layout/spacing and CSS variables (`var(--btn-bg)`, `var(--text)`, etc.) for theme-sensitive colors.
 
+See `src/Foundation/NamingConventions.stories.tsx` for the full naming conventions reference.
+
 ### Business Context
 
 Murfy is an appliance repair company (électroménager) expanding into heating (chauffage) and solar (solaire). Each vertical has its own accent color. Components should adapt visually via CSS variables rather than hardcoded per-vertical code.
@@ -78,6 +80,10 @@ When adding or redesigning components, always consider how they behave across al
 
 **Design system Figma file:** `mAUdca2csMWlBqyQI0fIVl` (`Design-system-new-claude`)
 
+**Full component & token catalogue:** `.claude/FIGMA_LIBRARY.md` — read this before starting any Figma work.
+
+> **MANDATORY:** After adding or updating any component in Figma, update `.claude/FIGMA_LIBRARY.md` with the component name, ID, position, variants, and instantiation snippet. Same rule applies when adding tokens to `tokens.json`.
+
 ### Component map (design system page)
 
 > Before adding a component, place it at y ≥ 3000 to avoid overlap.
@@ -92,30 +98,16 @@ When adding or redesigning components, always consider how they behave across al
 | MurfyNavbar | 2750 |
 | **Next slot** | **3000+** |
 
-### Figma variables — skip re-fetching, use these directly
+### Reuse rules — MANDATORY before creating anything in Figma
 
-Theme vars (pass to `figma.variables.getVariableByIdAsync()`):
-- `bg` → `VariableID:1:30`, `bg-2` → `VariableID:1:31`, `text` → `VariableID:1:33`
-- `border` → `VariableID:1:35`, `btn-bg` → `VariableID:1:37`, `btn-text` → `VariableID:1:38`
+**Before drawing any frame or shape, always ask:**
 
-Accent modes (use with `setExplicitVariableModeForCollection(accentCol, modeId)`):
-- `fuschia` → `1:9`, `violet` → `1:7`, `yellow` → `1:8`, `default` → `1:6`
+1. **Does a component already exist?** Check the component map above. If yes, use `component.createInstance()` — never recreate from scratch.
+2. **Does the color exist as a variable?** All fills and strokes must use a bound Figma variable (`figma.variables.setBoundVariableForPaint`). Never pass a raw `{ r, g, b }` color for brand/theme colors.
+3. **Does the spacing/radius exist as a variable?** Use Dimensions variables (`radius-pill`, `radius-card`, `radius-small`, `radius-dropdown`, `radius-section`) — never hardcode px values for these.
+4. **Does the text style exist?** Use `setTextStyleIdAsync()` with an existing style ID. Never set `fontName`, `fontSize`, `fontWeight` manually on a text node unless overriding a single property on top of a style.
 
-Label text style ID: `S:479da77ce6b4ab1fe07a3aea3d5ef221b582e83a,`
-
-Always load fonts before creating text nodes:
-```js
-await figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
-await figma.loadFontAsync({ family: 'Murfy A2', style: 'SemiBold' })
-```
-
-### Vertical → accent mapping
-
-| Vertical | data-accent | Figma mode |
-|---|---|---|
-| Électroménager | fuschia | `1:9` |
-| Chauffage | violet | `1:7` |
-| Solaire | yellow | `1:8` |
+**All component IDs, text styles, variable IDs, and instantiation snippets are in `.claude/FIGMA_LIBRARY.md`.**
 
 ### Required workflow for every Figma-driven task
 
