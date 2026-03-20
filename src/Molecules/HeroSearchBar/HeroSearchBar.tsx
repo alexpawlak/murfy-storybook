@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from '../../Atoms/Button/Button'
+import { Input } from '../../Atoms/Input/Input'
 
 // Trustpilot brand green — intentionally hardcoded as it's an external brand colour
 const TP_GREEN = '#00b67a'
@@ -87,22 +88,16 @@ export function HeroSearchBar({
             boxShadow: '0 4px 16px -1px rgba(0,0,0,0.19)',
           }}
         >
-          <input
+          <Input
+            value={value}
+            onChange={setValue}
+            placeholder={placeholder}
+            aria-label={placeholder}
             type="text"
             inputMode="numeric"
             maxLength={5}
-            value={value}
-            onChange={e => setValue(e.target.value)}
-            placeholder={placeholder}
-            aria-label={placeholder}
-            className={[
-              'w-full flex-1 bg-transparent outline-none',
-              'px-4 py-3',
-              'rounded-pill border border-border',
-              'text-text-main placeholder:opacity-50',
-              'md:border-none md:py-2',
-            ].join(' ')}
-            style={{ color: 'var(--brand-text)' }}
+            containerClassName="w-full flex-1"
+            inputClassName="md:h-10 md:border-none md:bg-transparent md:px-4"
           />
           <Button
             variant="primary"

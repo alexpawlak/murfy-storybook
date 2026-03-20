@@ -132,6 +132,38 @@ When adding or redesigning components, always consider how they behave across al
 - Tailwind color classes like `bg-btn-bg` are available because `tailwind.config.js` maps them to CSS vars — prefer these over inline `style={{ color: 'var(--btn-bg)' }}`
 - Responsive breakpoint: `md:` is the desktop breakpoint used throughout this project
 
+### Typography rules — MANDATORY
+
+**Font family**
+- `font-sans` and `font-brand` both map to Murfy A2 — it is already the default body font
+- **NEVER** set `fontFamily: 'GT Walsheim Pro'` or `fontFamily: '"Murfy A2"'` inline — it is already the default and inline overrides are redundant noise
+- The only valid use of inline `fontFamily` is `monospace` for code/debug contexts
+
+**Font size — always use the mapped Tailwind classes, never `text-sm/xs/base/lg/xl` etc.**
+
+| Class | Size | Paired weight | Use for |
+|---|---|---|---|
+| `text-display` | 112px | `font-bold` | Hero display |
+| `text-h1` | 61px | `font-black` | Page titles |
+| `text-h2` | 46px | `font-bold` | Section titles |
+| `text-h3` | 32px | `font-bold` | Sub-section titles |
+| `text-h4` | 24px | `font-bold` | Card titles |
+| `text-h5` | 20px | `font-bold` | Small headings |
+| `text-h6` | 18px | `font-bold` | Sub-headings |
+| `text-text-large` | 20px | `font-normal` | Large body |
+| `text-text-main` | 18px | `font-normal` | Main body |
+| `text-text-small` | 16px | `font-normal` | Small body |
+| `text-text-xsmall` | 14px | `font-normal` | XSmall body |
+| `text-text-large-semibold` | 20px | `font-semibold` | Emphasized large |
+| `text-text-main-semibold` | 18px | `font-semibold` | Emphasized body |
+| `text-text-small-semibold` | 16px | `font-semibold` | Emphasized small |
+| `text-text-xsmall-semibold` | 14px | `font-semibold` | Emphasized xsmall |
+| `text-label` | 12px | `font-semibold` | Labels, pills, badges (also add `uppercase tracking-[0.08em]`) |
+
+**NEVER use:** `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`, `text-4xl` — these are Tailwind defaults and do **not** map to the Murfy type scale.
+
+**NEVER use:** `style={{ fontSize: '...' }}` with raw px/rem values. Use the nearest Tailwind class above. Only exception: a Figma-specified size between scale steps — use `style={{ fontSize: 'var(--font-size-h4)' }}` with the CSS var, never a raw value.
+
 ### Component placement
 
 - Primitive/single-purpose UI → `src/Atoms/ComponentName/`

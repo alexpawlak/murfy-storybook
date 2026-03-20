@@ -25,8 +25,8 @@ function DocRow({ title, description, children }: {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 border-t border-border">
       <div>
-        <h4 className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{title}</h4>
-        <p className="text-sm mt-1 leading-relaxed opacity-60" style={{ color: 'var(--text)' }}>{description}</p>
+        <h4 className="text-text-xsmall-semibold" style={{ color: 'var(--text)' }}>{title}</h4>
+        <p className="text-text-xsmall mt-1 leading-relaxed opacity-60" style={{ color: 'var(--text)' }}>{description}</p>
       </div>
       <div className="md:col-span-2">
         {children}
@@ -61,16 +61,16 @@ export const Overview: Story = {
     <div className="p-8 max-w-3xl space-y-12">
 
       <div>
-        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>AccordionItem</h2>
-        <p className="text-sm mt-1 max-w-xl opacity-60" style={{ color: 'var(--text)' }}>
+        <h2 className="text-h4 font-bold" style={{ color: 'var(--text)' }}>AccordionItem</h2>
+        <p className="text-text-xsmall mt-1 max-w-xl opacity-60" style={{ color: 'var(--text)' }}>
           FAQ dropdown component. Closed state shows a full card with border; open state goes flat (no card).
           Icon is a "+" that rotates 45° to "×" when expanded. Switch the Theme toolbar to test across themes.
         </p>
       </div>
 
       <section>
-        <h3 className="text-base font-bold mb-1" style={{ color: 'var(--text)' }}>States</h3>
-        <p className="text-sm mb-4 opacity-60" style={{ color: 'var(--text)' }}>
+        <h3 className="text-text-small font-bold mb-1" style={{ color: 'var(--text)' }}>States</h3>
+        <p className="text-text-xsmall mb-4 opacity-60" style={{ color: 'var(--text)' }}>
           Closed and open states of a single accordion item.
         </p>
 
@@ -91,7 +91,7 @@ export const Overview: Story = {
       </section>
 
       <section>
-        <h3 className="text-base font-bold mb-4" style={{ color: 'var(--text)' }}>FAQ Group</h3>
+        <h3 className="text-text-small font-bold mb-4" style={{ color: 'var(--text)' }}>FAQ Group</h3>
         <Accordion items={faqItems} />
       </section>
 

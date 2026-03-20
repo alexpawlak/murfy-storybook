@@ -7,6 +7,10 @@ const meta: Meta<typeof Input> = {
   component: Input,
   parameters: { layout: 'fullscreen' },
   argTypes: {
+    label: { control: 'text' },
+    placeholder: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
     type: { control: 'select', options: ['text', 'email', 'tel', 'number'] },
     disabled: { control: 'boolean' },
   },
@@ -20,8 +24,10 @@ function DocRow({ title, description, children }: { title: string; description: 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 border-t border-border">
       <div>
-        <h4 className="text-sm font-semibold">{title}</h4>
-        <p className="text-sm text-text-2 mt-1 leading-relaxed">{description}</p>
+        <h4 className="text-h6 font-bold text-text-default">{title}</h4>
+        <p className="mt-1 text-text-small text-text-default" style={{ opacity: 0.7 }}>
+          {description}
+        </p>
       </div>
       <div className="md:col-span-2 max-w-sm">
         {children}
@@ -37,19 +43,26 @@ export const Overview: Story = {
     <div className="p-8 max-w-4xl space-y-12">
 
       <div>
-        <h2 className="text-2xl font-bold">Input</h2>
-        <p className="text-sm text-text-2 mt-1 max-w-xl">
+        <h2 className="text-h4 font-bold text-text-default">Input</h2>
+        <p className="mt-1 max-w-xl text-text-small text-text-default" style={{ opacity: 0.7 }}>
           Text field used in forms — postal code entry, contact details, search.
           The label is always visible above the field so users don't lose context while typing.
         </p>
       </div>
 
       <section>
-        <h3 className="text-base font-bold mb-1">States</h3>
-        <p className="text-sm text-text-2 mb-4 max-w-xl">
+        <h3 className="mb-1 text-h6 font-bold text-text-default">States</h3>
+        <p className="mb-4 max-w-xl text-text-small text-text-default" style={{ opacity: 0.7 }}>
           The input has four distinct states. Each communicates something different to the user
           — guide them before they type, while they type, and after validation.
         </p>
+
+        <DocRow
+          title="Search field"
+          description="Closest to the Figma reference: a pill field with the placeholder inside the control and no external label."
+        >
+          <Input placeholder="Saisissez votre code postal" type="text" />
+        </DocRow>
 
         <DocRow
           title="Default"
@@ -91,8 +104,15 @@ export const Playground: Story = {
     const [val, setVal] = useState('')
     return (
       <div className="p-8 max-w-xs">
-        <Input label="Votre code postal" placeholder="75001" value={val} onChange={setVal} />
-        <p className="mt-2 text-text-xsmall text-text-2">Valeur : {val || '—'}</p>
+        <Input
+          label="Votre code postal"
+          placeholder="Saisissez votre code postal"
+          value={val}
+          onChange={setVal}
+        />
+        <p className="mt-2 text-text-xsmall text-text-default" style={{ opacity: 0.65 }}>
+          Valeur : {val || '—'}
+        </p>
       </div>
     )
   },

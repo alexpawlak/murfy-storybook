@@ -1,4 +1,6 @@
 import React from 'react'
+import { Tag } from '../../Atoms/Tag/Tag'
+import type { TagVariant } from '../../Atoms/Tag/Tag'
 
 export interface Vertical {
   id: string
@@ -38,26 +40,17 @@ export function VerticalSelector({
     <div className="flex items-center justify-center gap-2">
       {verticals.map(v => {
         const isActive = v.id === active
+        const variant: TagVariant = isActive ? v.accent : 'outline'
         return (
-          <div
+          <Tag
             key={v.id}
-            data-accent={v.accent}
-            className="inline-block"
+            variant={variant}
+            size="sm"
+            onClick={() => handleClick(v.id)}
+            className="uppercase tracking-[0.08em]"
           >
-            <button
-              onClick={() => handleClick(v.id)}
-              className="px-4 py-2 rounded-pill border font-semibold uppercase tracking-widest transition-all whitespace-nowrap"
-              style={{
-                letterSpacing: '0.08em',
-                fontSize: 'var(--font-size-label)',
-                backgroundColor: isActive ? 'var(--accent-btn-bg)' : 'transparent',
-                color: isActive ? 'var(--accent-btn-text)' : 'var(--text)',
-                borderColor: isActive ? 'var(--accent-btn-bg)' : 'var(--border)',
-              }}
-            >
-              {v.label}
-            </button>
-          </div>
+            {v.label}
+          </Tag>
         )
       })}
     </div>

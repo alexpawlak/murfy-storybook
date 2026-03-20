@@ -234,7 +234,7 @@ function IconsPage() {
     // Content-Edit
     'ArchiveBook': ['books', 'library', 'reading'],
     'Bill': ['invoice', 'receipt'],
-    'Clipboard': ['copy', 'paste'],
+    'Clipboard': ['copy', 'paste', 'notes', 'document'],
     'Document': ['file', 'page', 'text'],
     'Edit': ['modify', 'update', 'change', 'pencil'],
     'Edit2': ['modify', 'update', 'change', 'pencil'],
@@ -298,7 +298,7 @@ function IconsPage() {
     // Devices
     'Airdrop': ['share', 'send'],
     'Bluetooth': ['wireless', 'connection'],
-    'Cloud': ['storage', 'online', 'backup'],
+    'Cloud': ['storage', 'online', 'backup', 'sky', 'overcast', 'weather'],
     'Cpu': ['processor', 'chip', 'computer'],
     'Devices': ['gadgets', 'electronics'],
     'Driver': ['software', 'hardware'],
@@ -316,7 +316,6 @@ function IconsPage() {
     'Watch': ['timepiece', 'smartwatch'],
     
     // Weather
-    'Cloud': ['sky', 'overcast'],
     'Drop': ['rain', 'water', 'liquid'],
     'Moon': ['night', 'lunar'],
     'Sun': ['day', 'sunny', 'light'],
@@ -336,7 +335,6 @@ function IconsPage() {
     'Bookmark': ['save', 'marker'],
     'Briefcase': ['work', 'bag', 'portfolio'],
     'Calculator': ['math', 'numbers'],
-    'Clipboard': ['notes', 'document'],
     'Gift': ['present', 'box', 'birthday'],
     'Notepad': ['notes', 'writing', 'memo'],
     'Teacher': ['professor', 'instructor', 'school'],

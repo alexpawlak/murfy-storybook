@@ -1,69 +1,93 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import tokens from '../../tokens.json'
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+type TypographyScaleName = keyof typeof tokens.typography
+
+type TypographyRow = {
+  name: TypographyScaleName
+  label: string
+  sample: string
+}
 
 const WEIGHTS = [
-  { label: 'Regular',   value: 400 },
-  { label: 'Medium',    value: 500 },
-  { label: 'SemiBold',  value: 600 },
-  { label: 'Bold',      value: 700 },
+  { label: 'Regular', value: 400 },
+  { label: 'Medium', value: 500 },
+  { label: 'SemiBold', value: 600 },
+  { label: 'Bold', value: 700 },
   { label: 'ExtraBold', value: 800 },
-  { label: 'Black',     value: 900 },
-  { label: 'Ultra',     value: 950 },
+  { label: 'Black', value: 900 },
+  { label: 'Ultra', value: 950 },
 ]
 
-const HEADINGS = [
-  { name: 'display',  label: 'Display', size: '112px', weight: '700 — Bold',  sample: 'Murfy' },
-  { name: 'h1',       label: 'H1',      size: '61px',  weight: '900 — Black', sample: 'Réparez, ne remplacez pas' },
-  { name: 'h2',       label: 'H2',      size: '46px',  weight: '700 — Bold',  sample: 'Nos services de réparation' },
-  { name: 'h3',       label: 'H3',      size: '32px',  weight: '700 — Bold',  sample: 'Réparation à domicile' },
-  { name: 'h4',       label: 'H4',      size: '24px',  weight: '700 — Bold',  sample: 'Lave-linge, sèche-linge, lave-vaisselle' },
-  { name: 'h5',       label: 'H5',      size: '20px',  weight: '700 — Bold',  sample: 'Prise en charge rapide et efficace' },
-  { name: 'h6',       label: 'H6',      size: '18px',  weight: '700 — Bold',  sample: 'Techniciens certifiés et expérimentés' },
+const HEADING_ROWS: TypographyRow[] = [
+  { name: 'display', label: 'Display', sample: 'Murfy' },
+  { name: 'h1', label: 'H1', sample: 'Réparez, ne remplacez pas' },
+  { name: 'h2', label: 'H2', sample: 'Nos services de réparation' },
+  { name: 'h3', label: 'H3', sample: 'Réparation à domicile' },
+  { name: 'h4', label: 'H4', sample: 'Lave-linge, sèche-linge, lave-vaisselle' },
+  { name: 'h5', label: 'H5', sample: 'Prise en charge rapide et efficace' },
+  { name: 'h6', label: 'H6', sample: 'Techniciens certifiés et expérimentés' },
 ]
 
-const BODY = [
-  { name: 'text-large',          label: 'Large',           size: '20px', weight: '400 — Regular',   sample: 'Nous réparons vos appareils électroménagers à domicile.' },
-  { name: 'text-main',           label: 'Main',            size: '18px', weight: '400 — Regular',   sample: 'Prenez rendez-vous en ligne en quelques clics. Un technicien se déplace chez vous.' },
-  { name: 'text-small',          label: 'Small',           size: '16px', weight: '400 — Regular',   sample: 'Réparation garantie 6 mois. Pièces d\'origine constructeur.' },
-  { name: 'text-xsmall',         label: 'XSmall',          size: '14px', weight: '400 — Regular',   sample: 'Mentions légales · Politique de confidentialité · CGV' },
-  { name: 'text-large-semibold', label: 'Large Semibold',  size: '20px', weight: '600 — SemiBold',  sample: 'Nous réparons vos appareils électroménagers à domicile.' },
-  { name: 'text-main-semibold',  label: 'Main Semibold',   size: '18px', weight: '600 — SemiBold',  sample: 'Prenez rendez-vous en ligne en quelques clics.' },
-  { name: 'text-small-semibold', label: 'Small Semibold',  size: '16px', weight: '600 — SemiBold',  sample: 'Réparation garantie 6 mois. Pièces d\'origine constructeur.' },
-  { name: 'text-xsmall-semibold',label: 'XSmall Semibold', size: '14px', weight: '600 — SemiBold',  sample: 'Techniciens certifiés et expérimentés' },
-  { name: 'label',               label: 'Label',           size: '12px', weight: '600 — SemiBold',  sample: 'SECTION LABEL · FORM FIELD · BADGE TEXT', letterSpacing: '0.08em', uppercase: true },
+const BODY_ROWS: TypographyRow[] = [
+  { name: 'text-large', label: 'Large', sample: 'Nous réparons vos appareils électroménagers à domicile.' },
+  { name: 'text-main', label: 'Main', sample: 'Prenez rendez-vous en ligne en quelques clics. Un technicien se déplace chez vous.' },
+  { name: 'text-small', label: 'Small', sample: 'Réparation garantie 6 mois. Pièces d’origine constructeur.' },
+  { name: 'text-xsmall', label: 'XSmall', sample: 'Mentions légales · Politique de confidentialité · CGV' },
+  { name: 'text-large-semibold', label: 'Large Semibold', sample: 'Nous réparons vos appareils électroménagers à domicile.' },
+  { name: 'text-main-semibold', label: 'Main Semibold', sample: 'Prenez rendez-vous en ligne en quelques clics.' },
+  { name: 'text-small-semibold', label: 'Small Semibold', sample: 'Réparation garantie 6 mois. Pièces d’origine constructeur.' },
+  { name: 'text-xsmall-semibold', label: 'XSmall Semibold', sample: 'Techniciens certifiés et expérimentés' },
+  { name: 'label', label: 'Label', sample: 'Section label · Form field · Badge text' },
 ]
 
-// ─── Row component ─────────────────────────────────────────────────────────────
+function getWeightLabel(value: number) {
+  return WEIGHTS.find((weight) => weight.value === value)?.label ?? String(value)
+}
 
-function TypeRow({ name, label, size, weight, sample, letterSpacing, uppercase }: {
-  name: string
-  label: string
-  size: string
-  weight: string
-  sample: string
-  letterSpacing?: string
-  uppercase?: boolean
-}) {
-  const isHeading = name.startsWith('h') || name === 'display'
+function getTypographyModeVars(mode: 'mobile' | 'desktop') {
+  return Object.entries(tokens.typography).reduce<Record<string, string>>((acc, [name, scale]) => {
+    const values = scale[mode]
+    acc[`--font-size-${name}`] = `${values.fontSize}px`
+    acc[`--line-height-${name}`] = String(values.lineHeight)
+    acc[`--font-weight-${name}`] = String(scale.fontWeight)
+    acc[`--letter-spacing-${name}`] = `${scale.letterSpacing}em`
+    acc[`--text-transform-${name}`] = scale.textTransform
+    return acc
+  }, {})
+}
+
+function TypeRow({ name, label, sample }: TypographyRow) {
+  const scale = tokens.typography[name]
+
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-4 py-5 border-t"
-      style={{ borderColor: 'var(--border)', opacity: 1 }}
+      className="grid grid-cols-1 gap-4 border-t py-5 md:grid-cols-[260px_1fr]"
+      style={{ borderColor: 'var(--border)' }}
     >
       <div className="pt-1">
         <div className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{label}</div>
-        <div className="text-xs opacity-50 mt-0.5" style={{ color: 'var(--text)' }}>{size}</div>
-        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>{weight}</div>
-        {letterSpacing && (
-          <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>ls: {letterSpacing}</div>
-        )}
+        <div className="mt-0.5 text-xs opacity-50" style={{ color: 'var(--text)' }}>
+          Desktop {scale.desktop.fontSize}px / Mobile {scale.mobile.fontSize}px
+        </div>
+        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+          {scale.fontWeight} — {getWeightLabel(scale.fontWeight)}
+        </div>
+        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+          lh {scale.desktop.lineHeight} / {scale.mobile.lineHeight}
+        </div>
+        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+          ls {scale.letterSpacing}em
+        </div>
+        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+          case {scale.textTransform}
+        </div>
         <code
-          className="text-[10px] mt-1.5 inline-block px-1.5 py-0.5 rounded"
+          className="mt-1.5 inline-block rounded px-1.5 py-0.5 text-[10px]"
           style={{ backgroundColor: 'var(--bg-2)', color: 'var(--text)', opacity: 0.7 }}
         >
-          var(--font-size-{name})
+          {`--font-size-${name}`}
         </code>
       </div>
       <div
@@ -71,10 +95,10 @@ function TypeRow({ name, label, size, weight, sample, letterSpacing, uppercase }
           fontSize: `var(--font-size-${name})`,
           fontWeight: `var(--font-weight-${name})`,
           lineHeight: `var(--line-height-${name})`,
-          letterSpacing: isHeading ? '-0.05em' : letterSpacing,
-          textTransform: uppercase ? 'uppercase' : undefined,
+          letterSpacing: `var(--letter-spacing-${name})`,
+          textTransform: `var(--text-transform-${name})` as React.CSSProperties['textTransform'],
           color: 'var(--text)',
-          fontFamily: '"Murfy A2", sans-serif',
+          fontFamily: 'var(--font-family-brand)',
         }}
       >
         {sample}
@@ -83,52 +107,66 @@ function TypeRow({ name, label, size, weight, sample, letterSpacing, uppercase }
   )
 }
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+function TypographySpecimen({
+  mode,
+  widthClassName,
+}: {
+  mode: 'mobile' | 'desktop'
+  widthClassName: string
+}) {
+  return (
+    <div
+      className={`rounded-card p-6 ${widthClassName}`}
+      style={{
+        backgroundColor: 'var(--bg)',
+        boxShadow: '0 2px 16px color-mix(in srgb, var(--dark-900) 8%, transparent)',
+        ...getTypographyModeVars(mode),
+      } as React.CSSProperties}
+    >
+      <div className="text-label font-semibold text-text-default opacity-60">
+        {mode === 'mobile' ? 'Mobile specimen' : 'Desktop specimen'}
+      </div>
+      <div className="mt-4 text-display font-bold text-text-default">Murfy</div>
+      <h2 className="mt-4 text-h2 font-bold text-text-default">Réparer plutôt que remplacer</h2>
+      <p className="mt-4 text-text-main text-text-default opacity-80">
+        Une hiérarchie rapide à scanner pour vérifier la différence entre les valeurs mobiles et desktop.
+      </p>
+      <div className="mt-5 flex flex-wrap gap-3">
+        <span className="text-label font-semibold text-text-default" style={{ backgroundColor: 'var(--bg-2)', borderRadius: 'var(--radius-pill)', padding: '8px 12px' }}>
+          Type system
+        </span>
+        <span className="text-text-small-semibold text-text-default">
+          {mode === 'mobile' ? '390px reference' : 'Desktop reference'}
+        </span>
+      </div>
+    </div>
+  )
+}
 
 function TypographyPage() {
   return (
-    <div className="p-8 max-w-5xl">
-
-      {/* Intro */}
-      <div
-        className="rounded-card p-8 mb-12"
-        style={{ backgroundColor: 'var(--bg-2)' }}
-      >
+    <div className="max-w-5xl p-8">
+      <div className="mb-12 rounded-card p-8" style={{ backgroundColor: 'var(--bg-2)' }}>
         <div
-          className="text-xs font-semibold uppercase tracking-widest mb-3 opacity-50"
+          className="mb-3 text-xs font-semibold uppercase tracking-widest opacity-50"
           style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
         >
           Brand typeface
         </div>
-        <h1
-          className="mb-4"
-          style={{
-            fontSize: 'var(--font-size-h2)',
-            fontWeight: 'var(--font-weight-h2)',
-            lineHeight: 'var(--line-height-h2)',
-            letterSpacing: '-0.05em',
-            color: 'var(--text)',
-            fontFamily: '"Murfy A2", sans-serif',
-          }}
-        >
+        <h1 className="mb-4 text-h2 font-bold" style={{ color: 'var(--text)' }}>
           Murfy A2
         </h1>
         <p
-          className="max-w-2xl mb-6"
-          style={{
-            fontSize: 'var(--font-size-text-main)',
-            lineHeight: 'var(--line-height-text-main)',
-            color: 'var(--text)',
-            opacity: 0.7,
-          }}
+          className="mb-6 max-w-2xl text-text-main"
+          style={{ color: 'var(--text)', opacity: 0.7 }}
         >
-          Murfy A2 is the brand's custom typeface — designed to feel modern, friendly, and confident.
-          It replaces GT Walsheim Pro across all touchpoints. Use it exclusively: never substitute
-          system fonts or other typefaces in brand contexts.
+          Murfy A2 is the brand&apos;s custom typeface. The typography system is now mobile-first in code, with a
+          desktop override at the `md` breakpoint and a matching Desktop/Mobile mode strategy planned for Figma.
+          Only the Display style is uppercase by system rule. `H1` to `H6` keep their normal casing unless a component
+          intentionally applies uppercase for a specific design.
         </p>
 
-        {/* Weight specimen */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid gap-4 md:grid-cols-4">
           {WEIGHTS.map(({ label, value }) => (
             <div
               key={label}
@@ -137,7 +175,7 @@ function TypographyPage() {
             >
               <div
                 style={{
-                  fontFamily: '"Murfy A2", sans-serif',
+                  fontFamily: 'var(--font-family-brand)',
                   fontWeight: value,
                   fontSize: 'var(--font-size-h5)',
                   color: 'var(--text)',
@@ -146,7 +184,7 @@ function TypographyPage() {
               >
                 Aa
               </div>
-              <div className="text-xs mt-2 opacity-50" style={{ color: 'var(--text)' }}>
+              <div className="mt-2 text-xs opacity-50" style={{ color: 'var(--text)' }}>
                 {label}
               </div>
               <div className="text-xs opacity-40" style={{ color: 'var(--text)' }}>
@@ -157,48 +195,63 @@ function TypographyPage() {
         </div>
       </div>
 
-      {/* Headings */}
       <section className="mb-12">
         <h2
-          className="text-xs font-semibold uppercase tracking-widest mb-1 opacity-50"
+          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
+          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
+        >
+          Responsive preview
+        </h2>
+        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
+          These specimen cards pin the typography variables to each mode so you can compare the mobile and desktop
+          versions side by side in the same Storybook page.
+        </p>
+        <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
+          <TypographySpecimen mode="mobile" widthClassName="w-full max-w-[390px]" />
+          <TypographySpecimen mode="desktop" widthClassName="w-full xl:flex-1" />
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2
+          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
           style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
         >
           Headings
         </h2>
-        <p className="text-sm mb-6 opacity-50" style={{ color: 'var(--text)' }}>
-          Tight letter-spacing (−0.05em). Bold for most scales, Black for H1 impact.
+        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
+          Only `Display` is uppercase by design. Mobile values are the default and desktop values take over from the
+          `md` breakpoint so the same semantic class scales cleanly across layouts.
         </p>
-        {HEADINGS.map(row => <TypeRow key={row.name} {...row} />)}
+        {HEADING_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
       </section>
 
-      {/* Body */}
       <section>
         <h2
-          className="text-xs font-semibold uppercase tracking-widest mb-1 opacity-50"
+          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
           style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
         >
           Body & UI
         </h2>
-        <p className="text-sm mb-6 opacity-50" style={{ color: 'var(--text)' }}>
-          Regular for long-form content. Semibold for labels, nav items, emphasized copy.
-          Label style adds letter-spacing for small uppercase use cases.
+        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
+          Body styles stay sentence case. These tokens follow the same desktop/mobile structure so Storybook and Figma
+          can share one semantic type system instead of separate scales.
         </p>
-        {BODY.map(row => <TypeRow key={row.name} {...row} />)}
+        {BODY_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
       </section>
-
     </div>
   )
 }
-
-// ─── Story ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
   title: 'Foundation/Typography',
   parameters: { layout: 'fullscreen' },
 }
+
 export default meta
 
 type Story = StoryObj
+
 export const Overview: Story = {
   render: () => <TypographyPage />,
 }

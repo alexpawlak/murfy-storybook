@@ -12,8 +12,8 @@ export function AccordionItem({ question, answer, defaultOpen = false }: Accordi
 
   return (
     <div
-      className={`rounded-[10px] overflow-hidden transition-colors ${
-        isOpen ? '' : 'border border-border bg-bg'
+      className={`rounded-[10px] overflow-hidden transition-colors bg-bg ${
+        isOpen ? '' : 'border border-border'
       }`}
     >
       <button

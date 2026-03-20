@@ -2,6 +2,8 @@
 
 :root {
   /* Primitives */
+  --black: #000000;
+  --transparent: #00000000;
   --pink-500: #f59bbb;
   --pink-accent: #fd6c9f;
   --pink-600: #c47c96;
@@ -24,65 +26,93 @@
   --yellow-highlight: #ffde73;
   --yellow-hover: #e0be00;
   --brand-hover: #093c3a;
+  --teal-100: #bae3e9;
+  --teal-700: #145c6f;
 
   /* Font Families */
   --font-family-brand: "Murfy A2", sans-serif;
 
   /* Typography */
-  --font-size-display: 112px;
+  --font-size-display: 64px;
   --font-weight-display: 700;
   --line-height-display: 1;
   --letter-spacing-display: -0.05em;
-  --font-size-h1: 61px;
+  --text-transform-display: uppercase;
+  --font-size-h1: 40px;
   --font-weight-h1: 900;
-  --line-height-h1: 1;
+  --line-height-h1: 1.05;
   --letter-spacing-h1: -0.05em;
-  --font-size-h2: 46px;
+  --text-transform-h1: none;
+  --font-size-h2: 32px;
   --font-weight-h2: 700;
-  --line-height-h2: 1;
+  --line-height-h2: 1.1;
   --letter-spacing-h2: -0.05em;
-  --font-size-h3: 32px;
+  --text-transform-h2: none;
+  --font-size-h3: 28px;
   --font-weight-h3: 700;
-  --line-height-h3: 1.3;
+  --line-height-h3: 1.2;
   --letter-spacing-h3: -0.05em;
-  --font-size-h4: 24px;
+  --text-transform-h3: none;
+  --font-size-h4: 22px;
   --font-weight-h4: 700;
-  --line-height-h4: 1.3;
+  --line-height-h4: 1.25;
   --letter-spacing-h4: -0.05em;
-  --font-size-h5: 20px;
+  --text-transform-h4: none;
+  --font-size-h5: 18px;
   --font-weight-h5: 700;
   --line-height-h5: 1.3;
-  --font-size-h6: 18px;
+  --letter-spacing-h5: 0em;
+  --text-transform-h5: none;
+  --font-size-h6: 16px;
   --font-weight-h6: 700;
-  --line-height-h6: 1.3;
-  --font-size-text-large: 20px;
+  --line-height-h6: 1.35;
+  --letter-spacing-h6: 0em;
+  --text-transform-h6: none;
+  --font-size-text-large: 18px;
   --font-weight-text-large: 400;
   --line-height-text-large: 1.5;
-  --font-size-text-main: 18px;
+  --letter-spacing-text-large: 0em;
+  --text-transform-text-large: none;
+  --font-size-text-main: 16px;
   --font-weight-text-main: 400;
   --line-height-text-main: 1.5;
-  --font-size-text-small: 16px;
+  --letter-spacing-text-main: 0em;
+  --text-transform-text-main: none;
+  --font-size-text-small: 14px;
   --font-weight-text-small: 400;
   --line-height-text-small: 1.5;
-  --font-size-text-xsmall: 14px;
+  --letter-spacing-text-small: 0em;
+  --text-transform-text-small: none;
+  --font-size-text-xsmall: 12px;
   --font-weight-text-xsmall: 400;
   --line-height-text-xsmall: 1.5;
-  --font-size-text-large-semibold: 20px;
+  --letter-spacing-text-xsmall: 0em;
+  --text-transform-text-xsmall: none;
+  --font-size-text-large-semibold: 18px;
   --font-weight-text-large-semibold: 600;
   --line-height-text-large-semibold: 1.5;
-  --font-size-text-main-semibold: 18px;
+  --letter-spacing-text-large-semibold: 0em;
+  --text-transform-text-large-semibold: none;
+  --font-size-text-main-semibold: 16px;
   --font-weight-text-main-semibold: 600;
   --line-height-text-main-semibold: 1.5;
-  --font-size-text-small-semibold: 16px;
+  --letter-spacing-text-main-semibold: 0em;
+  --text-transform-text-main-semibold: none;
+  --font-size-text-small-semibold: 14px;
   --font-weight-text-small-semibold: 600;
   --line-height-text-small-semibold: 1.5;
-  --font-size-text-xsmall-semibold: 14px;
+  --letter-spacing-text-small-semibold: 0em;
+  --text-transform-text-small-semibold: none;
+  --font-size-text-xsmall-semibold: 12px;
   --font-weight-text-xsmall-semibold: 600;
   --line-height-text-xsmall-semibold: 1.5;
-  --font-size-label: 12px;
+  --letter-spacing-text-xsmall-semibold: 0em;
+  --text-transform-text-xsmall-semibold: none;
+  --font-size-label: 11px;
   --font-weight-label: 600;
   --line-height-label: 1.5;
   --letter-spacing-label: 0.08em;
+  --text-transform-label: uppercase;
 
   /* Dimensions */
   --radius-section: 48px;
@@ -98,14 +128,14 @@
   --bg-2: var(--light-200);
   --bg-3: var(--light-100);
   --text: var(--brand-text);
-  --text-2: #ffffff;
+  --text-2: var(--light-100);
   --border: var(--dark-900);
   --heading-accent: var(--pink-600);
   --btn-bg: var(--pink-500);
   --btn-text: var(--brand-text);
   --btn-bg-hover: var(--pink-accent);
   --btn-text-hover: var(--brand-text);
-  --btn2-bg: #00000000;
+  --btn2-bg: var(--transparent);
   --btn2-text: var(--dark-800);
   --btn2-border: var(--dark-800);
   --btn2-bg-hover: var(--light-200);
@@ -124,7 +154,7 @@
   --btn-text: var(--brand-text);
   --btn-bg-hover: var(--light-200);
   --btn-text-hover: var(--brand-text);
-  --btn2-bg: #00000000;
+  --btn2-bg: var(--transparent);
   --btn2-text: var(--light-100);
   --btn2-border: var(--light-100);
   --btn2-bg-hover: var(--light-100);
@@ -143,7 +173,7 @@
   --btn-text: var(--light-100);
   --btn-bg-hover: var(--brand-hover);
   --btn-text-hover: var(--light-100);
-  --btn2-bg: #00000000;
+  --btn2-bg: var(--transparent);
   --btn2-text: var(--dark-800);
   --btn2-border: var(--dark-800);
   --btn2-bg-hover: var(--light-200);
@@ -162,7 +192,7 @@
   --btn-text: var(--light-100);
   --btn-bg-hover: var(--brand-hover);
   --btn-text-hover: var(--light-100);
-  --btn2-bg: #00000000;
+  --btn2-bg: var(--transparent);
   --btn2-text: var(--dark-800);
   --btn2-border: var(--dark-800);
   --btn2-bg-hover: var(--light-200);
@@ -181,7 +211,7 @@
   --btn-text: var(--light-100);
   --btn-bg-hover: var(--brand-hover);
   --btn-text-hover: var(--light-100);
-  --btn2-bg: #00000000;
+  --btn2-bg: var(--transparent);
   --btn2-text: var(--dark-800);
   --btn2-border: var(--dark-800);
   --btn2-bg-hover: var(--light-200);
@@ -190,9 +220,9 @@
 
 [data-accent="default"] {
   --accent-btn-bg: var(--brand-text);
-  --accent-btn-text: #ffffff;
+  --accent-btn-text: var(--light-100);
   --accent-btn-bg-hover: var(--brand-hover);
-  --accent-btn-text-hover: #ffffff;
+  --accent-btn-text-hover: var(--light-100);
   --accent-accent-highlight: var(--light-100);
   --accent-accent-pill-active: var(--light-100);
   --accent-accent-text: var(--brand-text);
@@ -215,14 +245,14 @@
   --accent-btn-text-hover: var(--dark-900);
   --accent-accent-highlight: var(--yellow-highlight);
   --accent-accent-pill-active: var(--yellow-highlight);
-  --accent-accent-text: var(--yellow-600);
+  --accent-accent-text: var(--dark-900);
 }
 
 [data-accent="fuschia"] {
   --accent-btn-bg: #e8006f;
-  --accent-btn-text: #ffffff;
+  --accent-btn-text: var(--light-100);
   --accent-btn-bg-hover: #cc0062;
-  --accent-btn-text-hover: #ffffff;
+  --accent-btn-text-hover: var(--light-100);
   --accent-accent-highlight: var(--fuschia-highlight);
   --accent-accent-pill-active: var(--fuschia-highlight);
   --accent-accent-text: var(--fuschia-text);
@@ -230,12 +260,49 @@
 
 :root {
   --accent-btn-bg: var(--brand-text);
-  --accent-btn-text: #ffffff;
+  --accent-btn-text: var(--light-100);
   --accent-btn-bg-hover: var(--brand-hover);
-  --accent-btn-text-hover: #ffffff;
+  --accent-btn-text-hover: var(--light-100);
   --accent-accent-highlight: var(--light-100);
   --accent-accent-pill-active: var(--light-100);
   --accent-accent-text: var(--brand-text);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-size-display: 112px;
+    --line-height-display: 1;
+    --font-size-h1: 61px;
+    --line-height-h1: 1;
+    --font-size-h2: 46px;
+    --line-height-h2: 1;
+    --font-size-h3: 32px;
+    --line-height-h3: 1.3;
+    --font-size-h4: 24px;
+    --line-height-h4: 1.3;
+    --font-size-h5: 20px;
+    --line-height-h5: 1.3;
+    --font-size-h6: 18px;
+    --line-height-h6: 1.3;
+    --font-size-text-large: 20px;
+    --line-height-text-large: 1.5;
+    --font-size-text-main: 18px;
+    --line-height-text-main: 1.5;
+    --font-size-text-small: 16px;
+    --line-height-text-small: 1.5;
+    --font-size-text-xsmall: 14px;
+    --line-height-text-xsmall: 1.5;
+    --font-size-text-large-semibold: 20px;
+    --line-height-text-large-semibold: 1.5;
+    --font-size-text-main-semibold: 18px;
+    --line-height-text-main-semibold: 1.5;
+    --font-size-text-small-semibold: 16px;
+    --line-height-text-small-semibold: 1.5;
+    --font-size-text-xsmall-semibold: 14px;
+    --line-height-text-xsmall-semibold: 1.5;
+    --font-size-label: 12px;
+    --line-height-label: 1.5;
+  }
 }
 
 @media (min-width: 1024px) {

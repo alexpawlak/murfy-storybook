@@ -1,45 +1,79 @@
-import React from 'react'
+import React, { useId } from 'react'
 
-interface InputProps {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'> {
   label?: string
-  placeholder?: string
   value?: string
   onChange?: (value: string) => void
-  type?: 'text' | 'email' | 'tel' | 'number'
   error?: string
-  disabled?: boolean
   hint?: string
+  containerClassName?: string
+  inputClassName?: string
 }
 
-export function Input({ label, placeholder, value, onChange, type = 'text', error, disabled, hint }: InputProps) {
+export function Input({
+  label,
+  value,
+  onChange,
+  type = 'text',
+  error,
+  disabled,
+  hint,
+  containerClassName = '',
+  inputClassName = '',
+  id,
+  'aria-describedby': inputAriaDescribedBy,
+  ...inputProps
+}: InputProps) {
+  const generatedId = useId()
+  const inputId = id ?? generatedId
+  const helperText = error || hint
+  const helperId = helperText ? `${inputId}-message` : undefined
+  const ariaDescribedBy = [inputAriaDescribedBy, helperId].filter(Boolean).join(' ') || undefined
+
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className={`flex w-full flex-col gap-2 ${containerClassName}`.trim()}>
       {label && (
-        <label className="text-text-small font-semibold text-text-default">
+        <label
+          htmlFor={inputId}
+          className="text-label font-semibold uppercase tracking-[0.08em] text-text-default"
+        >
           {label}
         </label>
       )}
       <input
+        id={inputId}
         type={type}
         value={value}
-        placeholder={placeholder}
         disabled={disabled}
+        {...inputProps}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={ariaDescribedBy}
         onChange={e => onChange?.(e.target.value)}
         className={[
-          'w-full px-4 py-3 rounded-dropdown border bg-bg-2 text-text-default text-text-main',
+          'w-full h-11 rounded-pill border bg-light-100 px-6',
+          'text-text-main text-text-default placeholder:text-text-default placeholder:opacity-45',
           'outline-none transition-colors',
+          'disabled:cursor-not-allowed disabled:bg-bg-2 disabled:opacity-60',
           'focus:ring-2 focus:ring-btn-bg',
           error
             ? 'border-red-500 focus:ring-red-500'
             : 'border-border hover:border-btn-bg',
-          disabled ? 'opacity-50 cursor-not-allowed' : '',
+          inputClassName,
         ].join(' ')}
       />
       {hint && !error && (
-        <span className="text-text-xsmall text-text-2">{hint}</span>
+        <span
+          id={helperId}
+          className="text-text-xsmall text-text-default"
+          style={{ opacity: 0.65 }}
+        >
+          {hint}
+        </span>
       )}
       {error && (
-        <span className="text-text-xsmall text-red-500">{error}</span>
+        <span id={helperId} className="text-text-xsmall text-red-500">
+          {error}
+        </span>
       )}
     </div>
   )

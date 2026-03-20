@@ -8,6 +8,20 @@ const __dirname = path.dirname(__filename)
 const tokensPath = path.resolve(__dirname, '../tokens.json')
 const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'))
 
+type ResponsiveTypographyScale = {
+  fontWeight: number
+  letterSpacing: number
+  textTransform: string
+  desktop: {
+    fontSize: number
+    lineHeight: number
+  }
+  mobile: {
+    fontSize: number
+    lineHeight: number
+  }
+}
+
 // Resolve token references like {primitives.pink-500} -> var(--pink-500)
 function resolveRef(value: string): string {
   return value.replace(/\{primitives\.([^}]+)\}/g, (_, name) => `var(--${name})`)
@@ -27,13 +41,12 @@ for (const [key, value] of Object.entries(fontFamilies)) {
   css += `  --font-family-${key}: ${value};\n`
 }
 css += `\n  /* Typography */\n`
-for (const [scale, props] of Object.entries(tokens.typography as Record<string, any>)) {
-  css += `  --font-size-${scale}: ${props.fontSize}px;\n`
+for (const [scale, props] of Object.entries(tokens.typography as Record<string, ResponsiveTypographyScale>)) {
+  css += `  --font-size-${scale}: ${props.mobile.fontSize}px;\n`
   css += `  --font-weight-${scale}: ${props.fontWeight};\n`
-  css += `  --line-height-${scale}: ${props.lineHeight};\n`
-  if (props.letterSpacing !== 0) {
-    css += `  --letter-spacing-${scale}: ${props.letterSpacing}em;\n`
-  }
+  css += `  --line-height-${scale}: ${props.mobile.lineHeight};\n`
+  css += `  --letter-spacing-${scale}: ${props.letterSpacing}em;\n`
+  css += `  --text-transform-${scale}: ${props.textTransform};\n`
 }
 css += `\n  /* Dimensions */\n`
 const dims = tokens.dimensions as Record<string, number>
@@ -84,6 +97,15 @@ if (defaultAccent) {
 }
 css += `}\n\n`
 
+css += `@media (min-width: 768px) {\n`
+css += `  :root {\n`
+for (const [scale, props] of Object.entries(tokens.typography as Record<string, ResponsiveTypographyScale>)) {
+  css += `    --font-size-${scale}: ${props.desktop.fontSize}px;\n`
+  css += `    --line-height-${scale}: ${props.desktop.lineHeight};\n`
+}
+css += `  }\n`
+css += `}\n\n`
+
 // Desktop spacing override
 css += `@media (min-width: 1024px) {\n`
 css += `  :root { --spacing-section-y: ${dims['spacing-section-y-desktop']}px; }\n`
@@ -99,6 +121,10 @@ const primitiveColors: Record<string, string> = {}
 for (const key of Object.keys(tokens.primitives as Record<string, string>)) {
   primitiveColors[key] = `var(--${key})`
 }
+
+const fontSizeConfig = Object.keys(tokens.typography as Record<string, ResponsiveTypographyScale>)
+  .map((scale) => `        '${scale}': ['var(--font-size-${scale})', { lineHeight: 'var(--line-height-${scale})', letterSpacing: 'var(--letter-spacing-${scale})' }]`)
+  .join(',\n')
 
 const tailwindConfig = `/** @type {import('tailwindcss').Config} */
 export default {
@@ -138,22 +164,7 @@ export default {
         dropdown: 'var(--radius-dropdown)',
       },
       fontSize: {
-        display: ['var(--font-size-display)', { lineHeight: '1', letterSpacing: '-0.05em' }],
-        h1: ['var(--font-size-h1)', { lineHeight: '1', letterSpacing: '-0.05em' }],
-        h2: ['var(--font-size-h2)', { lineHeight: '1', letterSpacing: '-0.05em' }],
-        h3: ['var(--font-size-h3)', { lineHeight: '1.3', letterSpacing: '-0.05em' }],
-        h4: ['var(--font-size-h4)', { lineHeight: '1.3', letterSpacing: '-0.05em' }],
-        h5: ['var(--font-size-h5)', { lineHeight: '1.3' }],
-        h6: ['var(--font-size-h6)', { lineHeight: '1.3' }],
-        'text-large': ['var(--font-size-text-large)', { lineHeight: '1.5' }],
-        'text-main': ['var(--font-size-text-main)', { lineHeight: '1.5' }],
-        'text-small': ['var(--font-size-text-small)', { lineHeight: '1.5' }],
-        'text-xsmall': ['var(--font-size-text-xsmall)', { lineHeight: '1.5' }],
-        'text-large-semibold': ['var(--font-size-text-large-semibold)', { lineHeight: '1.5' }],
-        'text-main-semibold': ['var(--font-size-text-main-semibold)', { lineHeight: '1.5' }],
-        'text-small-semibold': ['var(--font-size-text-small-semibold)', { lineHeight: '1.5' }],
-        'text-xsmall-semibold': ['var(--font-size-text-xsmall-semibold)', { lineHeight: '1.5' }],
-        'label': ['var(--font-size-label)', { lineHeight: '1.5', letterSpacing: '0.08em' }],
+${fontSizeConfig},
       },
       fontFamily: {
         brand: ['Murfy A2', 'sans-serif'],

@@ -48,15 +48,7 @@ function PlaygroundSection() {
         </div>
 
         {/* Main heading */}
-        <h1
-          style={{
-            fontSize: 'var(--font-size-h1)',
-            fontWeight: 900,
-            lineHeight: 1,
-            letterSpacing: '-0.05em',
-            color: 'var(--text)',
-          }}
-        >
+        <h1 className="text-h1 font-black" style={{ color: 'var(--text)' }}>
           Réparer, c'est{' '}
           <span style={{ color: 'var(--heading-accent)' }}>
             mieux

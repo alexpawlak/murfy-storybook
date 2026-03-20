@@ -35,21 +35,21 @@ export const Overview: Story = {
       </div>
 
       <section>
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
+        <p className="text-label font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
           Électroménager (default)
         </p>
         <MurfyNavbar />
       </section>
 
       <section>
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
+        <p className="text-label font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
           Chauffage active
         </p>
         <MurfyNavbar activeVerticalId="chauffage" />
       </section>
 
       <section>
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
+        <p className="text-label font-semibold uppercase tracking-widest opacity-50 px-4 mb-3" style={{ color: 'var(--text)', letterSpacing: '0.08em' }}>
           Solaire active
         </p>
         <MurfyNavbar activeVerticalId="solaire" />

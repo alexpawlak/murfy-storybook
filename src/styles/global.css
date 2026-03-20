@@ -59,3 +59,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .text-display {
+    text-transform: var(--text-transform-display);
+  }
+
+  .text-label {
+    text-transform: var(--text-transform-label);
+  }
+}

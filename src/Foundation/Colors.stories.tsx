@@ -125,6 +125,18 @@ function ColorsDoc() {
   return (
     <div className="p-8 space-y-14 max-w-5xl" style={{ color: '#073331' }}>
 
+      <section
+        className="rounded-card p-6"
+        style={{ backgroundColor: 'var(--bg-2)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
+      >
+        <h2 className="text-h5 font-bold text-text-default">How to use this page</h2>
+        <p className="mt-2 text-text-small text-text-default" style={{ opacity: 0.78 }}>
+          This page shows the available brand colors and accent tokens. It is a palette reference, not an approval by
+          itself. Before pairing text and backgrounds for CTAs, pills, or colored cards, validate the combination
+          against the accessibility guidance and approved examples in <strong>Foundation/Accessibility Guidelines</strong>.
+        </p>
+      </section>
+
       {/* Brand & Neutral */}
       <section>
         <h2 className="text-xl font-bold mb-1">Brand & Neutral</h2>

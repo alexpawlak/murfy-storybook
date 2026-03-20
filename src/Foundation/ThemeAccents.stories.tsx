@@ -8,6 +8,17 @@ function ThemeAccentsGrid() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Theme × Accent Matrix</h2>
+      <div
+        className="mb-6 rounded-card p-5"
+        style={{ backgroundColor: 'var(--bg-2)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
+      >
+        <p className="text-text-small text-text-default" style={{ opacity: 0.78 }}>
+          Use this matrix to preview how tokens react across themes and accents. It does <strong>not</strong> replace
+          usage guidance. A combination can be technically available here and still be a poor accessibility or hierarchy
+          choice in a real component. Use <strong>Foundation/Accessibility Guidelines</strong> and the component stories
+          to decide what is approved.
+        </p>
+      </div>
       <div className="overflow-x-auto">
         <table className="border-collapse w-full">
           <thead>

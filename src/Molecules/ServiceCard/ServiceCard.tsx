@@ -21,7 +21,10 @@ export function ServiceCard({
   ctaLabel = 'Prendre rendez-vous',
 }: ServiceCardProps) {
   return (
-    <div className="rounded-card overflow-hidden border border-border bg-bg-2 flex flex-col max-w-sm">
+    <div
+      className="rounded-card overflow-hidden bg-bg-2 flex flex-col max-w-sm"
+      style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.07)' }}
+    >
       {imageUrl && (
         <div className="h-48 overflow-hidden bg-bg-3">
           <img src={imageUrl} alt={title} className="w-full h-full object-cover" />

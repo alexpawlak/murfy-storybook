@@ -10,6 +10,8 @@ export interface TagProps {
   /** Adds a ring indicator — use when the tag acts as an active navigation selector */
   selected?: boolean
   onClick?: () => void
+  /** Extra Tailwind/utility classes merged onto the root element */
+  className?: string
 }
 
 const variantClasses: Record<TagVariant, string> = {
@@ -31,6 +33,7 @@ export function Tag({
   size = 'md',
   selected = false,
   onClick,
+  className,
 }: TagProps) {
   return (
     <span
@@ -40,6 +43,7 @@ export function Tag({
         variantClasses[variant],
         selected ? 'ring-2 ring-offset-2 ring-current opacity-100' : '',
         onClick ? 'cursor-pointer hover:opacity-75 active:scale-95' : '',
+        className ?? '',
       ]
         .filter(Boolean)
         .join(' ')}

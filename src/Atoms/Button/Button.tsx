@@ -21,15 +21,11 @@ export function Button({ variant = 'primary', size = 'md', children, disabled, o
   const variantClasses: Record<string, string> = {
     primary: 'bg-btn-bg text-btn-text border-transparent hover:bg-btn-bg-hover',
     secondary: 'bg-transparent text-btn2-text border-btn2-border hover:bg-btn2-bg-hover hover:text-btn2-text-hover',
-    accent: 'border-transparent',
+    accent: 'border-transparent bg-[var(--accent-btn-bg)] text-[var(--accent-btn-text)] hover:bg-[var(--accent-btn-bg-hover)] hover:text-[var(--accent-btn-text-hover)]',
   }
-  const accentStyle = variant === 'accent'
-    ? { backgroundColor: 'var(--accent-btn-bg)', color: 'var(--accent-btn-text)' }
-    : {}
   return (
     <button
       className={`${base} ${sizes[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
-      style={accentStyle}
       disabled={disabled}
       onClick={onClick}
       type={type}
