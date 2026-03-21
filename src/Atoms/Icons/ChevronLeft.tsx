@@ -5,12 +5,12 @@ export function ChevronLeft(props: React.SVGProps<SVGSVGElement>) {
     <svg
       width="24"
       height="24"
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path d="M22.3467 15.2933L17.6533 20L22.3467 24.7067" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14.3467 7.29333L9.65335 12L14.3467 16.7067" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }

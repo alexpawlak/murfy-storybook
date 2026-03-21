@@ -3,17 +3,18 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Flashy, Sun1, Wind } from 'iconsax-react'
 import { Card } from './Card'
 
+const cardDecorator: StoryObj<typeof Card>['decorators'] = [
+  (Story) => (
+    <div style={{ width: 300 }}>
+      <Story />
+    </div>
+  ),
+]
+
 const meta: Meta<typeof Card> = {
   title: 'Molecules/Card',
   component: Card,
-  parameters: { layout: 'centered' },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 300 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: { layout: 'fullscreen' },
 }
 
 export default meta
@@ -93,6 +94,11 @@ export const Overview: Story = {
           tone="warning"
           description="Avoid adding a dark outline around an already filled or tinted card. It often increases visual noise more than clarity on small screens."
         />
+        <GuidanceCard
+          title="Cards don't use border outlines"
+          tone="warning"
+          description="A card outline adds a third edge to the page — alongside the section/grid boundary and any interior rule lines — making the layout feel crowded on mobile. Separation is handled entirely by box-shadow and background-color contrast. A card border must also pass a 3:1 contrast ratio against the surrounding surface across all five themes × four accents — a brittle check that the shadow system sidesteps by using luminance depth instead of stroke color."
+        />
       </section>
 
       <section>
@@ -155,6 +161,8 @@ export const Overview: Story = {
 // Pink circle icon · title · subtitle · pricing · dark CTA button
 export const ServiceCard: Story = {
   name: 'Service — PAC',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     circleContent: <Flashy size={56} color="var(--text)" variant="Bold" />,
     title: 'Pompe à chaleur',
@@ -171,6 +179,8 @@ export const ServiceCard: Story = {
 // Full photo · location badge · tag pills
 export const ProjectCard: Story = {
   name: 'Project — Solar install',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
     imageBadge: 'La Bédoulé (13)',
@@ -182,6 +192,8 @@ export const ProjectCard: Story = {
 // Photo + overlay · product row · stats table
 export const CaseStudyCard: Story = {
   name: 'Case study — Testimonial',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=600&q=80',
     imageOverlay: 'Voir le témoignage',
@@ -202,6 +214,8 @@ export const CaseStudyCard: Story = {
 // Full photo · step number circle · title · body
 export const StepPhotoCard: Story = {
   name: 'Step + photo',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80',
     circleContent: <span className="text-text-main-semibold font-black">1</span>,
@@ -214,6 +228,8 @@ export const StepPhotoCard: Story = {
 // Title · body · floating arrow circle · photo at bottom
 export const ContentArrowCard: Story = {
   name: 'Content + arrow',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     title: 'Fiabilité héritée du terrain',
     body: 'Durabilité et savoir-faire depuis 2018 — chaque installation pensée pour durer.',
@@ -227,6 +243,8 @@ export const ContentArrowCard: Story = {
 // Photo at top · title · body · pink pill CTA
 export const MediaContentCard: Story = {
   name: 'Media + content',
+  decorators: cardDecorator,
+  parameters: { layout: 'centered' },
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
     title: 'Techniciens salariés Murfy',

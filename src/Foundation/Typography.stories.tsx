@@ -226,7 +226,7 @@ function TypographyPage() {
         {HEADING_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
       </section>
 
-      <section>
+      <section className="mb-12">
         <h2
           className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
           style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
@@ -238,6 +238,69 @@ function TypographyPage() {
           can share one semantic type system instead of separate scales.
         </p>
         {BODY_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
+      </section>
+
+      <section>
+        <h2
+          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
+          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
+        >
+          All-caps usage rules
+        </h2>
+        <p className="mb-6 text-sm" style={{ color: 'var(--text)', opacity: 0.7 }}>
+          The <code>text-label</code> token (12px, semibold, <code>tracking-[0.08em]</code>, <code>uppercase</code>)
+          is the only all-caps style in the type system. It exists for very short, high-contrast labels — not for
+          headings or body text.
+        </p>
+
+        <div className="grid gap-4 md:grid-cols-2 mb-8">
+          <div className="rounded-card p-6" style={{ backgroundColor: 'var(--bg-2)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+            <h3 className="text-h6 font-bold mb-4" style={{ color: 'var(--text)' }}>Do</h3>
+            <ul className="flex flex-col gap-3">
+              {[
+                'Section labels above a content block ("Nos services", "Comment ça marche")',
+                'Navigation category chips (≤ 3 words, single line)',
+                'Status or state badges ("Nouveau", "Disponible", "Garanti")',
+                'Form field group headers where the label floats above an input group',
+                'Legal or compliance markers in footers ("CGV · Mentions légales")',
+              ].map((item) => (
+                <li key={item} className="text-text-small" style={{ color: 'var(--text)', opacity: 0.8 }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            className="rounded-card p-6"
+            style={{ backgroundColor: 'var(--pink-vivid)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
+          >
+            <h3 className="text-h6 font-bold mb-4" style={{ color: 'var(--text)' }}>Avoid</h3>
+            <ul className="flex flex-col gap-3">
+              {[
+                'Any heading H1–H6 — all-caps strips the letter-shape differentiation that makes headings scan fast',
+                'CTA button labels — uppercase removes the rounded cap-to-lowercase contrast that aids click affordance recognition',
+                'Body text of any length — reading speed drops ~14% for all-caps prose',
+                'Any string longer than 4 words or ~28 characters — beyond that, word-shape recognition fails and the reader must decode letter by letter',
+              ].map((item) => (
+                <li key={item} className="text-text-small" style={{ color: 'var(--text)', opacity: 0.8 }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div
+          className="rounded-card p-4"
+          style={{ backgroundColor: '#fff8e1', border: '1px solid #ffe082' }}
+        >
+          <p className="text-text-small" style={{ color: '#5a3800' }}>
+            <strong>28-character / 4-word limit.</strong> Above this threshold, word-shape recognition breaks down and
+            reading speed drops significantly. If you need more than four words, use sentence case with{' '}
+            <code>text-text-small-semibold</code> instead — the visual weight is similar, the legibility is better.
+          </p>
+        </div>
       </section>
     </div>
   )

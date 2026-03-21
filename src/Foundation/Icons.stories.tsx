@@ -2,12 +2,47 @@ import React, { useState, useMemo } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import * as IconsaxIcons from 'iconsax-react'
 
+// Brand Icons
+import { MurfyLogo } from '../Atoms/BrandIcons/MurfyLogo'
+import { Facebook } from '../Atoms/Icons/Facebook'
+import { Instagram } from '../Atoms/Icons/Instagram'
+import { LinkedIn } from '../Atoms/Icons/LinkedIn'
+import { X } from '../Atoms/Icons/X'
+import { YouTube } from '../Atoms/Icons/YouTube'
+import { Tick } from '../Atoms/Icons/Tick'
+import { ChevronRight } from '../Atoms/Icons/ChevronRight'
+import { ChevronLeft } from '../Atoms/Icons/ChevronLeft'
+import { ChevronUp } from '../Atoms/Icons/ChevronUp'
+import { ChevronDown } from '../Atoms/Icons/ChevronDown'
+
 const meta: Meta = {
   title: 'Foundation/Icons',
   parameters: { layout: 'fullscreen' },
 }
 export default meta
 type Story = StoryObj
+
+// ─── Brand Icons ─────────────────────────────────────────────────────────────
+
+const BRAND_ICONS = {
+  'Brand Logo': [
+    { name: 'MurfyLogo', Icon: MurfyLogo },
+  ],
+  'Social Icons': [
+    { name: 'Facebook', Icon: Facebook },
+    { name: 'Instagram', Icon: Instagram },
+    { name: 'LinkedIn', Icon: LinkedIn },
+    { name: 'X', Icon: X },
+    { name: 'YouTube', Icon: YouTube },
+  ],
+  'UI Icons': [
+    { name: 'Tick', Icon: Tick },
+    { name: 'ChevronRight', Icon: ChevronRight },
+    { name: 'ChevronLeft', Icon: ChevronLeft },
+    { name: 'ChevronUp', Icon: ChevronUp },
+    { name: 'ChevronDown', Icon: ChevronDown },
+  ]
+}
 
 // ─── Icon catalogue (from iconsax-react meta-data.json) ───────────────────────
 
@@ -50,9 +85,10 @@ type IconSize = typeof SIZES[number]
 
 // ─── Icon cell ────────────────────────────────────────────────────────────────
 
-function IconCell({ name, variant, size }: { name: string; variant: Variant; size: IconSize }) {
+function IconCell({ name, variant, size, BrandIcon }: { name: string; variant: Variant; size: IconSize; BrandIcon?: React.ComponentType<{ width?: number; height?: number; style?: React.CSSProperties }> }) {
   const [copied, setCopied] = useState(false)
-  const IconComp = (IconsaxIcons as Record<string, React.ComponentType<{ size?: number; variant?: string; color?: string }>>)[name]
+  
+  const IconComp = BrandIcon || (IconsaxIcons as Record<string, React.ComponentType<{ size?: number; variant?: string; color?: string }>>)[name]
 
   if (!IconComp) return null
 
@@ -69,7 +105,13 @@ function IconCell({ name, variant, size }: { name: string; variant: Variant; siz
       title={copied ? 'Copied!' : name}
       className="flex flex-col items-center gap-1.5 p-3 rounded-lg border border-transparent hover:border-border hover:bg-bg-2 transition-all group cursor-pointer text-center"
     >
-      <IconComp size={size} variant={variant} color="var(--text)" />
+      <div className="flex items-center justify-center" style={{ width: size, height: size }}>
+        {BrandIcon ? (
+          <BrandIcon width={size} height={size} style={{ color: 'var(--text)' }} />
+        ) : (
+          <IconComp size={size} variant={variant} color="var(--text)" />
+        )}
+      </div>
       <span
         className="text-[10px] leading-tight opacity-50 group-hover:opacity-100 transition-opacity truncate w-full"
         style={{ color: 'var(--text)', maxWidth: 72 }}
@@ -88,7 +130,7 @@ function IconsPage() {
   const [size, setSize] = useState<IconSize>(24)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
-  const allCategories = Object.keys(CATEGORIES)
+  const allIconsaxCategories = Object.keys(CATEGORIES)
 
   const ICON_ALIASES: Record<string, string[]> = {
     // Essential
@@ -372,11 +414,28 @@ function IconsPage() {
     'Ship': ['boat', 'vessel', 'maritime'],
   }
 
-  const filtered = useMemo(() => {
+  const brandFiltered = useMemo(() => {
+    const q = search.toLowerCase().trim()
+    const result: Record<string, any[]> = {}
+    for (const [cat, icons] of Object.entries(BRAND_ICONS)) {
+      // If searching, ignore activeCategory for matching
+      if (!q && activeCategory && activeCategory !== 'Brand Icons' && activeCategory !== cat) continue
+      
+      const matches = q
+        ? icons.filter(i => i.name.toLowerCase().includes(q))
+        : icons
+      if (matches.length > 0) result[cat] = matches
+    }
+    return result
+  }, [search, activeCategory])
+
+  const iconsaxFiltered = useMemo(() => {
     const q = search.toLowerCase().trim()
     const result: Record<string, string[]> = {}
     for (const [cat, icons] of Object.entries(CATEGORIES)) {
-      if (activeCategory && cat !== activeCategory) continue
+      // If searching, ignore activeCategory for matching
+      if (!q && activeCategory && activeCategory !== 'Iconsax' && cat !== activeCategory) continue
+      
       const matches = q
         ? icons.filter(n => {
             const lowerName = n.toLowerCase()
@@ -390,7 +449,9 @@ function IconsPage() {
     return result
   }, [search, activeCategory])
 
-  const totalVisible = Object.values(filtered).reduce((s, arr) => s + arr.length, 0)
+  const totalBrand = Object.values(brandFiltered).reduce((s, arr) => s + arr.length, 0)
+  const totalIconsax = Object.values(iconsaxFiltered).reduce((s, arr) => s + arr.length, 0)
+  const totalVisible = totalBrand + totalIconsax
 
   return (
     <div className="p-8 max-w-6xl">
@@ -399,9 +460,7 @@ function IconsPage() {
       <div className="mb-8">
         <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Icons</h2>
         <p className="text-sm mt-1 opacity-60 max-w-xl" style={{ color: 'var(--text)' }}>
-          993 icons across 32 categories from{' '}
-          <a href="https://iconsax.io" target="_blank" rel="noreferrer" className="underline">iconsax.io</a>.
-          Import from <code className="font-mono bg-bg-2 px-1 rounded">iconsax-react</code>.
+          Brand-specific icons and the full Iconsax library (993 icons).
           Click any icon to copy its name.
         </p>
       </div>
@@ -470,7 +529,33 @@ function IconsPage() {
         >
           All
         </button>
-        {allCategories.map(cat => (
+        <button
+          onClick={() => setActiveCategory('Brand Icons')}
+          className="px-3 py-1 rounded-full text-xs border transition-colors"
+          style={{
+            backgroundColor: activeCategory === 'Brand Icons' ? 'var(--text)' : 'transparent',
+            color: activeCategory === 'Brand Icons' ? 'var(--bg)' : 'var(--text)',
+            borderColor: 'var(--border)',
+          }}
+        >
+          Brand Icons
+        </button>
+        <button
+          onClick={() => setActiveCategory('Iconsax')}
+          className="px-3 py-1 rounded-full text-xs border transition-colors"
+          style={{
+            backgroundColor: activeCategory === 'Iconsax' ? 'var(--text)' : 'transparent',
+            color: activeCategory === 'Iconsax' ? 'var(--bg)' : 'var(--text)',
+            borderColor: 'var(--border)',
+          }}
+        >
+          Iconsax
+        </button>
+        
+        {/* Separator if needed */}
+        <div className="w-px h-6 bg-border mx-1 self-center" />
+
+        {allIconsaxCategories.map(cat => (
           <button
             key={cat}
             onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
@@ -486,15 +571,39 @@ function IconsPage() {
         ))}
       </div>
 
-      {/* Icon grid — flat when searching, grouped by category otherwise */}
-      {search.trim() ? (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-1">
-          {Object.values(filtered).flat().map(name => (
-            <IconCell key={name} name={name} variant={variant} size={size} />
-          ))}
+      {/* Brand Icons Grid */}
+      {Object.entries(brandFiltered).map(([cat, icons]) => (
+        <div key={cat} className="mb-10">
+          <h3
+            className="text-xs font-semibold uppercase tracking-widest mb-3 opacity-50"
+            style={{ color: 'var(--text)' }}
+          >
+            {cat} <span className="font-normal normal-case tracking-normal">({icons.length})</span>
+          </h3>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-1">
+            {icons.map(icon => (
+              <IconCell key={icon.name} name={icon.name} variant={variant} size={size} BrandIcon={icon.Icon} />
+            ))}
+          </div>
         </div>
+      ))}
+
+      {/* Iconsax Grid */}
+      {search.trim() ? (
+        totalIconsax > 0 && (
+          <div className="mb-10">
+            <h3 className="text-xs font-semibold uppercase tracking-widest mb-3 opacity-50" style={{ color: 'var(--text)' }}>
+              Iconsax Results <span className="font-normal normal-case tracking-normal">({totalIconsax})</span>
+            </h3>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-1">
+              {Object.values(iconsaxFiltered).flat().map(name => (
+                <IconCell key={name} name={name} variant={variant} size={size} />
+              ))}
+            </div>
+          </div>
+        )
       ) : (
-        Object.entries(filtered).map(([cat, icons]) => (
+        Object.entries(iconsaxFiltered).map(([cat, icons]) => (
           <div key={cat} className="mb-10">
             <h3
               className="text-xs font-semibold uppercase tracking-widest mb-3 opacity-50"
@@ -523,17 +632,29 @@ function IconsPage() {
         style={{ backgroundColor: 'var(--bg-2)' }}
       >
         <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--text)' }}>Usage</h3>
-        <pre
-          className="text-xs leading-relaxed overflow-auto"
-          style={{ color: 'var(--text)', opacity: 0.8 }}
-        >
-{`import { Home, SearchNormal1, ArrowDown2 } from 'iconsax-react'
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 className="text-xs font-semibold mb-2 opacity-60" style={{ color: 'var(--text)' }}>Brand Icons</h4>
+            <pre className="text-xs leading-relaxed overflow-auto" style={{ color: 'var(--text)', opacity: 0.8 }}>
+{`import { MurfyLogo } from './Atoms/BrandIcons/MurfyLogo'
+import { Facebook } from './Atoms/Icons/Facebook'
+
+<MurfyLogo width={40} height={40} />
+<Facebook width={24} height={24} />`}
+            </pre>
+          </div>
+          <div>
+            <h4 className="text-xs font-semibold mb-2 opacity-60" style={{ color: 'var(--text)' }}>Iconsax</h4>
+            <pre className="text-xs leading-relaxed overflow-auto" style={{ color: 'var(--text)', opacity: 0.8 }}>
+{`import { Home, SearchNormal1 } from 'iconsax-react'
 
 // variant: 'Linear' | 'Bold' | 'Broken' | 'Bulk' | 'Outline' | 'TwoTone'
-<Home size={24} variant="Linear" color="var(--text)" />
-<SearchNormal1 size={20} variant="Bold" color="var(--accent-btn-bg)" />
-<ArrowDown2 size={16} variant="Broken" />`}
-        </pre>
+<Home size={24} variant="Linear" />
+<SearchNormal1 size={20} variant="Bold" />`}
+            </pre>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -541,4 +662,52 @@ function IconsPage() {
 
 export const Overview: Story = {
   render: () => <IconsPage />,
+}
+
+export const BrandLogo: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <div className="flex flex-col items-center gap-4">
+      <h3 className="text-lg font-bold" style={{ color: 'var(--text)' }}>Murfy Logo</h3>
+      <MurfyLogo width={120} height={120} style={{ color: 'var(--text)' }} />
+    </div>
+  )
+}
+
+export const SocialIcons: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <div className="flex flex-col items-center gap-6">
+      <h3 className="text-lg font-bold" style={{ color: 'var(--text)' }}>Social Icons</h3>
+      <div className="flex gap-4">
+        {BRAND_ICONS['Social Icons'].map(({ name, Icon }) => (
+          <div key={name} className="flex flex-col items-center gap-2">
+            <div className="p-4 rounded-lg bg-bg-2 border border-border">
+              <Icon width={32} height={32} style={{ color: 'var(--text)' }} />
+            </div>
+            <span className="text-[10px] opacity-60" style={{ color: 'var(--text)' }}>{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export const UIIcons: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <div className="flex flex-col items-center gap-6">
+      <h3 className="text-lg font-bold" style={{ color: 'var(--text)' }}>UI Icons</h3>
+      <div className="flex gap-4">
+        {BRAND_ICONS['UI Icons'].map(({ name, Icon }) => (
+          <div key={name} className="flex flex-col items-center gap-2">
+            <div className="p-4 rounded-lg bg-bg-2 border border-border">
+              <Icon width={24} height={24} style={{ color: 'var(--text)' }} />
+            </div>
+            <span className="text-[10px] opacity-60" style={{ color: 'var(--text)' }}>{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
