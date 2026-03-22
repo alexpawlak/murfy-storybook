@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import tokens from '../../tokens.json'
+import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote } from './doc-components'
 
 type TypographyScaleName = keyof typeof tokens.typography
 
@@ -33,11 +34,11 @@ const HEADING_ROWS: TypographyRow[] = [
 const BODY_ROWS: TypographyRow[] = [
   { name: 'text-large', label: 'Large', sample: 'Nous réparons vos appareils électroménagers à domicile.' },
   { name: 'text-main', label: 'Main', sample: 'Prenez rendez-vous en ligne en quelques clics. Un technicien se déplace chez vous.' },
-  { name: 'text-small', label: 'Small', sample: 'Réparation garantie 6 mois. Pièces d’origine constructeur.' },
+  { name: 'text-small', label: 'Small', sample: "Réparation garantie 6 mois. Pièces d'origine constructeur." },
   { name: 'text-xsmall', label: 'XSmall', sample: 'Mentions légales · Politique de confidentialité · CGV' },
   { name: 'text-large-semibold', label: 'Large Semibold', sample: 'Nous réparons vos appareils électroménagers à domicile.' },
   { name: 'text-main-semibold', label: 'Main Semibold', sample: 'Prenez rendez-vous en ligne en quelques clics.' },
-  { name: 'text-small-semibold', label: 'Small Semibold', sample: 'Réparation garantie 6 mois. Pièces d’origine constructeur.' },
+  { name: 'text-small-semibold', label: 'Small Semibold', sample: "Réparation garantie 6 mois. Pièces d'origine constructeur." },
   { name: 'text-xsmall-semibold', label: 'XSmall Semibold', sample: 'Techniciens certifiés et expérimentés' },
   { name: 'label', label: 'Label', sample: 'Section label · Form field · Badge text' },
 ]
@@ -67,25 +68,28 @@ function TypeRow({ name, label, sample }: TypographyRow) {
       style={{ borderColor: 'var(--border)' }}
     >
       <div className="pt-1">
-        <div className="text-xs font-semibold" style={{ color: 'var(--text)' }}>{label}</div>
-        <div className="mt-0.5 text-xs opacity-50" style={{ color: 'var(--text)' }}>
+        <div className="text-text-xsmall-semibold text-text">{label}</div>
+        <div className="mt-0.5 text-label text-text" style={{ opacity: 0.5 }}>
           Desktop {scale.desktop.fontSize}px / Mobile {scale.mobile.fontSize}px
         </div>
-        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+        <div className="text-label text-text" style={{ opacity: 0.5 }}>
           {scale.fontWeight} — {getWeightLabel(scale.fontWeight)}
         </div>
-        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+        <div className="text-label text-text" style={{ opacity: 0.5 }}>
           lh {scale.desktop.lineHeight} / {scale.mobile.lineHeight}
         </div>
-        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+        <div className="text-label text-text" style={{ opacity: 0.5 }}>
           ls {scale.letterSpacing}em
         </div>
-        <div className="text-xs opacity-50" style={{ color: 'var(--text)' }}>
+        <div className="text-label text-text" style={{ opacity: 0.5 }}>
           case {scale.textTransform}
         </div>
         <code
-          className="mt-1.5 inline-block rounded px-1.5 py-0.5 text-[10px]"
-          style={{ backgroundColor: 'var(--bg-2)', color: 'var(--text)', opacity: 0.7 }}
+          className="mt-1.5 inline-block rounded-[var(--radius-small)] px-1.5 py-0.5 text-label font-mono"
+          style={{
+            background: 'color-mix(in srgb, var(--accent-btn-bg) 10%, var(--bg))',
+            color: 'var(--accent-btn-bg)',
+          }}
         >
           {`--font-size-${name}`}
         </code>
@@ -98,7 +102,6 @@ function TypeRow({ name, label, sample }: TypographyRow) {
           letterSpacing: `var(--letter-spacing-${name})`,
           textTransform: `var(--text-transform-${name})` as React.CSSProperties['textTransform'],
           color: 'var(--text)',
-          fontFamily: 'var(--font-family-brand)',
         }}
       >
         {sample}
@@ -107,35 +110,33 @@ function TypeRow({ name, label, sample }: TypographyRow) {
   )
 }
 
-function TypographySpecimen({
-  mode,
-  widthClassName,
-}: {
-  mode: 'mobile' | 'desktop'
-  widthClassName: string
-}) {
+function TypographySpecimen({ mode, widthClassName }: { mode: 'mobile' | 'desktop'; widthClassName: string }) {
   return (
     <div
-      className={`rounded-card p-6 ${widthClassName}`}
+      className={`rounded-[var(--radius-card)] p-6 ${widthClassName}`}
       style={{
         backgroundColor: 'var(--bg)',
+        border: '1px solid var(--border)',
         boxShadow: '0 2px 16px color-mix(in srgb, var(--dark-900) 8%, transparent)',
         ...getTypographyModeVars(mode),
       } as React.CSSProperties}
     >
-      <div className="text-label font-semibold text-text-default opacity-60">
+      <div className="text-label font-semibold text-text" style={{ opacity: 0.6 }}>
         {mode === 'mobile' ? 'Mobile specimen' : 'Desktop specimen'}
       </div>
-      <div className="mt-4 text-display font-bold text-text-default">Murfy</div>
-      <h2 className="mt-4 text-h2 font-bold text-text-default">Réparer plutôt que remplacer</h2>
-      <p className="mt-4 text-text-main text-text-default opacity-80">
+      <div className="mt-4 text-display font-bold text-text">Murfy</div>
+      <h2 className="mt-4 text-h2 font-bold text-text">Réparer plutôt que remplacer</h2>
+      <p className="mt-4 text-text-main text-text" style={{ opacity: 0.8 }}>
         Une hiérarchie rapide à scanner pour vérifier la différence entre les valeurs mobiles et desktop.
       </p>
       <div className="mt-5 flex flex-wrap gap-3">
-        <span className="text-label font-semibold text-text-default" style={{ backgroundColor: 'var(--bg-2)', borderRadius: 'var(--radius-pill)', padding: '8px 12px' }}>
+        <span
+          className="text-label font-semibold text-text"
+          style={{ backgroundColor: 'color-mix(in srgb, var(--accent-btn-bg) 10%, var(--bg))', borderRadius: 'var(--radius-pill)', padding: '8px 12px' }}
+        >
           Type system
         </span>
-        <span className="text-text-small-semibold text-text-default">
+        <span className="text-text-small-semibold text-text">
           {mode === 'mobile' ? '390px reference' : 'Desktop reference'}
         </span>
       </div>
@@ -143,165 +144,141 @@ function TypographySpecimen({
   )
 }
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 function TypographyPage() {
   return (
-    <div className="max-w-5xl p-8">
-      <div className="mb-12 rounded-card p-8" style={{ backgroundColor: 'var(--bg-2)' }}>
-        <div
-          className="mb-3 text-xs font-semibold uppercase tracking-widest opacity-50"
-          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
-        >
-          Brand typeface
-        </div>
-        <h1 className="mb-4 text-h2 font-bold" style={{ color: 'var(--text)' }}>
-          Murfy A2
-        </h1>
-        <p
-          className="mb-6 max-w-2xl text-text-main"
-          style={{ color: 'var(--text)', opacity: 0.7 }}
-        >
-          Murfy A2 is the brand&apos;s custom typeface. The typography system is now mobile-first in code, with a
-          desktop override at the `md` breakpoint and a matching Desktop/Mobile mode strategy planned for Figma.
-          Only the Display style is uppercase by system rule. `H1` to `H6` keep their normal casing unless a component
-          intentionally applies uppercase for a specific design.
-        </p>
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Foundation"
+        title="Typography"
+        description="Murfy A2 is the brand's custom typeface. The type system is mobile-first with a desktop override at the md breakpoint. Fourteen named steps cover every use case from display headings to micro labels — only one all-caps style exists by design."
+      />
 
-        <div className="grid gap-4 md:grid-cols-4">
-          {WEIGHTS.map(({ label, value }) => (
-            <div
-              key={label}
-              className="rounded-sm p-4"
-              style={{ backgroundColor: 'var(--bg)' }}
-            >
-              <div
-                style={{
-                  fontFamily: 'var(--font-family-brand)',
-                  fontWeight: value,
-                  fontSize: 'var(--font-size-h5)',
-                  color: 'var(--text)',
-                  lineHeight: 1.2,
-                }}
-              >
-                Aa
-              </div>
-              <div className="mt-2 text-xs opacity-50" style={{ color: 'var(--text)' }}>
-                {label}
-              </div>
-              <div className="text-xs opacity-40" style={{ color: 'var(--text)' }}>
-                {value}
-              </div>
+      <div className="px-8 py-12 max-w-5xl">
+
+        {/* ── Typeface ──────────────────────────────────────────────────── */}
+        <DocSection
+          label="Murfy A2 — Typeface"
+          subtitle="The brand's custom typeface. Seven weights are available. Mobile values are the default; desktop values take over at the md breakpoint."
+        >
+          <div className="rounded-[var(--radius-card)] border border-border p-6 mb-6" style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))' }}>
+            <div className="grid gap-4 md:grid-cols-4">
+              {WEIGHTS.map(({ label, value }) => (
+                <div key={label} className="rounded-[var(--radius-small)] p-4 border border-border" style={{ background: 'var(--bg)' }}>
+                  <div style={{ fontWeight: value, fontSize: 'var(--font-size-h5)', color: 'var(--text)', lineHeight: 1.2 }}>
+                    Aa
+                  </div>
+                  <div className="mt-2 text-text-xsmall text-text" style={{ opacity: 0.6 }}>{label}</div>
+                  <div className="text-label text-text" style={{ opacity: 0.4 }}>{value}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </DocSection>
+
+        {/* ── Responsive preview ────────────────────────────────────────── */}
+        <DocSection
+          label="Responsive preview"
+          subtitle="These specimen cards pin the typography variables to each mode so you can compare mobile and desktop side by side."
+        >
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
+            <TypographySpecimen mode="mobile" widthClassName="w-full max-w-[390px]" />
+            <TypographySpecimen mode="desktop" widthClassName="w-full xl:flex-1" />
+          </div>
+        </DocSection>
+
+        {/* ── Headings ──────────────────────────────────────────────────── */}
+        <DocSection
+          label="Headings"
+          subtitle="Only Display is uppercase by design. H1–H6 keep sentence case unless a component intentionally applies uppercase for a specific design purpose."
+        >
+          {HEADING_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
+        </DocSection>
+
+        {/* ── Body & UI ─────────────────────────────────────────────────── */}
+        <DocSection
+          label="Body & UI"
+          subtitle="Body styles stay sentence case. Semibold variants provide emphasis without changing the scale step — prefer these over a heavier weight on the same step."
+        >
+          {BODY_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
+        </DocSection>
+
+        {/* ── Best Practices ────────────────────────────────────────────── */}
+        <DocSection
+          label="Best Practices"
+          subtitle="Rules for using the type system correctly — covering class names, all-caps, and sizing."
+        >
+          <GuidanceGrid
+            dos={[
+              {
+                rule: 'Use the Murfy Tailwind classes: text-h1, text-text-main, text-label, etc.',
+                rationale: 'The custom classes map to CSS variables that respond to the token system. Tailwind defaults (text-sm, text-xl) bypass the system and break responsive scaling.',
+              },
+              {
+                rule: 'Apply text-label (12px, semibold, uppercase) only for 4-word-or-fewer labels.',
+                rationale: 'Word-shape recognition fails above ~28 characters of all-caps text, dropping reading speed significantly. The label style is calibrated for short identifiers only.',
+                wcag: 'WCAG 2.1 AA 1.4.8',
+              },
+              {
+                rule: 'Use the semibold variant for emphasis within body text rather than bumping the scale step.',
+                rationale: 'Jumping from text-main to text-h5 for inline emphasis disrupts line height and visual flow. The semibold variant (text-main-semibold) adds emphasis without breaking the rhythm.',
+              },
+              {
+                rule: 'Set minimum body text at text-text-xsmall (14px) for any readable content.',
+                rationale: 'Text below 14px is difficult to read for users with moderate visual impairments even with 20/20 vision. It also fails WCAG minimum contrast at standard contrast ratios.',
+                wcag: 'WCAG 2.1 AA 1.4.3',
+              },
+            ]}
+            donts={[
+              {
+                rule: 'Do not use text-xs, text-sm, text-base, text-lg, text-xl — any Tailwind default sizes.',
+                rationale: 'Tailwind default sizes do not map to the Murfy type scale. They create visual inconsistency and ignore the responsive mobile/desktop scaling system.',
+              },
+              {
+                rule: 'Do not uppercase H1–H6 headings.',
+                rationale: 'All-caps headings strip letter-shape differentiation (ascenders and descenders) which makes headings 10–14% slower to read. Headings are scanned, not read linearly — shape differentiation is essential.',
+              },
+              {
+                rule: 'Do not set font sizes via inline styles with raw px or rem values.',
+                rationale: 'Raw px/rem values bypass the token system. Use the nearest Tailwind class, or var(--font-size-h4) if a size falls between scale steps — never a raw number.',
+              },
+              {
+                rule: 'Do not set fontFamily: "GT Walsheim Pro" or fontFamily: "Murfy A2" inline.',
+                rationale: 'Murfy A2 is already the default body font. Setting it inline creates redundant overrides that may conflict when the font stack changes in the future.',
+              },
+            ]}
+          />
+        </DocSection>
+
+        {/* ── Accessibility ─────────────────────────────────────────────── */}
+        <DocSection
+          label="Accessibility & WCAG"
+          subtitle="Typography standards that protect readability for all users."
+        >
+          <div className="flex flex-col gap-4">
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
+              requirement="4.5:1 for normal text · 3:1 for large text (≥18pt or ≥14pt bold)"
+              why="Body text (text-main, text-small) must achieve 4.5:1 contrast against its background. Heading text at h3 and above (large text) requires 3:1. The Murfy dark green (#0b4744) on white achieves 9.1:1 — well above both thresholds."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 1.4.12 — Text Spacing"
+              requirement="Content must not be lost when letter-spacing, word-spacing, and line-height are overridden by users"
+              why="Some users with dyslexia or cognitive disabilities override type spacing in their browser. Murfy's type tokens use CSS variables which allows these overrides to work correctly. Avoid overriding line-height or letter-spacing with !important — this blocks user accessibility settings."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 1.4.8 — Visual Presentation"
+              requirement="Text blocks must not be fully justified; line length should target 80 characters or fewer"
+              why="The Murfy type system uses max-w-2xl (42rem ≈ 65–72 characters at text-main) for body text containers. This is within the optimal reading range. Do not apply text-align: justify — uneven word spacing caused by full justification creates 'rivers of white' that disrupt reading flow."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+            />
+          </div>
+        </DocSection>
+
       </div>
-
-      <section className="mb-12">
-        <h2
-          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
-          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
-        >
-          Responsive preview
-        </h2>
-        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
-          These specimen cards pin the typography variables to each mode so you can compare the mobile and desktop
-          versions side by side in the same Storybook page.
-        </p>
-        <div className="flex flex-col gap-6 xl:flex-row xl:items-start">
-          <TypographySpecimen mode="mobile" widthClassName="w-full max-w-[390px]" />
-          <TypographySpecimen mode="desktop" widthClassName="w-full xl:flex-1" />
-        </div>
-      </section>
-
-      <section className="mb-12">
-        <h2
-          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
-          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
-        >
-          Headings
-        </h2>
-        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
-          Only `Display` is uppercase by design. Mobile values are the default and desktop values take over from the
-          `md` breakpoint so the same semantic class scales cleanly across layouts.
-        </p>
-        {HEADING_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
-      </section>
-
-      <section className="mb-12">
-        <h2
-          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
-          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
-        >
-          Body & UI
-        </h2>
-        <p className="mb-6 text-sm opacity-50" style={{ color: 'var(--text)' }}>
-          Body styles stay sentence case. These tokens follow the same desktop/mobile structure so Storybook and Figma
-          can share one semantic type system instead of separate scales.
-        </p>
-        {BODY_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
-      </section>
-
-      <section>
-        <h2
-          className="mb-1 text-xs font-semibold uppercase tracking-widest opacity-50"
-          style={{ color: 'var(--text)', letterSpacing: '0.08em' }}
-        >
-          All-caps usage rules
-        </h2>
-        <p className="mb-6 text-sm" style={{ color: 'var(--text)', opacity: 0.7 }}>
-          The <code>text-label</code> token (12px, semibold, <code>tracking-[0.08em]</code>, <code>uppercase</code>)
-          is the only all-caps style in the type system. It exists for very short, high-contrast labels — not for
-          headings or body text.
-        </p>
-
-        <div className="grid gap-4 md:grid-cols-2 mb-8">
-          <div className="rounded-card p-6" style={{ backgroundColor: 'var(--bg-2)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
-            <h3 className="text-h6 font-bold mb-4" style={{ color: 'var(--text)' }}>Do</h3>
-            <ul className="flex flex-col gap-3">
-              {[
-                'Section labels above a content block ("Nos services", "Comment ça marche")',
-                'Navigation category chips (≤ 3 words, single line)',
-                'Status or state badges ("Nouveau", "Disponible", "Garanti")',
-                'Form field group headers where the label floats above an input group',
-                'Legal or compliance markers in footers ("CGV · Mentions légales")',
-              ].map((item) => (
-                <li key={item} className="text-text-small" style={{ color: 'var(--text)', opacity: 0.8 }}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div
-            className="rounded-card p-6"
-            style={{ backgroundColor: 'var(--pink-vivid)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
-          >
-            <h3 className="text-h6 font-bold mb-4" style={{ color: 'var(--text)' }}>Avoid</h3>
-            <ul className="flex flex-col gap-3">
-              {[
-                'Any heading H1–H6 — all-caps strips the letter-shape differentiation that makes headings scan fast',
-                'CTA button labels — uppercase removes the rounded cap-to-lowercase contrast that aids click affordance recognition',
-                'Body text of any length — reading speed drops ~14% for all-caps prose',
-                'Any string longer than 4 words or ~28 characters — beyond that, word-shape recognition fails and the reader must decode letter by letter',
-              ].map((item) => (
-                <li key={item} className="text-text-small" style={{ color: 'var(--text)', opacity: 0.8 }}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div
-          className="rounded-card p-4"
-          style={{ backgroundColor: '#fff8e1', border: '1px solid #ffe082' }}
-        >
-          <p className="text-text-small" style={{ color: '#5a3800' }}>
-            <strong>28-character / 4-word limit.</strong> Above this threshold, word-shape recognition breaks down and
-            reading speed drops significantly. If you need more than four words, use sentence case with{' '}
-            <code>text-text-small-semibold</code> instead — the visual weight is similar, the legibility is better.
-          </p>
-        </div>
-      </section>
     </div>
   )
 }

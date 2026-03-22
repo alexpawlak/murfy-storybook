@@ -12,9 +12,7 @@ export function AccordionItem({ question, answer, defaultOpen = false }: Accordi
 
   return (
     <div
-      className={`rounded-[10px] overflow-hidden transition-colors bg-bg ${
-        isOpen ? '' : 'border border-border'
-      }`}
+      className="rounded-[10px] overflow-hidden transition-colors bg-bg border border-border"
     >
       <button
         className="w-full flex items-center justify-between gap-2 px-4 py-4 text-left transition-opacity hover:opacity-80"

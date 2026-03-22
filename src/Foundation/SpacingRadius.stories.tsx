@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote } from './doc-components'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -65,19 +66,6 @@ const spacingTokens = [
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function SectionHeader({ label, description }: { label: string; description: string }) {
-  return (
-    <div className="mb-8">
-      <h2 className="text-h4 font-bold text-text mb-1">{label}</h2>
-      <p className="text-text-small text-text max-w-2xl" style={{ opacity: 0.6 }}>{description}</p>
-    </div>
-  )
-}
-
-function Divider() {
-  return <hr className="border-border my-12" />
-}
-
 function Token({ children }: { children: React.ReactNode }) {
   return (
     <code
@@ -92,16 +80,11 @@ function Token({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ─── Radius Section ───────────────────────────────────────────────────────────
+// ─── Showcase sections ────────────────────────────────────────────────────────
 
-function RadiusSection() {
+function RadiusShowcase() {
   return (
-    <section>
-      <SectionHeader
-        label="Border Radius"
-        description="Five named radius tokens cover every shape in the Murfy UI. Always reference a token — never use a raw px value. Tokens are consumed via CSS variable or the corresponding Tailwind utility."
-      />
-
+    <>
       {/* Visual showcase */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-10">
         {radii.map(({ label, value, cssVar }) => (
@@ -126,7 +109,7 @@ function RadiusSection() {
       <div className="rounded-[var(--radius-card)] border border-border overflow-hidden">
         <table className="w-full text-left text-text-small">
           <thead>
-            <tr className="border-b border-border" style={{ background: 'var(--bg)', opacity: 1 }}>
+            <tr className="border-b border-border" style={{ background: 'var(--bg)' }}>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Token</th>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Value</th>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Preview</th>
@@ -134,24 +117,16 @@ function RadiusSection() {
             </tr>
           </thead>
           <tbody>
-            {radii.map(({ name, label, value, cssVar, usage }, i) => (
+            {radii.map(({ name, value, cssVar, usage }, i) => (
               <tr
                 key={name}
                 className="border-b border-border last:border-0"
                 style={{ background: i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--border) 40%, transparent)' }}
               >
-                <td className="px-5 py-4">
-                  <Token>{`var(${cssVar})`}</Token>
-                </td>
+                <td className="px-5 py-4"><Token>{`var(${cssVar})`}</Token></td>
                 <td className="px-5 py-4 font-mono text-text-xsmall text-text" style={{ opacity: 0.7 }}>{value}</td>
                 <td className="px-5 py-4">
-                  <div
-                    className="w-10 h-10"
-                    style={{
-                      borderRadius: `var(${cssVar})`,
-                      background: 'var(--accent-btn-bg)',
-                    }}
-                  />
+                  <div className="w-10 h-10" style={{ borderRadius: `var(${cssVar})`, background: 'var(--accent-btn-bg)' }} />
                 </td>
                 <td className="px-5 py-4 text-text-xsmall text-text" style={{ opacity: 0.65 }}>{usage}</td>
               </tr>
@@ -160,7 +135,6 @@ function RadiusSection() {
         </table>
       </div>
 
-      {/* Usage note */}
       <div
         className="mt-6 rounded-[var(--radius-dropdown)] border border-border px-5 py-4 flex gap-3 items-start"
         style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 8%, transparent)' }}
@@ -171,37 +145,24 @@ function RadiusSection() {
           In Figma, every radius is a variable in the <strong>Dimensions</strong> collection — never enter raw pixels.
         </p>
       </div>
-    </section>
+    </>
   )
 }
 
-// ─── Spacing Section ──────────────────────────────────────────────────────────
-
-function SpacingSection() {
+function SpacingShowcase() {
   const maxVal = Math.max(...spacingTokens.map(t => t.value))
 
   return (
-    <section>
-      <SectionHeader
-        label="Spacing"
-        description="Spacing tokens govern the vertical rhythm of the page — the breathing room between full-width sections. Consistent application keeps the page from feeling cramped on mobile or too spaced-out on desktop."
-      />
-
+    <>
       {/* Visual bar chart */}
       <div className="flex items-end gap-10 mb-10">
-        {spacingTokens.map(({ label, value, cssVar }) => (
+        {spacingTokens.map(({ label, value }) => (
           <div key={label} className="flex flex-col items-center gap-3">
-            {/* bar */}
             <div className="relative flex items-end" style={{ height: maxVal + 24 }}>
               <div
                 className="w-20 rounded-t-[var(--radius-small)]"
-                style={{
-                  height: value,
-                  background: 'var(--accent-btn-bg)',
-                  opacity: 0.85,
-                }}
+                style={{ height: value, background: 'var(--accent-btn-bg)', opacity: 0.85 }}
               />
-              {/* measurement line */}
               <div
                 className="absolute right-[-28px] top-0 flex flex-col items-center gap-0"
                 style={{ height: value }}
@@ -209,7 +170,6 @@ function SpacingSection() {
                 <div className="flex-1 border-r border-dashed border-border" />
               </div>
             </div>
-            {/* label */}
             <div className="text-center">
               <p className="text-text-small-semibold text-text">{label}</p>
               <p className="text-text-xsmall font-mono" style={{ color: 'var(--text)', opacity: 0.5 }}>{value}px</p>
@@ -236,9 +196,7 @@ function SpacingSection() {
                 className="border-b border-border last:border-0"
                 style={{ background: i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--border) 40%, transparent)' }}
               >
-                <td className="px-5 py-4">
-                  <Token>{`var(${cssVar})`}</Token>
-                </td>
+                <td className="px-5 py-4"><Token>{`var(${cssVar})`}</Token></td>
                 <td className="px-5 py-4 font-mono text-text-xsmall text-text" style={{ opacity: 0.7 }}>{value}px</td>
                 <td className="px-5 py-4 text-text-xsmall text-text" style={{ opacity: 0.7 }}>
                   {name.includes('mobile') ? '< md (640px)' : '≥ md (640px)'}
@@ -250,7 +208,6 @@ function SpacingSection() {
         </table>
       </div>
 
-      {/* Tailwind pattern */}
       <div
         className="mt-6 rounded-[var(--radius-dropdown)] border border-border px-5 py-4"
         style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 8%, transparent)' }}
@@ -260,57 +217,7 @@ function SpacingSection() {
           {'py-[var(--spacing-section-y-mobile)] md:py-[var(--spacing-section-y-desktop)]'}
         </code>
       </div>
-    </section>
-  )
-}
-
-// ─── Usage Principles ─────────────────────────────────────────────────────────
-
-function PrinciplesSection() {
-  const rules = [
-    {
-      icon: '✦',
-      title: 'Token-first, always',
-      body: 'Never hardcode a px value for radius or section spacing. If a value isn\'t in the token list, add it to tokens.json and run npm run build-tokens.',
-    },
-    {
-      icon: '⊞',
-      title: 'Scale with context',
-      body: 'Use smaller radii (small, dropdown) for functional controls and inputs. Reserve larger radii (card, section) for containers and surfaces that hold content.',
-    },
-    {
-      icon: '↕',
-      title: 'Vertical rhythm consistency',
-      body: 'Every top-level section on murfy.fr uses the section-y spacing tokens. This creates a predictable rhythm as users scroll — avoid one-off padding values on sections.',
-    },
-    {
-      icon: '⬡',
-      title: 'Pill for interactive states',
-      body: 'Tags, filters, and status chips use radius-pill. This creates an obvious visual distinction between interactive identifiers and rectangular content cards.',
-    },
-  ]
-
-  return (
-    <section>
-      <SectionHeader
-        label="Usage Principles"
-        description="Guidelines for applying spacing and radius tokens consistently across all Murfy surfaces."
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {rules.map(({ icon, title, body }) => (
-          <div
-            key={title}
-            className="rounded-[var(--radius-card)] border border-border px-6 py-5 flex gap-4"
-          >
-            <span className="text-h5 leading-none mt-0.5" style={{ color: 'var(--accent-btn-bg)' }}>{icon}</span>
-            <div>
-              <p className="text-text-small-semibold text-text mb-1">{title}</p>
-              <p className="text-text-xsmall text-text" style={{ opacity: 0.65 }}>{body}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+    </>
   )
 }
 
@@ -319,29 +226,97 @@ function PrinciplesSection() {
 function SpacingRadiusDoc() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-      {/* Page header */}
-      <div
-        className="px-8 py-10 border-b border-border"
-        style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))' }}
-      >
-        <p className="text-label uppercase tracking-[0.08em] font-semibold mb-2" style={{ color: 'var(--accent-btn-bg)' }}>
-          Foundation
-        </p>
-        <h1 className="text-h2 font-bold text-text mb-3">Spacing & Radius</h1>
-        <p className="text-text-main text-text max-w-2xl" style={{ opacity: 0.65 }}>
-          The spatial vocabulary of the Murfy design system. Five radius tokens control every
-          rounded shape; two spacing tokens regulate vertical rhythm across all page sections.
-          These tokens are the same in code (CSS variables) and design (Figma variables).
-        </p>
-      </div>
+      <DocHeader
+        layer="Foundation"
+        title="Spacing & Radius"
+        description="The spatial vocabulary of the Murfy design system. Five radius tokens control every rounded shape; two spacing tokens regulate vertical rhythm across all page sections. These tokens are the same in code (CSS variables) and design (Figma variables)."
+      />
 
-      {/* Content */}
-      <div className="px-8 py-12 max-w-5xl space-y-0">
-        <RadiusSection />
-        <Divider />
-        <SpacingSection />
-        <Divider />
-        <PrinciplesSection />
+      <div className="px-8 py-12 max-w-5xl">
+
+        {/* ── Border Radius ─────────────────────────────────────────────── */}
+        <DocSection
+          label="Border Radius"
+          subtitle="Five named radius tokens cover every shape in the Murfy UI. Always reference a token — never use a raw px value."
+        >
+          <RadiusShowcase />
+        </DocSection>
+
+        {/* ── Spacing ───────────────────────────────────────────────────── */}
+        <DocSection
+          label="Spacing"
+          subtitle="Spacing tokens govern the vertical rhythm of the page — the breathing room between full-width sections. Consistent application keeps the page from feeling cramped on mobile or too spaced-out on desktop."
+        >
+          <SpacingShowcase />
+        </DocSection>
+
+        {/* ── Best Practices ────────────────────────────────────────────── */}
+        <DocSection
+          label="Best Practices"
+          subtitle="Follow these rules to keep the design system coherent across all surfaces and verticals."
+        >
+          <GuidanceGrid
+            dos={[
+              {
+                rule: 'Use radius-pill for interactive tags and filter chips.',
+                rationale: 'The pill shape creates an unmistakable visual distinction from rectangular card containers, helping users instantly identify clickable identifiers.',
+              },
+              {
+                rule: 'Use section-y spacing tokens for every top-level section.',
+                rationale: 'Consistent vertical rhythm creates a predictable scrolling experience. Users subconsciously expect similar breathing room between sections — one-off values break that expectation.',
+                wcag: 'WCAG 2.5.5 Target Size',
+              },
+              {
+                rule: 'Scale radius to context: small for controls, large for containers.',
+                rationale: 'Inputs and buttons use radius-small (8px); cards and panels use radius-card (24px). The visual hierarchy mirrors the content hierarchy — smaller controls feel contained inside larger surfaces.',
+              },
+              {
+                rule: 'Reference tokens in both Tailwind and Figma — never enter raw pixels.',
+                rationale: 'If a token value ever changes, a single update to tokens.json propagates everywhere. Hardcoded values silently diverge.',
+              },
+            ]}
+            donts={[
+              {
+                rule: 'Do not mix radius-pill with radius-card on the same interactive element.',
+                rationale: 'Mixing pill and card radii on a single component creates visual ambiguity about what level of the hierarchy the element belongs to.',
+              },
+              {
+                rule: 'Do not add one-off vertical padding to sections outside the token values.',
+                rationale: 'Arbitrary spacing values break the page rhythm and make future layout changes unpredictable. If a new value is genuinely needed, add it to tokens.json first.',
+              },
+              {
+                rule: 'Do not use radius-section for small UI controls like buttons or inputs.',
+                rationale: 'A 48px radius on a 40px tall button is visually indistinguishable from a pill — use radius-pill explicitly for that intent to keep naming meaningful.',
+              },
+              {
+                rule: 'Do not set spacing values with Tailwind defaults (p-4, p-8) on full-width sections.',
+                rationale: 'Tailwind spacing utilities are for component-level spacing. Section-level vertical rhythm must come from the design token to stay consistent across breakpoints.',
+              },
+            ]}
+          />
+        </DocSection>
+
+        {/* ── Accessibility ─────────────────────────────────────────────── */}
+        <DocSection
+          label="Accessibility & WCAG"
+          subtitle="Spacing and radius are invisible to screen readers but critical for users with motor and visual impairments."
+        >
+          <div className="flex flex-col gap-4">
+            <AccessibilityNote
+              criterion="WCAG 2.5.5 — Target Size (AA)"
+              requirement="Interactive elements must be at least 44×44 CSS pixels"
+              why="Users with motor impairments, tremors, or who are on small touch screens need a generous tap target. The 64px section spacing ensures interactive elements never crowd each other vertically on mobile. Buttons and tags must maintain at least 44px height — never reduce spacing to the point where tap targets fall below this threshold."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/target-size.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 1.4.10 — Reflow (AA)"
+              requirement="Content must reflow to a single column at 320px width without horizontal scrolling"
+              why="The mobile section-y spacing token (64px) was chosen to maintain readable vertical rhythm at 320px viewport width. Reducing it further squeezes content sections together and forces users with low vision who zoom to 400% to scroll both horizontally and vertically."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/reflow.html"
+            />
+          </div>
+        </DocSection>
+
       </div>
     </div>
   )

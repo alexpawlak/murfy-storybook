@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Button } from './Button'
+import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote } from '../../Foundation/doc-components'
 
 const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
@@ -17,13 +18,12 @@ type Story = StoryObj<typeof Button>
 
 // ─── Layout helpers ───────────────────────────────────────────────────────────
 
-/** Two-column doc row: description left, examples right */
 function DocRow({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 border-t border-border">
       <div>
-        <h4 className="text-sm font-semibold">{title}</h4>
-        <p className="text-sm text-text-2 mt-1 leading-relaxed">{description}</p>
+        <h4 className="text-text-small-semibold text-text">{title}</h4>
+        <p className="text-text-xsmall text-text mt-1 leading-relaxed" style={{ opacity: 0.65 }}>{description}</p>
       </div>
       <div className="md:col-span-2 flex flex-wrap items-center gap-3">
         {children}
@@ -32,62 +32,21 @@ function DocRow({ title, description, children }: { title: string; description: 
   )
 }
 
-function GuidanceColumn({
-  title,
-  items,
-  tone = 'default',
-}: {
-  title: string
-  items: string[]
-  tone?: 'default' | 'warning'
-}) {
-  return (
-    <div
-      className="rounded-card p-6"
-      style={{
-        backgroundColor: tone === 'warning' ? 'var(--pink-vivid)' : 'var(--bg-2)',
-        boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
-      }}
-    >
-      <h4 className="text-h6 font-bold text-text-default">{title}</h4>
-      <ul className="mt-4 flex flex-col gap-3">
-        {items.map((item) => (
-          <li key={item} className="text-text-small text-text-default" style={{ opacity: 0.8 }}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
 function SurfacePreview({
-  title,
-  description,
-  accent,
-  backgroundColor,
-  children,
+  title, description, accent, backgroundColor, children,
 }: {
-  title: string
-  description: string
-  accent: 'default' | 'violet' | 'yellow' | 'fuschia'
-  backgroundColor: string
-  children: React.ReactNode
+  title: string; description: string; accent: 'default' | 'violet' | 'yellow' | 'fuschia'; backgroundColor: string; children: React.ReactNode
 }) {
   return (
     <div
       data-theme="light"
       data-accent={accent}
-      className="rounded-card p-6"
+      className="rounded-[var(--radius-card)] p-6"
       style={{ backgroundColor, boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
     >
-      <h4 className="text-h6 font-bold text-text-default">{title}</h4>
-      <p className="mt-2 text-text-small text-text-default" style={{ opacity: 0.78 }}>
-        {description}
-      </p>
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        {children}
-      </div>
+      <h4 className="text-h6 font-bold text-text">{title}</h4>
+      <p className="mt-2 text-text-small text-text" style={{ opacity: 0.78 }}>{description}</p>
+      <div className="mt-5 flex flex-wrap items-center gap-3">{children}</div>
     </div>
   )
 }
@@ -96,283 +55,249 @@ function SurfacePreview({
 
 export const Overview: Story = {
   render: () => (
-    <div className="p-8 max-w-6xl space-y-12">
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Atoms"
+        title="Button"
+        description="Three variants cover every CTA context on the site. All colors are driven by CSS variables — switch Theme or Accent in the toolbar to see them update live."
+      />
 
-      <div>
-        <h2 className="text-h4 font-bold text-text-default">Button</h2>
-        <p className="mt-2 max-w-2xl text-text-small text-text-default" style={{ opacity: 0.78 }}>
-          Three variants cover every CTA context on the site. All colors are driven by CSS variables —
-          switch the Theme or Accent in the toolbar to see them update live. The rules below explain how to use
-          those variants safely, especially when a surface is already colored.
-        </p>
-      </div>
+      <div className="px-8 py-12 max-w-5xl">
 
-      {/* Primary */}
-      <section>
-        <h3 className="text-base font-bold mb-1">Primary</h3>
-        <p className="text-sm text-text-2 mb-4 max-w-xl">
-          Strongest visual weight. Use for the single main action on a page — booking, submitting a form.
-          Only one Primary button should appear per view.
-        </p>
-        <DocRow title="Small" description="Inline CTAs, inside cards or compact layouts.">
-          <Button variant="primary" size="sm">Prendre rendez-vous</Button>
-        </DocRow>
-        <DocRow title="Medium" description="Default size for most contexts.">
-          <Button variant="primary" size="md">Prendre rendez-vous</Button>
-        </DocRow>
-        <DocRow title="Large" description="Hero sections and prominent page headers.">
-          <Button variant="primary" size="lg">Prendre rendez-vous</Button>
-        </DocRow>
-        <DocRow title="Disabled" description="Action is not available. Communicates state without removing the button from the layout.">
-          <Button variant="primary" size="md" disabled>Indisponible</Button>
-        </DocRow>
-      </section>
+        {/* ── Showcase ──────────────────────────────────────────────────── */}
+        <DocSection
+          label="Showcase"
+          subtitle="Three variants × three sizes × disabled state. One main action per view."
+        >
 
-      {/* Secondary */}
-      <section>
-        <h3 className="text-base font-bold mb-1">Secondary</h3>
-        <p className="text-sm text-text-2 mb-4 max-w-xl">
-          Outlined, lower visual weight. Use alongside a Primary for a secondary action — "En savoir plus", "Voir les détails".
-          Transparent background lets it sit on any surface without clashing.
-        </p>
-        <DocRow title="Small" description="Paired with small primary buttons or used in lists.">
-          <Button variant="secondary" size="sm">En savoir plus</Button>
-        </DocRow>
-        <DocRow title="Medium" description="Default pairing with a medium primary.">
-          <Button variant="secondary" size="md">En savoir plus</Button>
-        </DocRow>
-        <DocRow title="Large" description="Used in hero sections alongside a large primary.">
-          <Button variant="secondary" size="lg">En savoir plus</Button>
-        </DocRow>
-        <DocRow title="Disabled" description="Secondary action is unavailable.">
-          <Button variant="secondary" size="md" disabled>Indisponible</Button>
-        </DocRow>
-      </section>
+          <section className="mb-10">
+            <h3 className="text-text-small-semibold text-text mb-1">Primary</h3>
+            <p className="text-text-xsmall text-text mb-4 max-w-xl" style={{ opacity: 0.65 }}>
+              Strongest visual weight. Use for the single main action on a page — booking, submitting a form.
+              Only one Primary button should appear per view.
+            </p>
+            <DocRow title="Small" description="Inline CTAs, inside cards or compact layouts.">
+              <Button variant="primary" size="sm">Prendre rendez-vous</Button>
+            </DocRow>
+            <DocRow title="Medium" description="Default size for most contexts.">
+              <Button variant="primary" size="md">Prendre rendez-vous</Button>
+            </DocRow>
+            <DocRow title="Large" description="Hero sections and prominent page headers.">
+              <Button variant="primary" size="lg">Prendre rendez-vous</Button>
+            </DocRow>
+            <DocRow title="Disabled" description="Action is not available. Communicates state without removing the button.">
+              <Button variant="primary" size="md" disabled>Indisponible</Button>
+            </DocRow>
+          </section>
 
-      {/* Accent */}
-      <section>
-        <h3 className="text-base font-bold mb-1">Accent</h3>
-        <p className="text-sm text-text-2 mb-4 max-w-xl">
-          Filled with the vertical's accent color — pink for électroménager, purple for chauffage, yellow for solaire.
-          Use for vertical-specific CTAs. <strong>Switch the Accent toolbar</strong> to see it update live.
-          For filled buttons, the atom uses <code>--accent-btn-bg</code> and <code>--accent-btn-text</code>. The darker
-          same-family token <code>--accent-accent-text</code> is reserved for lighter accent surfaces such as highlight
-          pills, not for every filled CTA.
-        </p>
-        <DocRow title="Small" description="Compact accent CTA, inside vertical-specific cards.">
-          <Button variant="accent" size="sm">Accent CTA</Button>
-        </DocRow>
-        <DocRow title="Medium" description="Default accent button size.">
-          <Button variant="accent" size="md">Accent CTA</Button>
-        </DocRow>
-        <DocRow title="Large" description="Prominent vertical CTA in hero or landing sections.">
-          <Button variant="accent" size="lg">Accent CTA</Button>
-        </DocRow>
-        <DocRow title="Disabled" description="Accent action unavailable.">
-          <Button variant="accent" size="md" disabled>Indisponible</Button>
-        </DocRow>
-      </section>
+          <section className="mb-10">
+            <h3 className="text-text-small-semibold text-text mb-1">Secondary</h3>
+            <p className="text-text-xsmall text-text mb-4 max-w-xl" style={{ opacity: 0.65 }}>
+              Outlined, lower visual weight. Use alongside a Primary for a secondary action — "En savoir plus", "Voir les détails".
+              Transparent background lets it sit on any surface without clashing.
+            </p>
+            <DocRow title="Small" description="Paired with small primary buttons or used in lists.">
+              <Button variant="secondary" size="sm">En savoir plus</Button>
+            </DocRow>
+            <DocRow title="Medium" description="Default pairing with a medium primary.">
+              <Button variant="secondary" size="md">En savoir plus</Button>
+            </DocRow>
+            <DocRow title="Large" description="Used in hero sections alongside a large primary.">
+              <Button variant="secondary" size="lg">En savoir plus</Button>
+            </DocRow>
+            <DocRow title="Disabled" description="Secondary action is unavailable.">
+              <Button variant="secondary" size="md" disabled>Indisponible</Button>
+            </DocRow>
+          </section>
 
-      {/* Side-by-side comparison */}
-      <section>
-        <h3 className="text-h6 font-bold text-text-default mb-1">All variants together</h3>
-        <p className="text-text-small text-text-default mb-4" style={{ opacity: 0.78 }}>
-          Typical CTA group — one main action, one secondary action, one vertical-specific action.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Button variant="primary">Prendre rendez-vous</Button>
-          <Button variant="secondary">En savoir plus</Button>
-          <Button variant="accent">Accent CTA</Button>
-        </div>
-      </section>
+          <section>
+            <h3 className="text-text-small-semibold text-text mb-1">Accent</h3>
+            <p className="text-text-xsmall text-text mb-4 max-w-xl" style={{ opacity: 0.65 }}>
+              Filled with the vertical's accent color — pink for électroménager, purple for chauffage, yellow for solaire.
+              Use for vertical-specific CTAs. <strong>Switch the Accent toolbar</strong> to see it update live.
+            </p>
+            <DocRow title="Small" description="Compact accent CTA, inside vertical-specific cards.">
+              <Button variant="accent" size="sm">Accent CTA</Button>
+            </DocRow>
+            <DocRow title="Medium" description="Default accent button size.">
+              <Button variant="accent" size="md">Accent CTA</Button>
+            </DocRow>
+            <DocRow title="Large" description="Prominent vertical CTA in hero or landing sections.">
+              <Button variant="accent" size="lg">Accent CTA</Button>
+            </DocRow>
+            <DocRow title="Disabled" description="Accent action unavailable.">
+              <Button variant="accent" size="md" disabled>Indisponible</Button>
+            </DocRow>
 
-      <section>
-        <h3 className="text-h6 font-bold text-text-default mb-1">Usage guardrails</h3>
-        <p className="text-text-small text-text-default mb-4 max-w-2xl" style={{ opacity: 0.78 }}>
-          Accessibility is not only about contrast. CTA hierarchy should also stay readable on mobile, where a
-          colorful surface plus a colorful button plus an extra border quickly becomes visually too heavy.
-        </p>
-        <div className="grid gap-4 md:grid-cols-2">
-          <GuidanceColumn
-            title="Do"
-            items={[
-              'Keep one filled primary action per viewport when possible.',
-              'Use Accent only when the vertical meaning matters.',
-              'Prefer neutral or softly tinted backgrounds for filled CTAs.',
-              'On yellow surfaces, keep text dark for contrast.',
-            ]}
-          />
-          <GuidanceColumn
-            title="Avoid"
-            tone="warning"
-            items={[
-              'Do not stack a saturated accent button on an equally saturated background without extra separation.',
-              'Do not add a dark outline around a filled CTA just to make it stand out.',
-              'Do not rely on the toolbar alone to decide whether a color pairing is safe.',
-              'Do not show multiple filled CTAs with equal emphasis in the same mobile block.',
-            ]}
-          />
-        </div>
-      </section>
+            <div className="mt-6">
+              <p className="text-text-xsmall-semibold text-text mb-3" style={{ opacity: 0.7 }}>All variants together — typical CTA group</p>
+              <div className="flex flex-wrap gap-3">
+                <Button variant="primary">Prendre rendez-vous</Button>
+                <Button variant="secondary">En savoir plus</Button>
+                <Button variant="accent">Accent CTA</Button>
+              </div>
+            </div>
+          </section>
+        </DocSection>
 
-      <section>
-        <h3 className="text-h6 font-bold text-text-default mb-1">Buttons on backgrounds</h3>
-        <p className="text-text-small text-text-default mb-4 max-w-2xl" style={{ opacity: 0.78 }}>
-          The same button can feel right or wrong depending on its surrounding surface. Use these examples as the
-          practical rule of thumb teams should follow.
-        </p>
-        <div className="grid gap-4 md:grid-cols-3">
-          <SurfacePreview
-            title="Preferred: neutral surface"
-            description="The filled CTA is the main point of contrast, so it remains clear and scannable."
-            accent="default"
-            backgroundColor="#ffffff"
-          >
-            <Button variant="primary">Prendre rendez-vous</Button>
-            <Button variant="secondary">En savoir plus</Button>
-          </SurfacePreview>
-
-          <SurfacePreview
-            title="Preferred: soft tint"
-            description="Accent CTAs can sit on a tinted surface when the button still has a distinct silhouette and readable text."
-            accent="violet"
-            backgroundColor="#f3f3f3"
-          >
-            <Button variant="accent">Demander un devis</Button>
-            <Button variant="secondary">Voir les details</Button>
-          </SurfacePreview>
-
-          <SurfacePreview
-            title="Avoid: loud surface + loud CTA"
-            description="When the surface is already saturated, a second strong fill plus an extra outline feels heavy on mobile."
-            accent="fuschia"
-            backgroundColor="#ff6492"
-          >
-            <button
-              className="rounded-pill px-6 py-3 text-text-small-semibold"
-              style={{
-                backgroundColor: '#e8006f',
-                color: '#ffffff',
-                border: '2px solid #3a121e',
-              }}
+        {/* ── Buttons on surfaces ───────────────────────────────────────── */}
+        <DocSection
+          label="Buttons on backgrounds"
+          subtitle="The same button can feel right or wrong depending on its surrounding surface. These examples show the practical rule of thumb."
+        >
+          <div className="grid gap-4 md:grid-cols-3">
+            <SurfacePreview
+              title="Preferred: neutral surface"
+              description="The filled CTA is the main point of contrast, so it remains clear and scannable."
+              accent="default"
+              backgroundColor="#ffffff"
             >
-              Too heavy
-            </button>
-          </SurfacePreview>
-        </div>
-      </section>
+              <Button variant="primary">Prendre rendez-vous</Button>
+              <Button variant="secondary">En savoir plus</Button>
+            </SurfacePreview>
 
-      <section>
-        <h3 className="text-h6 font-bold text-text-default mb-1">Contrast & WCAG compliance</h3>
-        <p className="text-text-small text-text-default mb-6 max-w-2xl" style={{ opacity: 0.78 }}>
-          WCAG 2.1 Level AA requires 4.5:1 contrast for body-size text and 3:1 for large text (≥18pt or ≥14pt bold).
-          Interactive UI elements must also reach 3:1 against their surrounding surface. Every button variant in this
-          system was validated against those thresholds. The table below lists the measured ratio for each variant
-          across all accent contexts — ratios are computed from the actual token values in <code>tokens.css</code>.
-        </p>
+            <SurfacePreview
+              title="Preferred: soft tint"
+              description="Accent CTAs can sit on a tinted surface when the button still has a distinct silhouette and readable text."
+              accent="violet"
+              backgroundColor="#f3f3f3"
+            >
+              <Button variant="accent">Demander un devis</Button>
+              <Button variant="secondary">Voir les details</Button>
+            </SurfacePreview>
 
-        <div className="overflow-x-auto rounded-card" style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
-          <table className="w-full text-text-small text-text-default" style={{ borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ backgroundColor: 'var(--bg-2)', borderBottom: '1px solid var(--border)' }}>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>Variant</th>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>Context</th>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>BG</th>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>Text</th>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>Ratio</th>
-                <th className="px-4 py-3 text-left text-text-xsmall-semibold" style={{ opacity: 0.6 }}>Rating</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { variant: 'Primary', context: 'All themes', bg: '#f59bbb', bgLabel: 'pink-500', text: '#0b4744', textLabel: 'brand-text', ratio: '4.7:1', rating: 'AA', warn: false },
-                { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: '#0b4744', textLabel: 'brand-text', ratio: '9.1:1', rating: 'AAA', warn: false },
-                { variant: 'Accent', context: 'Default', bg: '#0b4744', bgLabel: 'brand-text', text: '#ffffff', textLabel: 'white', ratio: '9.1:1', rating: 'AAA', warn: false },
-                { variant: 'Accent', context: 'Violet', bg: '#543bce', bgLabel: 'purple-700', text: '#ffffff', textLabel: 'white', ratio: '6.5:1', rating: 'AA', warn: false },
-                { variant: 'Accent', context: 'Yellow', bg: '#ffd800', bgLabel: 'yellow-500', text: '#032524', textLabel: 'dark-900', ratio: '10.5:1', rating: 'AAA', warn: false },
-                { variant: 'Accent', context: 'Fuschia', bg: '#e8006f', bgLabel: 'fuschia', text: '#ffffff', textLabel: 'white', ratio: '4.5:1', rating: 'AA ⚠', warn: true },
-              ].map((row, i) => (
-                <tr
-                  key={i}
-                  style={{
-                    backgroundColor: i % 2 === 0 ? 'var(--bg)' : 'var(--bg-2)',
-                    borderBottom: '1px solid var(--border)',
-                  }}
-                >
-                  <td className="px-4 py-3 text-text-small-semibold">{row.variant}</td>
-                  <td className="px-4 py-3 text-text-small" style={{ opacity: 0.8 }}>{row.context}</td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex items-center gap-2">
-                      <span
-                        className="inline-block rounded-sm"
-                        style={{ width: 14, height: 14, backgroundColor: row.bg === 'transparent → white' ? '#ffffff' : row.bg, border: '1px solid var(--border)', flexShrink: 0 }}
-                      />
-                      <code className="text-text-xsmall" style={{ opacity: 0.7 }}>{row.bgLabel || row.bg}</code>
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex items-center gap-2">
-                      <span
-                        className="inline-block rounded-sm"
-                        style={{ width: 14, height: 14, backgroundColor: row.text, border: '1px solid var(--border)', flexShrink: 0 }}
-                      />
-                      <code className="text-text-xsmall" style={{ opacity: 0.7 }}>{row.textLabel}</code>
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-text-small-semibold">{row.ratio}</td>
-                  <td className="px-4 py-3">
-                    <span
-                      className="inline-block rounded-pill px-2 py-0.5 text-label uppercase tracking-[0.08em]"
-                      style={{
-                        backgroundColor: row.warn ? '#fff0c0' : row.rating === 'AAA' ? '#d1fae5' : '#dbeafe',
-                        color: row.warn ? '#7a4a00' : row.rating === 'AAA' ? '#065f46' : '#1e40af',
-                      }}
-                    >
-                      {row.rating}
-                    </span>
-                  </td>
+            <SurfacePreview
+              title="Avoid: loud surface + loud CTA"
+              description="When the surface is already saturated, a second strong fill plus an extra outline feels heavy on mobile."
+              accent="fuschia"
+              backgroundColor="#ff6492"
+            >
+              <button
+                className="rounded-[var(--radius-pill)] px-6 py-3 text-text-small-semibold"
+                style={{ backgroundColor: '#e8006f', color: '#ffffff', border: '2px solid #3a121e' }}
+              >
+                Too heavy
+              </button>
+            </SurfacePreview>
+          </div>
+        </DocSection>
+
+        {/* ── Best Practices ────────────────────────────────────────────── */}
+        <DocSection label="Best Practices" subtitle="Usage rules for button hierarchy, variant selection, and surface pairing.">
+          <GuidanceGrid
+            dos={[
+              {
+                rule: 'Keep one filled primary action per viewport when possible.',
+                rationale: 'Multiple filled CTAs compete for attention equally, which makes the main action harder to find. Users benefit from a clear visual hierarchy — one loud action, one quieter one.',
+              },
+              {
+                rule: 'Use Accent only when the vertical meaning matters.',
+                rationale: 'Accent buttons signal which vertical the CTA belongs to. Using accent in a context-neutral UI element (like a modal close) creates false vertical signaling.',
+              },
+              {
+                rule: 'Prefer neutral or softly tinted backgrounds for filled CTAs.',
+                rationale: 'Filling a CTA on a neutral surface makes the button the single point of saturation — maximum visual priority with minimum noise.',
+              },
+              {
+                rule: 'On yellow surfaces, always verify that CTA text remains dark.',
+                rationale: 'Yellow is a light color (luminance ~0.93). White text on yellow fails WCAG AA at roughly 1.1:1. The yellow accent token pre-sets dark text, but custom implementations must be verified.',
+                wcag: 'WCAG 2.1 AA 1.4.3',
+              },
+            ]}
+            donts={[
+              {
+                rule: 'Do not stack a saturated accent button on an equally saturated background without extra separation.',
+                rationale: 'When both the surface and button are highly saturated, the button loses shape contrast and legibility drops — especially on mobile where users scan quickly.',
+              },
+              {
+                rule: 'Do not add a dark outline around a filled CTA to make it "stand out".',
+                rationale: 'Adding a border to a filled button introduces a third competing edge in the visual layer alongside card borders and dividers. Use fill weight and surface contrast for differentiation, not extra borders.',
+              },
+              {
+                rule: 'Do not show multiple filled CTAs with equal emphasis in the same mobile block.',
+                rationale: 'On a small screen, two equally loud CTAs fight for eye movement and touch area. One should visually dominate; the second should be quieter (secondary or text-only).',
+              },
+              {
+                rule: 'Do not rely on the toolbar alone to decide whether a color pairing is safe.',
+                rationale: 'The toolbar shows the token in isolation. Check Foundation/Accessibility Guidelines for the measured contrast ratio before shipping any new variant × accent × surface combination.',
+              },
+            ]}
+          />
+        </DocSection>
+
+        {/* ── Contrast table ────────────────────────────────────────────── */}
+        <DocSection
+          label="Contrast & WCAG Compliance"
+          subtitle="Measured ratios for each variant across all accent contexts. Computed from actual token values in tokens.css."
+        >
+          <div className="overflow-x-auto rounded-[var(--radius-card)] border border-border mb-4">
+            <table className="w-full text-text-small text-text" style={{ borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ backgroundColor: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))', borderBottom: '1px solid var(--border)' }}>
+                  {['Variant', 'Context', 'BG', 'Text', 'Ratio', 'Rating'].map(h => (
+                    <th key={h} className="px-4 py-3 text-left text-label uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>{h}</th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {[
+                  { variant: 'Primary', context: 'All themes', bg: '#f59bbb', bgLabel: 'pink-500', text: '#0b4744', textLabel: 'brand-text', ratio: '4.7:1', rating: 'AA', warn: false },
+                  { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: '#0b4744', textLabel: 'brand-text', ratio: '9.1:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Default', bg: '#0b4744', bgLabel: 'brand-text', text: '#ffffff', textLabel: 'white', ratio: '9.1:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Violet', bg: '#543bce', bgLabel: 'purple-700', text: '#ffffff', textLabel: 'white', ratio: '6.5:1', rating: 'AA', warn: false },
+                  { variant: 'Accent', context: 'Yellow', bg: '#ffd800', bgLabel: 'yellow-500', text: '#032524', textLabel: 'dark-900', ratio: '10.5:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Fuschia', bg: '#e8006f', bgLabel: 'fuschia', text: '#ffffff', textLabel: 'white', ratio: '4.5:1', rating: 'AA ⚠', warn: true },
+                ].map((row, i) => (
+                  <tr key={i} style={{ backgroundColor: i % 2 === 0 ? 'var(--bg)' : 'color-mix(in srgb, var(--border) 30%, var(--bg))', borderBottom: '1px solid var(--border)' }}>
+                    <td className="px-4 py-3 text-text-small-semibold">{row.variant}</td>
+                    <td className="px-4 py-3 text-text-small" style={{ opacity: 0.8 }}>{row.context}</td>
+                    <td className="px-4 py-3">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="inline-block rounded-sm w-3.5 h-3.5 border border-border" style={{ backgroundColor: row.bg === 'transparent → white' ? '#ffffff' : row.bg, flexShrink: 0 }} />
+                        <code className="text-label font-mono" style={{ opacity: 0.7 }}>{row.bgLabel || row.bg}</code>
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="inline-block rounded-sm w-3.5 h-3.5 border border-border" style={{ backgroundColor: row.text, flexShrink: 0 }} />
+                        <code className="text-label font-mono" style={{ opacity: 0.7 }}>{row.textLabel}</code>
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-text-small-semibold">{row.ratio}</td>
+                    <td className="px-4 py-3">
+                      <span
+                        className="inline-block rounded-[var(--radius-pill)] px-2 py-0.5 text-label uppercase tracking-[0.08em]"
+                        style={{
+                          backgroundColor: row.warn ? '#fff0c0' : row.rating === 'AAA' ? '#d1fae5' : '#dbeafe',
+                          color: row.warn ? '#7a4a00' : row.rating === 'AAA' ? '#065f46' : '#1e40af',
+                        }}
+                      >
+                        {row.rating}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        <div
-          className="mt-4 rounded-card p-4"
-          style={{ backgroundColor: '#fff8e1', border: '1px solid #ffe082' }}
-        >
-          <p className="text-text-small" style={{ color: '#5a3800' }}>
-            <strong>⚠ Fuschia accent passes AA by a narrow margin (4.5:1).</strong> Avoid placing a fuschia button
-            directly on a saturated pink surface — the combined luminance overlap can drop the effective contrast below
-            threshold. Use a white or light-neutral buffer zone between the button and a loud background.
-          </p>
-        </div>
+          <div className="flex flex-col gap-4">
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
+              requirement="4.5:1 for button label text · 3:1 for button boundary against surrounding surface"
+              why="Button label text counts as normal text regardless of button size — it must meet 4.5:1. The button shape itself (boundary vs. background) must meet 3:1 under WCAG 1.4.11. The secondary button's outlined border at low opacity on a neutral surface may approach this threshold — always check before using secondary on a non-white background."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 2.5.5 — Target Size"
+              requirement="Interactive targets must be at least 44×44 CSS pixels"
+              why="Buttons use a minimum height of 44px (medium/large) so they're reachable for users with motor impairments or who use touch devices. The small size (sm) may fall below 44px — use it only for non-primary actions inside dense, touch-free contexts (data tables, inline actions in forms)."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/target-size.html"
+            />
+          </div>
+        </DocSection>
 
-        <div
-          className="mt-6 rounded-card p-6"
-          style={{ backgroundColor: 'var(--bg-2)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
-        >
-          <h4 className="text-h6 font-bold text-text-default mb-3">Why Murfy buttons are always filled</h4>
-          <p className="text-text-small text-text-default mb-3" style={{ opacity: 0.82 }}>
-            An outline-only button puts the entire interactive affordance on a 1–2 px stroke. On standard (96 dpi)
-            displays that stroke can vibrate or disappear between two near-neutral surfaces. More importantly, the
-            Murfy layout already uses box-shadow and card borders for spatial separation — adding a button stroke
-            creates a third competing edge in the same visual layer, blurring reading order.
-          </p>
-          <p className="text-text-small text-text-default mb-3" style={{ opacity: 0.82 }}>
-            Hierarchy in this system is expressed through fill weight, not borders. The primary action has the densest
-            fill; secondary actions have a lighter fill (never an empty fill). Removing fill entirely breaks the
-            contract: a user scanning the page loses the instant signal that says "this is the main thing to click".
-          </p>
-          <p className="text-text-small text-text-default" style={{ opacity: 0.82 }}>
-            For WCAG compliance, a filled button needs only one contrast check (text vs. fill). An outline button
-            requires two: text vs. page background AND stroke vs. page background. As themes and accents change,
-            maintaining both checks across 5 themes × 4 accents is a fragile proposition — the filled approach keeps
-            the surface area of failure small.
-          </p>
-        </div>
-      </section>
-
+      </div>
     </div>
   ),
 }

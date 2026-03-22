@@ -1,7 +1,12 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { Flashy, Sun1, Wind } from 'iconsax-react'
 import { Card } from './Card'
+import pacImg from '../../Assets/icons/icone pompe à chaleur.png'
+import panneauxImg from '../../Assets/icons/imgPanneauxSolaires.png'
+import batterieImg from '../../Assets/icons/imgBatterie.png'
+import apSystemImg from '../../Assets/icons/imgAPSystem.png'
+import { WhyMurfyCard } from '../WhyMurfyCard/WhyMurfyCard'
+import { DocHeader, DocSection, AccessibilityNote } from '../../Foundation/doc-components'
 
 const cardDecorator: StoryObj<typeof Card>['decorators'] = [
   (Story) => (
@@ -45,138 +50,241 @@ function GuidanceCard({
   )
 }
 
-function SurfaceStage({
-  title,
-  description,
-  backgroundColor,
-  children,
-}: {
-  title: string
-  description: string
-  backgroundColor: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="rounded-card p-6" style={{ backgroundColor }}>
-      <h3 className="text-h6 font-bold text-text-default">{title}</h3>
-      <p className="mt-2 text-text-small text-text-default" style={{ opacity: 0.78 }}>
-        {description}
-      </p>
-      <div className="mt-5">
-        {children}
-      </div>
-    </div>
-  )
-}
-
+// ── Overview ──────────────────────────────────────────────────────────────────
 export const Overview: Story = {
   render: () => (
-    <div className="flex max-w-6xl flex-col gap-10 p-8">
-      <section className="max-w-3xl">
-        <h2 className="text-h4 font-bold text-text-default">Card</h2>
-        <p className="mt-2 text-text-small text-text-default" style={{ opacity: 0.78 }}>
-          Cards group media, supporting facts, and a single clear action. They should feel calm enough for content to
-          breathe, especially on mobile where strong borders can make already colorful surfaces feel crowded.
-        </p>
-      </section>
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Molecules"
+        title="Card"
+        description="Six card variants for media, services, case studies, process steps, and content. Cards group media, supporting facts, and a single clear action. Separation is achieved through elevation (box-shadow) and surface contrast — not borders."
+      />
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <GuidanceCard
-          title="Use cards for grouped content"
-          description="Choose this pattern when the user needs to scan a complete mini-story: image, headline, supporting detail, and one next step."
-        />
-        <GuidanceCard
-          title="Let the surface do the work"
-          description="Radius, spacing, and elevation should create separation first. Use borders only when structure or state really needs to be called out."
-        />
-        <GuidanceCard
-          title="Keep mobile weight under control"
-          tone="warning"
-          description="Avoid adding a dark outline around an already filled or tinted card. It often increases visual noise more than clarity on small screens."
-        />
-        <GuidanceCard
-          title="Cards don't use border outlines"
-          tone="warning"
-          description="A card outline adds a third edge to the page — alongside the section/grid boundary and any interior rule lines — making the layout feel crowded on mobile. Separation is handled entirely by box-shadow and background-color contrast. A card border must also pass a 3:1 contrast ratio against the surrounding surface across all five themes × four accents — a brittle check that the shadow system sidesteps by using luminance depth instead of stroke color."
-        />
-      </section>
+      <div className="flex max-w-6xl flex-col gap-10 p-8">
 
-      <section>
-        <h3 className="text-h6 font-bold text-text-default mb-1">Cards on different surfaces</h3>
-        <p className="mb-4 max-w-3xl text-text-small text-text-default" style={{ opacity: 0.78 }}>
-          These examples are meant to teach when the card should carry separation itself and when the surrounding
-          surface is already doing enough.
-        </p>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          <SurfaceStage
-            title="Preferred: neutral page surface"
-            description="A subtle shadow is enough to make the content block feel clickable and distinct."
-            backgroundColor="#ffffff"
-          >
-            <Card
-              title="Techniciens salaries Murfy"
-              body="Pas de sous-traitance, pas de surprise - nos techniciens certifies interviennent chez vous."
-              cta={{ label: 'En savoir plus', variant: 'primary' }}
+        {/* ── Design rules ── */}
+        <DocSection label="Design rules">
+          <section className="grid gap-4 md:grid-cols-2">
+            <GuidanceCard
+              title="Use cards for grouped content"
+              description="Choose this pattern when the user needs to scan a complete mini-story: image, headline, supporting detail, and one next step."
             />
-          </SurfaceStage>
-
-          <SurfaceStage
-            title="Preferred: tinted container"
-            description="A softer tinted section can hold cards, but the card itself should stay calmer than the section around it."
-            backgroundColor="#fff3f9"
-          >
-            <Card
-              title="Fiabilite heritee du terrain"
-              body="Une carte neutre dans une section teintee garde une hierarchie claire sans ajouter de contour fort."
-              cta={{ label: 'En savoir plus', variant: 'accent' }}
+            <GuidanceCard
+              title="Let the surface do the work"
+              description="Radius, spacing, and elevation create separation. Use borders only when structure or state must be explicitly called out."
             />
-          </SurfaceStage>
+            <GuidanceCard
+              title="Cards don't use border outlines"
+              tone="warning"
+              description="A card outline adds a third edge to the page — alongside the section/grid boundary and any interior rule lines. Separation is handled entirely by box-shadow and background-color contrast."
+            />
+            <GuidanceCard
+              title="Keep mobile weight under control"
+              tone="warning"
+              description="Avoid adding a dark outline around an already filled or tinted card. It often increases visual noise more than clarity on small screens."
+            />
+          </section>
+        </DocSection>
 
-          <SurfaceStage
-            title="Avoid: border on top of color"
-            description="A second dark outline on a colored card usually adds noise rather than hierarchy on mobile."
-            backgroundColor="#ffde73"
-          >
-            <div
-              className="rounded-card p-5"
-              style={{
-                backgroundColor: '#ffd800',
-                border: '2px solid #032524',
-              }}
-            >
-              <h4 className="text-h6 font-bold" style={{ color: '#032524' }}>Too heavy</h4>
-              <p className="mt-2 text-text-small" style={{ color: '#032524', opacity: 0.82 }}>
-                Prefer a calmer card surface or a neutral container instead of doubling down on outlines.
-              </p>
+        {/* ── All variants ── */}
+        <DocSection label="All variants">
+          <p className="mb-6 text-text-small" style={{ color: 'var(--text)', opacity: 0.65 }}>
+            Switch the accent in the toolbar to see pills and arrow buttons change color. Switch the theme to see card backgrounds change.
+          </p>
+
+          <div className="flex flex-wrap gap-6 items-start">
+
+            {/* 1. Service card */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>1 — Service</p>
+              <Card
+                circleContent={<img src={pacImg} alt="Pompe à chaleur" className="w-full h-full object-contain" />}
+                title="Pompe à chaleur"
+                subtitle="Air-Air ou Air-Eau"
+                prices={[
+                  { label: 'Air-Air à partir de', value: '2 500 €' },
+                  { label: 'Air-Eau à partir de', value: '14 500 €' },
+                ]}
+                cta={{ label: 'Demander un devis', variant: 'primary' }}
+              />
             </div>
-          </SurfaceStage>
-        </div>
-      </section>
+
+            {/* 2. Project card */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>2 — Project</p>
+              <Card
+                imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+                imageBadge="La Bédoulé (13)"
+                tags={['17 panneaux', '7,25 kWc', 'Batterie 10kWh']}
+              />
+            </div>
+
+            {/* 3. Case study / testimonial */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>3 — Case study</p>
+              <Card
+                imageUrl="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=600&q=80"
+                imageOverlay="Voir le témoignage"
+                tags={['12 panneaux', '7,25 kWc', 'Batterie 10kWh']}
+                products={[
+                  { imageUrl: panneauxImg, name: 'Panneaux x12', label: 'Dualsun' },
+                  { imageUrl: batterieImg, name: 'Batterie', label: 'Huawei' },
+                  { imageUrl: apSystemImg, name: 'Suivi temps réel', label: 'APsystem' },
+                ]}
+                stats={[
+                  { label: 'Économies mensuelles', value: '220 €' },
+                  { label: 'Économies annuelles', value: '13 330 €' },
+                  { label: 'Autoconsommation', value: '83 %' },
+                ]}
+              />
+            </div>
+
+            {/* 4. Step + photo */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>4 — Step + photo</p>
+              <Card
+                surface="dark"
+                imageUrl="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
+                circleContent={<span className="text-h5 font-black">1</span>}
+                circleSize={48}
+                title="Visite technique offerte"
+                body="Un de nos techniciens se déplace chez vous pour étudier vos besoins et les possibilités d'installation."
+              />
+            </div>
+
+            {/* 5. Content + arrow */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>5 — Content + arrow</p>
+              <Card
+                title="Ni plus ni moins : un chauffage dimensionné pour vos besoins"
+                body="Ni plus ni moins : un chauffage dimensionné pour vos besoins"
+                cta={{ label: 'En savoir plus', variant: 'arrow' }}
+                imageUrl="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80"
+                imagePosition="bottom"
+              />
+            </div>
+
+            {/* 6. Media + content */}
+            <div className="flex flex-col gap-2" style={{ width: 300 }}>
+              <p className="text-label uppercase tracking-[0.08em]" style={{ color: 'var(--text)', opacity: 0.5 }}>6 — Media + content</p>
+              <Card
+                imageUrl="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+                title="Réparation à domicile"
+                body="Un réparateur intervient chez vous en 24h pour réparer votre appareil. C'est simple & efficace !"
+                cta={{ label: 'Prendre RDV', variant: 'primary' }}
+              />
+            </div>
+
+          </div>
+        </DocSection>
+
+        {/* ── WhyMurfyCard ── */}
+        <DocSection label="WhyMurfyCard variant">
+          <p className="mb-6 text-text-small" style={{ color: 'var(--text)', opacity: 0.65 }}>
+            Fixed-size card (300 × 360 px) used in the "Why Murfy" horizontal scroll section.
+          </p>
+          <div className="flex flex-wrap gap-6">
+            <WhyMurfyCard
+              title="Des techniciens salariés, pas des sous-traitants"
+              body="Nos techniciens sont formés et certifiés en interne. Ils interviennent dans les meilleurs délais."
+            />
+            <WhyMurfyCard
+              title="Une garantie pièces et main-d'œuvre"
+              body="Toutes nos réparations sont couvertes par une garantie de 6 mois pièces et main-d'œuvre."
+            />
+          </div>
+        </DocSection>
+
+        {/* ── Backgrounds ── */}
+        <DocSection label="Cards on all brand backgrounds">
+          <p className="mb-6 text-text-small" style={{ color: 'var(--text)', opacity: 0.65 }}>
+            All valid page backgrounds are white or a shade of pink. Cards sit on these surfaces using elevation alone — no borders needed.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: 'light — #ffffff', bg: '#ffffff' },
+              { label: 'pink-mist — #FFF3F9', bg: '#FFF3F9' },
+              { label: 'light-pink — #ffdeef', bg: '#ffdeef' },
+              { label: 'pink-vivid — #ffadd6', bg: '#ffadd6' },
+            ].map(({ label, bg }) => (
+              <div key={bg} className="rounded-card p-5" style={{ backgroundColor: bg }}>
+                <p className="text-label uppercase tracking-[0.08em] mb-4" style={{ color: '#032524', opacity: 0.55 }}>{label}</p>
+                <Card
+                  title="Techniciens salariés Murfy"
+                  body="Pas de sous-traitance, pas de surprise."
+                  cta={{ label: 'En savoir plus', variant: 'primary' }}
+                />
+              </div>
+            ))}
+          </div>
+        </DocSection>
+
+        {/* ── Theme matrix ── */}
+        <DocSection label="Theme matrix">
+          <p className="mb-6 text-text-small" style={{ color: 'var(--text)', opacity: 0.65 }}>
+            All 5 themes rendered simultaneously — independent of the toolbar selection. Shows how card background (var(--bg)) adapts per theme.
+          </p>
+          <div className="flex flex-wrap gap-6 items-start">
+            {(['light', 'dark', 'light-pink', 'pink-mist', 'pink-vivid'] as const).map((theme) => (
+              <div key={theme} data-theme={theme} style={{ borderRadius: 12, padding: 16, background: 'var(--bg)' }}>
+                <p className="text-label uppercase tracking-[0.08em] mb-3" style={{ color: 'var(--text)', opacity: 0.55 }}>
+                  {theme}
+                </p>
+                <div style={{ width: 260 }}>
+                  <Card
+                    imageUrl="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+                    title="Réparation à domicile"
+                    body="Un réparateur intervient chez vous en 24h."
+                    tags={['RGE certifié', 'Garantie 6 mois']}
+                    cta={{ label: 'Prendre RDV', variant: 'primary' }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </DocSection>
+
+        {/* ── Accessibility ── */}
+        <DocSection label="Accessibility & WCAG">
+          <div className="flex flex-col gap-4">
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 1.4.11 — Non-text Contrast"
+              requirement="Card boundaries must achieve 3:1 against their surrounding surface"
+              why="The Murfy card system uses box-shadow for visual separation instead of borders. On surfaces where the card background is very close in luminance to the page background, an additional subtle border may be needed to maintain the 3:1 boundary requirement."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 2.4.4 — Link Purpose"
+              requirement="Card CTAs must have descriptive labels — either visible text or accessible context"
+              why="Generic labels like 'En savoir plus' on multiple cards are indistinguishable for screen reader users. The card title must appear as a heading before the CTA so screen readers can announce the full context."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html"
+            />
+          </div>
+        </DocSection>
+
+      </div>
     </div>
   ),
 }
 
-// ── 1. Service card ───────────────────────────────────────────────────────────
-// Pink circle icon · title · subtitle · pricing · dark CTA button
-export const ServiceCard: Story = {
+// ── Individual variant stories (Controls panel) ───────────────────────────────
+
+export const ServiceVariant: Story = {
   name: 'Service — PAC',
   decorators: cardDecorator,
   parameters: { layout: 'centered' },
   args: {
-    circleContent: <Flashy size={56} color="var(--text)" variant="Bold" />,
+    circleContent: <img src={pacImg} alt="Pompe à chaleur" className="w-full h-full object-contain" />,
     title: 'Pompe à chaleur',
     subtitle: 'Air-Air ou Air-Eau',
     prices: [
       { label: 'Air-Air à partir de', value: '2 500 €' },
       { label: 'Air-Eau à partir de', value: '14 500 €' },
     ],
-    cta: { label: 'Demander un devis', variant: 'accent' },
+    cta: { label: 'Demander un devis', variant: 'primary' },
   },
 }
 
-// ── 2. Project card ───────────────────────────────────────────────────────────
-// Full photo · location badge · tag pills
 export const ProjectCard: Story = {
   name: 'Project — Solar install',
   decorators: cardDecorator,
@@ -188,8 +296,6 @@ export const ProjectCard: Story = {
   },
 }
 
-// ── 3. Case study / testimonial card ─────────────────────────────────────────
-// Photo + overlay · product row · stats table
 export const CaseStudyCard: Story = {
   name: 'Case study — Testimonial',
   decorators: cardDecorator,
@@ -197,10 +303,11 @@ export const CaseStudyCard: Story = {
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=600&q=80',
     imageOverlay: 'Voir le témoignage',
+    tags: ['12 panneaux', '7,25 kWc', 'Batterie 10kWh'],
     products: [
-      { name: 'Panneaux x12', label: 'Dualsun' },
-      { name: 'Batterie', label: 'Huawei' },
-      { name: 'Suivi temps réel', label: 'APsystem' },
+      { imageUrl: panneauxImg, name: 'Panneaux x12', label: 'Dualsun' },
+      { imageUrl: batterieImg, name: 'Batterie', label: 'Huawei' },
+      { imageUrl: apSystemImg, name: 'Suivi temps réel', label: 'APsystem' },
     ],
     stats: [
       { label: 'Économies mensuelles', value: '220 €' },
@@ -210,120 +317,41 @@ export const CaseStudyCard: Story = {
   },
 }
 
-// ── 4. Step + photo card ──────────────────────────────────────────────────────
-// Full photo · step number circle · title · body
 export const StepPhotoCard: Story = {
   name: 'Step + photo',
   decorators: cardDecorator,
   parameters: { layout: 'centered' },
   args: {
+    surface: 'dark',
     imageUrl: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80',
-    circleContent: <span className="text-text-main-semibold font-black">1</span>,
-    title: 'Analyse de consommation',
-    body: 'On étudie vos factures et équipements existants pour comprendre vos besoins réels.',
+    circleContent: <span className="text-h5 font-black">1</span>,
+    circleSize: 48,
+    title: 'Visite technique offerte',
+    body: "Un de nos techniciens se déplace chez vous pour étudier vos besoins et les possibilités d'installation.",
   },
 }
 
-// ── 5. Content + arrow card ───────────────────────────────────────────────────
-// Title · body · floating arrow circle · photo at bottom
 export const ContentArrowCard: Story = {
   name: 'Content + arrow',
   decorators: cardDecorator,
   parameters: { layout: 'centered' },
   args: {
-    title: 'Fiabilité héritée du terrain',
-    body: 'Durabilité et savoir-faire depuis 2018 — chaque installation pensée pour durer.',
+    title: 'Ni plus ni moins : un chauffage dimensionné pour vos besoins',
+    body: 'Ni plus ni moins : un chauffage dimensionné pour vos besoins',
     cta: { label: 'En savoir plus', variant: 'arrow' },
     imageUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80',
     imagePosition: 'bottom',
   },
 }
 
-// ── 6. Media + content card ───────────────────────────────────────────────────
-// Photo at top · title · body · pink pill CTA
 export const MediaContentCard: Story = {
   name: 'Media + content',
   decorators: cardDecorator,
   parameters: { layout: 'centered' },
   args: {
     imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
-    title: 'Techniciens salariés Murfy',
-    body: 'Pas de sous-traitance, pas de surprise — nos techniciens certifiés RGE interviennent chez vous.',
-    cta: { label: 'En savoir plus', variant: 'primary' },
+    title: 'Réparation à domicile',
+    body: "Un réparateur intervient chez vous en 24h pour réparer votre appareil. C'est simple & efficace !",
+    cta: { label: 'Prendre RDV', variant: 'primary' },
   },
-}
-
-// ── All 6 in a row ────────────────────────────────────────────────────────────
-export const AllVariants: Story = {
-  name: 'All variants',
-  render: () => (
-    <div className="flex flex-wrap gap-6 items-start" style={{ maxWidth: 1400 }}>
-      {/* Service */}
-      <div style={{ width: 300 }}>
-        <Card
-          circleContent={<Flashy size={56} color="var(--text)" variant="Bold" />}
-          title="Pompe à chaleur"
-          subtitle="Air-Air ou Air-Eau"
-          prices={[
-            { label: 'Air-Air à partir de', value: '2 500 €' },
-            { label: 'Air-Eau à partir de', value: '14 500 €' },
-          ]}
-          cta={{ label: 'Demander un devis', variant: 'accent' }}
-        />
-      </div>
-      {/* Project */}
-      <div style={{ width: 300 }}>
-        <Card
-          imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
-          imageBadge="La Bédoulé (13)"
-          tags={['17 panneaux', '7,25 kWc', 'Batterie 10kWh']}
-        />
-      </div>
-      {/* Case study */}
-      <div style={{ width: 300 }}>
-        <Card
-          imageUrl="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=600&q=80"
-          imageOverlay="Voir le témoignage"
-          products={[
-            { name: 'Panneaux x12', label: 'Dualsun' },
-            { name: 'Batterie', label: 'Huawei' },
-            { name: 'Suivi temps réel', label: 'APsystem' },
-          ]}
-          stats={[
-            { label: 'Économies mensuelles', value: '220 €' },
-            { label: 'Économies annuelles', value: '13 330 €' },
-            { label: 'Autoconsommation', value: '83 %' },
-          ]}
-        />
-      </div>
-      {/* Step + photo */}
-      <div style={{ width: 300 }}>
-        <Card
-          imageUrl="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80"
-          circleContent={<span className="text-text-main-semibold font-black">1</span>}
-          title="Analyse de consommation"
-          body="On étudie vos factures et équipements existants pour comprendre vos besoins réels."
-        />
-      </div>
-      {/* Content + arrow */}
-      <div style={{ width: 300 }}>
-        <Card
-          title="Fiabilité héritée du terrain"
-          body="Durabilité et savoir-faire depuis 2018 — chaque installation pensée pour durer."
-          cta={{ label: 'En savoir plus', variant: 'arrow' }}
-          imageUrl="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80"
-          imagePosition="bottom"
-        />
-      </div>
-      {/* Media + content */}
-      <div style={{ width: 300 }}>
-        <Card
-          imageUrl="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
-          title="Techniciens salariés Murfy"
-          body="Pas de sous-traitance, pas de surprise — nos techniciens certifiés RGE interviennent chez vous."
-          cta={{ label: 'En savoir plus', variant: 'primary' }}
-        />
-      </div>
-    </div>
-  ),
 }

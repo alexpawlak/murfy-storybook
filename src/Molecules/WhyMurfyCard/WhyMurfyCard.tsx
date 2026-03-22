@@ -26,7 +26,7 @@ export function WhyMurfyCard({
     <div
       className={`flex flex-col overflow-hidden shrink-0 ${className}`}
       style={{
-        background: 'var(--light-100)',
+        background: 'var(--bg)',
         borderRadius: 'var(--radius-card)',
         boxShadow: '0 2px 16px rgba(0,0,0,0.07)',
         width: '300px',

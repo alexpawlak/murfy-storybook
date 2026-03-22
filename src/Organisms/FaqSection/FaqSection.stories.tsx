@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { FaqSection } from './FaqSection'
+import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote } from '../../Foundation/doc-components'
 
 const meta: Meta<typeof FaqSection> = {
   title: 'Organisms/FaqSection',
@@ -56,6 +57,58 @@ const defaultBody = (
     {" pour prolonger la durée de vie de vos appareils électroménagers et ainsi éviter des déchets inutiles. Chez Murfy, il y a forcément une solution pour chaque panne. Ainsi plusieurs solutions s'offrent à vous."}
   </>
 )
+
+export const Overview: Story = {
+  render: () => (
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Organisms"
+        title="FaqSection"
+        description="A full-page FAQ section: heading + intro text + expandable AccordionItem list. Used on the homepage and vertical-specific pages to answer common customer questions and improve SEO through structured content."
+      />
+      <div className="px-8 py-12 max-w-4xl">
+        <DocSection label="Composition">
+          <div className="rounded-[var(--radius-card)] border border-border px-5 py-4 mb-6" style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))' }}>
+            <p className="text-text-small text-text" style={{ opacity: 0.75 }}>
+              <strong>Molecules used:</strong> AccordionItem (× n), Accordion group
+              <br />
+              <strong>Layout:</strong> Heading + body text column left, accordion list right — two-column on desktop
+              <br />
+              <strong>Accent:</strong> Switch the Accent toolbar to see the section adapt to each vertical (Chauffage, Solaire, etc.)
+            </p>
+          </div>
+        </DocSection>
+        <DocSection label="Best Practices">
+          <GuidanceGrid
+            dos={[
+              { rule: 'Write questions from the customer\'s perspective, not the brand\'s.', rationale: '"Combien coûte une réparation ?" (customer voice) is more findable in search and more resonant than "Tarification de nos services" (brand voice). FAQ content is often indexed by search engines.' },
+              { rule: 'Order questions by frequency — most common first.', rationale: 'Users scan the first 2–3 questions before deciding whether to scroll. Putting low-frequency questions first means most users leave without getting an answer to their actual question.' },
+            ]}
+            donts={[
+              { rule: 'Do not open all accordion items by default.', rationale: 'An FAQ with all items open is a wall of text. The accordion contract is: questions visible, answers hidden until requested. Opening all defeats the scan-then-read interaction model.', wcag: 'WCAG 2.1 AA 4.1.2' },
+              { rule: 'Do not put the only instance of key pricing info inside an accordion.', rationale: 'Information inside a collapsed accordion has lower discoverability. Pricing must also appear in the hero/CTA areas — the FAQ answer is a supplement, not the primary source.' },
+            ]}
+          />
+        </DocSection>
+        <DocSection label="Accessibility & WCAG">
+          <div className="flex flex-col gap-4">
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 4.1.2 — Name, Role, Value"
+              requirement="Each accordion trigger must expose role, expanded state, and associated panel"
+              why="Screen readers must announce each FAQ question as an interactive button with its expand/collapse state. Without aria-expanded and aria-controls, users cannot determine which questions have answers or navigate between them using keyboard shortcuts for buttons."
+              href="https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"
+            />
+            <AccessibilityNote
+              criterion="WCAG 2.1 AA 2.4.6 — Headings and Labels"
+              requirement="Section must have a descriptive heading at the correct hierarchy level"
+              why="The FaqSection heading must use the correct HTML heading level (h2 on the homepage, h3 if nested inside a section with its own h2). Screen reader users navigate by headings — a skipped level or incorrect level disrupts the document outline."
+            />
+          </div>
+        </DocSection>
+      </div>
+    </div>
+  ),
+}
 
 export const Default: Story = {
   args: {
