@@ -13,15 +13,13 @@ export function StatItem({ value, label, className = '' }: StatItemProps) {
     <div className={`flex items-center gap-4 ${className}`}>
       <span
         className="text-h2 shrink-0 font-black leading-none tracking-tight"
-        style={{
-          color: 'var(--text)',
-        }}
+        style={{ color: 'inherit' }}
       >
         {value}
       </span>
       <span
         className="text-text-xsmall leading-snug"
-        style={{ color: 'var(--text)' }}
+        style={{ color: 'inherit' }}
       >
         {label}
       </span>

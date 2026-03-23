@@ -347,16 +347,16 @@ function AccessibilityGuidelinesDoc() {
             </SurfaceExample>
 
             <SurfaceExample
-              title="Preferred: tinted with dark text"
-              description="Yellow-tinted backgrounds work when text stays dark and the CTA still has clear shape contrast."
+              title="Preferred: white card with accent label"
+              description="Cards are always white. Bring accent color through a highlight pill or label — never by tinting the card background."
               accent="yellow"
-              background={surfaceColors.yellowHighlight}
+              background={surfaceColors.neutral}
             >
               <span
-                className="inline-flex rounded-[var(--radius-pill)] px-4 py-2 text-text-small-semibold"
-                style={{ backgroundColor: 'var(--yellow-500)', color: 'var(--dark-900)' }}
+                className="inline-flex rounded-[var(--radius-pill)] px-4 py-2 text-label uppercase tracking-[0.08em]"
+                style={{ backgroundColor: 'var(--accent-accent-highlight)', color: 'var(--accent-accent-text)' }}
               >
-                Highlight with dark text
+                Chauffage
               </span>
               <Button variant="accent">Demander un devis</Button>
             </SurfaceExample>

@@ -47,7 +47,7 @@ export const Overview: Story = {
             </div>
 
             <div
-              className="border-t border-border pt-8 p-6 rounded-[var(--radius-card)]"
+              className="border-t border-border pt-8 p-6 rounded-[var(--radius-card)] text-white"
               style={{ background: 'var(--dark-900)' }}
             >
               <p className="text-text-xsmall-semibold text-white mb-4" style={{ opacity: 0.6 }}>On dark background</p>

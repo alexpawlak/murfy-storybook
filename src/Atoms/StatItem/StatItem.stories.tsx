@@ -34,7 +34,7 @@ export const Overview: Story = {
           label="Showcase"
           subtitle="The three stat items used in the live Impact section."
         >
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 text-[color:var(--text)]">
             <StatItem value="250" label="Réparateurs partout en France" />
             <StatItem value="+ 350 000" label="Appareils réparés" />
             <StatItem value="-65KG" label="de déchets par appareil réparé" />
@@ -45,7 +45,7 @@ export const Overview: Story = {
             style={{ background: 'var(--dark-900)' }}
           >
             <p className="text-text-xsmall-semibold text-white mb-6" style={{ opacity: 0.5 }}>On dark background — typical Impact Section context</p>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 text-white">
               <StatItem value="250" label="Réparateurs partout en France" />
               <StatItem value="+ 350 000" label="Appareils réparés" />
               <StatItem value="-65KG" label="de déchets par appareil réparé" />

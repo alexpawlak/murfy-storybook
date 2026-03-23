@@ -26,7 +26,7 @@ export function TrustpilotBadge({
       <div className="flex items-center gap-2">
         <span
           className="text-h4 font-bold"
-          style={{ color: 'var(--text)' }}
+          style={{ color: 'inherit' }}
         >
           {label}
         </span>
@@ -37,7 +37,7 @@ export function TrustpilotBadge({
       <div className="flex items-center gap-1">
         <span
           className="text-label"
-          style={{ color: 'var(--text)', opacity: 0.6 }}
+          style={{ color: 'inherit', opacity: 0.6 }}
         >
           Basé sur {formattedCount} avis sur
         </span>

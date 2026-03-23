@@ -278,7 +278,10 @@ export function Card({
               className="gap-2 w-full justify-center"
             >
               {cta.label}
-              <ArrowRight size={14} variant="Linear" />
+              <ArrowRight
+                size={16}
+                color={cta.variant === 'accent' ? 'var(--accent-btn-text)' : 'var(--btn-text)'}
+              />
             </Button>
           )}
 
@@ -295,10 +298,9 @@ export function Card({
                   borderRadius: '50%',
                   border: 'none',
                   background: 'var(--accent-btn-bg)',
-                  color: 'var(--accent-btn-text)',
                 }}
               >
-                <ArrowRight size={20} variant="Linear" />
+                <ArrowRight size={20} color="var(--accent-btn-text)" />
               </button>
             </div>
           )}

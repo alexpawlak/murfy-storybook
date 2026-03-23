@@ -219,13 +219,13 @@
 }
 
 [data-accent="default"] {
-  --accent-btn-bg: var(--brand-text);
-  --accent-btn-text: var(--light-100);
-  --accent-btn-bg-hover: var(--brand-hover);
-  --accent-btn-text-hover: var(--light-100);
-  --accent-accent-highlight: var(--light-100);
-  --accent-accent-pill-active: var(--light-100);
-  --accent-accent-text: var(--brand-text);
+  --accent-btn-bg: var(--pink-accent);
+  --accent-btn-text: var(--brand-text);
+  --accent-btn-bg-hover: var(--pink-600);
+  --accent-btn-text-hover: var(--brand-text);
+  --accent-accent-highlight: var(--pink-500);
+  --accent-accent-pill-active: var(--pink-accent);
+  --accent-accent-text: var(--pink-accent);
 }
 
 [data-accent="violet"] {
@@ -259,13 +259,13 @@
 }
 
 :root {
-  --accent-btn-bg: var(--brand-text);
-  --accent-btn-text: var(--light-100);
-  --accent-btn-bg-hover: var(--brand-hover);
-  --accent-btn-text-hover: var(--light-100);
-  --accent-accent-highlight: var(--light-100);
-  --accent-accent-pill-active: var(--light-100);
-  --accent-accent-text: var(--brand-text);
+  --accent-btn-bg: var(--pink-accent);
+  --accent-btn-text: var(--brand-text);
+  --accent-btn-bg-hover: var(--pink-600);
+  --accent-btn-text-hover: var(--brand-text);
+  --accent-accent-highlight: var(--pink-500);
+  --accent-accent-pill-active: var(--pink-accent);
+  --accent-accent-text: var(--pink-accent);
 }
 
 @media (min-width: 768px) {
