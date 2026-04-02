@@ -15,18 +15,37 @@ const META_URL = '/storybook-update.json'
 
 const baseStyle: React.CSSProperties = {
   alignItems: 'center',
-  color: 'var(--sb-bar-text-color, #6b7280)',
+  background: 'linear-gradient(135deg, rgba(255, 212, 128, 0.28), rgba(255, 241, 214, 0.96))',
+  border: '1px solid rgba(217, 119, 6, 0.28)',
+  borderRadius: 999,
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.7)',
+  color: '#7c2d12',
   display: 'flex',
   fontFamily: 'inherit',
   fontSize: 12,
-  gap: 8,
+  fontWeight: 700,
+  gap: 6,
+  height: 28,
   lineHeight: 1,
-  marginLeft: 8,
+  marginLeft: 12,
   maxWidth: 420,
   overflow: 'hidden',
-  padding: '0 8px',
+  padding: '0 12px',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+}
+
+const prefixStyle: React.CSSProperties = {
+  color: '#9a3412',
+  fontSize: 11,
+  fontWeight: 800,
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+}
+
+const textStyle: React.CSSProperties = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }
 
 function StorybookUpdateTool() {
@@ -72,7 +91,8 @@ function StorybookUpdateTool() {
 
   return (
     <div style={baseStyle} title={meta.tooltip} aria-label={meta.tooltip}>
-      {meta.label}
+      <span style={prefixStyle}>Storybook</span>
+      <span style={textStyle}>{meta.label}</span>
     </div>
   )
 }
@@ -81,7 +101,7 @@ addons.register(ADDON_ID, () => {
   addons.add(TOOL_ID, {
     title: 'Last updated',
     type: types.TOOL,
-    match: ({ tabId }) => !tabId,
+    match: () => true,
     render: () => <StorybookUpdateTool />,
   })
 })

@@ -61,6 +61,7 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(ts|tsx)',
     '../src/**/*.mdx',
   ],
+  managerEntries: [fileURLToPath(new URL('./manager.tsx', import.meta.url))],
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
