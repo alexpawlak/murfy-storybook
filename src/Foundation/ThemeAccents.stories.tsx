@@ -128,7 +128,7 @@ function ThemeAccentsGrid() {
                 rationale: 'The toolbar applies data-theme and data-accent attributes to the root wrapper, which triggers the correct CSS variable cascade. This is exactly how the live site switches contexts.',
               },
               {
-                rule: 'For yellow accent: always verify that btn-text uses dark (#032524) not white.',
+                rule: 'For yellow accent: always verify that `btn-text` uses `dark-900`, not white.',
                 rationale: 'Yellow (luminance ~0.93) fails contrast when paired with white text. The yellow accent tokens are pre-configured with dark text, but custom implementations that override btn-text must be re-verified.',
                 wcag: 'WCAG 2.1 AA 1.4.3',
               },

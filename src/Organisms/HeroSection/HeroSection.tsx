@@ -28,7 +28,7 @@ function Highlighted({ children }: { children: React.ReactNode }) {
       style={{
         border: '2px solid var(--text)',
         borderRadius: '9999px',
-        backgroundColor: '#FF6492',
+        backgroundColor: 'var(--accent-accent-highlight)',
         color: 'var(--text)',
         paddingLeft: '0.4em',
         paddingRight: '0.4em',

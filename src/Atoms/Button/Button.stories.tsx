@@ -150,7 +150,7 @@ export const Overview: Story = {
               title="Preferred: neutral surface"
               description="The filled CTA is the main point of contrast, so it remains clear and scannable."
               accent="default"
-              backgroundColor="#ffffff"
+              backgroundColor="var(--light-100)"
             >
               <Button variant="primary">Prendre rendez-vous</Button>
               <Button variant="secondary">En savoir plus</Button>
@@ -160,7 +160,7 @@ export const Overview: Story = {
               title="Preferred: soft tint"
               description="Accent CTAs can sit on a tinted surface when the button still has a distinct silhouette and readable text."
               accent="violet"
-              backgroundColor="#f3f3f3"
+              backgroundColor="var(--light-200)"
             >
               <Button variant="accent">Demander un devis</Button>
               <Button variant="secondary">Voir les details</Button>
@@ -170,11 +170,11 @@ export const Overview: Story = {
               title="Avoid: loud surface + loud CTA"
               description="When the surface is already saturated, a second strong fill plus an extra outline feels heavy on mobile."
               accent="fuschia"
-              backgroundColor="#ff6492"
+              backgroundColor="var(--fuschia-highlight)"
             >
               <button
                 className="rounded-[var(--radius-pill)] px-6 py-3 text-text-small-semibold"
-                style={{ backgroundColor: '#e8006f', color: '#ffffff', border: '2px solid #3a121e' }}
+                style={{ backgroundColor: 'var(--fuschia-700)', color: 'var(--light-100)', border: '2px solid var(--fuschia-text)' }}
               >
                 Too heavy
               </button>
@@ -241,19 +241,21 @@ export const Overview: Story = {
               </thead>
               <tbody>
                 {[
-                  { variant: 'Primary', context: 'All themes', bg: '#f59bbb', bgLabel: 'pink-500', text: '#0b4744', textLabel: 'brand-text', ratio: '4.7:1', rating: 'AA', warn: false },
-                  { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: '#0b4744', textLabel: 'brand-text', ratio: '9.1:1', rating: 'AAA', warn: false },
-                  { variant: 'Accent', context: 'Default', bg: '#0b4744', bgLabel: 'brand-text', text: '#ffffff', textLabel: 'white', ratio: '9.1:1', rating: 'AAA', warn: false },
-                  { variant: 'Accent', context: 'Violet', bg: '#543bce', bgLabel: 'purple-700', text: '#ffffff', textLabel: 'white', ratio: '6.5:1', rating: 'AA', warn: false },
-                  { variant: 'Accent', context: 'Yellow', bg: '#ffd800', bgLabel: 'yellow-500', text: '#032524', textLabel: 'dark-900', ratio: '10.5:1', rating: 'AAA', warn: false },
-                  { variant: 'Accent', context: 'Fuschia', bg: '#e8006f', bgLabel: 'fuschia', text: '#ffffff', textLabel: 'white', ratio: '4.5:1', rating: 'AA ⚠', warn: true },
+                  { variant: 'Primary', context: 'Light theme', bg: 'var(--pink-vivid)', bgLabel: 'pink-vivid', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '6.1:1', rating: 'AA', warn: false },
+                  { variant: 'Primary', context: 'Dark theme', bg: 'var(--pink-500)', bgLabel: 'pink-500', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '4.7:1', rating: 'AA', warn: false },
+                  { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '9.1:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Default', bg: 'var(--brand-text)', bgLabel: 'brand-text', text: 'var(--light-100)', textLabel: 'white', ratio: '9.1:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Violet', bg: 'var(--purple-600)', bgLabel: 'purple-600', text: 'var(--light-100)', textLabel: 'white', ratio: '5.07:1', rating: 'AA', warn: false },
+                  { variant: 'Accent', context: 'Yellow', bg: 'var(--yellow-500)', bgLabel: 'yellow-500', text: 'var(--dark-900)', textLabel: 'dark-900', ratio: '10.5:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Fuschia', bg: 'var(--fuschia-700)', bgLabel: 'fuschia-700', text: 'var(--light-100)', textLabel: 'white', ratio: '4.77:1', rating: 'AA', warn: false },
+                  { variant: 'Accent', context: 'Blue (Formation)', bg: 'var(--blue-btn-bg)', bgLabel: 'blue-btn-bg', text: 'var(--dark-900)', textLabel: 'dark-900', ratio: '7.73:1', rating: 'AAA', warn: false },
                 ].map((row, i) => (
                   <tr key={i} style={{ backgroundColor: i % 2 === 0 ? 'var(--bg)' : 'color-mix(in srgb, var(--border) 30%, var(--bg))', borderBottom: '1px solid var(--border)' }}>
                     <td className="px-4 py-3 text-text-small-semibold">{row.variant}</td>
                     <td className="px-4 py-3 text-text-small" style={{ opacity: 0.8 }}>{row.context}</td>
                     <td className="px-4 py-3">
                       <span className="inline-flex items-center gap-2">
-                        <span className="inline-block rounded-sm w-3.5 h-3.5 border border-border" style={{ backgroundColor: row.bg === 'transparent → white' ? '#ffffff' : row.bg, flexShrink: 0 }} />
+                        <span className="inline-block rounded-sm w-3.5 h-3.5 border border-border" style={{ backgroundColor: row.bg === 'transparent → white' ? 'var(--light-100)' : row.bg, flexShrink: 0 }} />
                         <code className="text-label font-mono" style={{ opacity: 0.7 }}>{row.bgLabel || row.bg}</code>
                       </span>
                     </td>

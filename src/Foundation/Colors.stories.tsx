@@ -1,61 +1,79 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import tokens from '../../tokens.json'
 import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote, ContrastBadge } from './doc-components'
 
 // ─── Primitive groups ────────────────────────────────────────────────────────
 
+function primitive(name: keyof typeof tokens.primitives) {
+  return tokens.primitives[name]
+}
+
 const brandNeutral = {
-  'dark-900':   '#032524',
-  'dark-800':   '#073331',
-  'brand-text': '#0b4744',
-  'brand-hover':'#093c3a',
-  'light-200':  '#f3f3f3',
-  'light-100':  '#ffffff',
+  'dark-900':   primitive('dark-900'),
+  'dark-800':   primitive('dark-800'),
+  'brand-text': primitive('brand-text'),
+  'brand-hover': primitive('brand-hover'),
+  'light-200':  primitive('light-200'),
+  'light-100':  primitive('light-100'),
 }
 
 const accentGroups = [
   {
     label: 'Default — Brand baseline',
     accent: 'default',
-    description: 'Pink tones used as the brand baseline. Not tied to a specific activity — appears in global UI elements, marketing surfaces, and anywhere no vertical accent applies.',
+    description: 'Pink tones used as the brand baseline. #FFADD6 (pink-vivid) is the primary brand color — it is the default CTA button background in light theme. #F59BBB (pink-500) is used in dark theme where the lighter surface calls for a more muted tone. Neither value is tied to a specific vertical.',
     primitives: {
-      'pink-mist':        '#FFF3F9',
-      'pink-vivid-light': '#ffdeef',
-      'pink-vivid':       '#ffadd6',
-      'pink-500':         '#f59bbb',
-      'pink-600':         '#c47c96',
-      'pink-accent':      '#fd6c9f',
+      'pink-mist':        primitive('pink-mist'),
+      'pink-vivid-light': primitive('pink-vivid-light'),
+      'pink-vivid':       primitive('pink-vivid'),
+      'pink-500':         primitive('pink-500'),
+      'pink-600':         primitive('pink-600'),
+      'pink-accent':      primitive('pink-accent'),
     },
   },
   {
-    label: 'Violet — Électroménager',
-    accent: 'violet',
-    description: 'Purple tones for the appliance repair vertical.',
-    primitives: {
-      'purple-500': '#9e8cf8',
-      'purple-700': '#543bce',
-      'purple-800': '#432fa5',
-      'purple-navy':'#180d4d',
-    },
-  },
-  {
-    label: 'Yellow — Solaire',
-    accent: 'yellow',
-    description: 'Yellow tones for the solar energy vertical. Warm and energetic — communicates sun and sustainability.',
-    primitives: {
-      'yellow-highlight': '#ffde73',
-      'yellow-500':       '#ffd800',
-      'yellow-hover':     '#e0be00',
-      'yellow-600':       '#ccad00',
-    },
-  },
-  {
-    label: 'Fuschia — Chauffage',
+    label: 'Fuschia — Électroménager (réparation)',
     accent: 'fuschia',
-    description: 'High-saturation pink for the heating vertical.',
+    description: 'Fuchsia tones for the appliance repair vertical. Identity color `fuschia-highlight`, CTA `fuschia-700` — both WCAG AA compliant.',
     primitives: {
-      'fuschia-highlight': '#ff6492',
-      'fuschia-text':      '#3a121e',
+      'fuschia-highlight': primitive('fuschia-highlight'),
+      'fuschia-700':       primitive('fuschia-700'),
+      'fuschia-hover':     primitive('fuschia-hover'),
+      'fuschia-text':      primitive('fuschia-text'),
+    },
+  },
+  {
+    label: 'Violet — Chauffage (entretien)',
+    accent: 'violet',
+    description: 'Purple tones for the heating vertical. Identity color `purple-500`, CTA `purple-600` — WCAG AA compliant.',
+    primitives: {
+      'purple-500':  primitive('purple-500'),
+      'purple-600':  primitive('purple-600'),
+      'purple-hover': primitive('purple-hover'),
+      'purple-navy': primitive('purple-navy'),
+    },
+  },
+  {
+    label: 'Yellow — Solaire (installation)',
+    accent: 'yellow',
+    description: 'Yellow tones for the solar energy vertical. Warm and energetic — communicates sun and sustainability. No change needed — already WCAG AAA.',
+    primitives: {
+      'yellow-highlight': primitive('yellow-highlight'),
+      'yellow-500':       primitive('yellow-500'),
+      'yellow-hover':     primitive('yellow-hover'),
+      'yellow-600':       primitive('yellow-600'),
+    },
+  },
+  {
+    label: 'Blue — Formation (nouveau vertical)',
+    accent: 'blue',
+    description: 'Blue tones for the training vertical. Identity color `blue-highlight`, CTA `blue-btn-bg` — requires `dark-900` text. White text on this CTA fails WCAG (2.10:1).',
+    primitives: {
+      'blue-highlight': primitive('blue-highlight'),
+      'blue-btn-bg':    primitive('blue-btn-bg'),
+      'blue-btn-hover': primitive('blue-btn-hover'),
+      'blue-navy':      primitive('blue-navy'),
     },
   },
 ]
@@ -111,7 +129,7 @@ function AccentButtonPreview({ accent }: { accent: string }) {
       </button>
       <div
         className="px-4 py-1.5 rounded-[var(--radius-pill)] text-label uppercase tracking-[0.08em]"
-        style={{ backgroundColor: 'var(--accent-accent-highlight)', color: 'var(--accent-accent-text, #073331)' }}
+        style={{ backgroundColor: 'var(--accent-accent-highlight)', color: 'var(--accent-accent-text)' }}
       >
         Highlight pill
       </div>
@@ -122,10 +140,11 @@ function AccentButtonPreview({ accent }: { accent: string }) {
 // ─── Contrast pairs for accessibility section ─────────────────────────────────
 
 const contrastPairs = [
-  { bg: 'pink-500', bgColor: '#f59bbb', fg: 'brand-text', fgColor: '#0b4744', ratio: '4.7:1', rating: 'AA' as const, context: 'Primary button (default accent)' },
-  { bg: 'purple-700', bgColor: '#543bce', fg: 'white', fgColor: '#ffffff', ratio: '6.5:1', rating: 'AA' as const, context: 'Accent button (violet)' },
-  { bg: 'yellow-500', bgColor: '#ffd800', fg: 'dark-900', fgColor: '#032524', ratio: '10.5:1', rating: 'AAA' as const, context: 'Accent button (yellow)' },
-  { bg: 'fuschia-highlight', bgColor: '#ff6492', fg: 'white', fgColor: '#ffffff', ratio: '4.5:1', rating: 'AA ⚠' as const, context: 'Accent button (fuschia) — narrow margin' },
+  { bg: 'pink-vivid',   bgColor: primitive('pink-vivid'), fg: 'brand-text', fgColor: primitive('brand-text'), ratio: '6.1:1',  rating: 'AA'  as const, context: 'Primary button · thème clair (default accent)' },
+  { bg: 'fuschia-700',  bgColor: primitive('fuschia-700'), fg: 'white', fgColor: primitive('light-100'), ratio: '4.77:1', rating: 'AA'  as const, context: 'CTA Électroménager (fuschia)' },
+  { bg: 'purple-600',   bgColor: primitive('purple-600'), fg: 'white', fgColor: primitive('light-100'), ratio: '5.07:1', rating: 'AA'  as const, context: 'CTA Chauffage (violet)' },
+  { bg: 'yellow-500',   bgColor: primitive('yellow-500'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '11.65:1',rating: 'AAA' as const, context: 'CTA Solaire (yellow)' },
+  { bg: 'blue-btn-bg',  bgColor: primitive('blue-btn-bg'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '7.73:1', rating: 'AAA' as const, context: 'CTA Formation (blue) — texte foncé obligatoire' },
 ]
 
 // ─── Main doc component ───────────────────────────────────────────────────────
@@ -223,8 +242,8 @@ function ColorsDoc() {
                 rationale: 'Hardcoded hex values are invisible to the theme/accent system. If a brand color ever changes, hardcoded values must be hunted down manually and will inevitably be missed.',
               },
               {
-                rule: 'Do not pair fuschia text on fuschia surfaces without checking contrast first.',
-                rationale: 'Fuschia colors are close in luminance, which means small tint differences can drop below WCAG AA thresholds. Always verify the ratio before using fuschia-on-fuschia.',
+                rule: 'Do not use white text on the blue Formation CTA (`blue-btn-bg`).',
+                rationale: 'White on `blue-btn-bg` produces only 2.10:1 — a hard WCAG Fail. Always use `dark-900` as the button text color for the blue vertical.',
                 wcag: 'WCAG 2.1 AA 1.4.3',
               },
               {
@@ -255,7 +274,7 @@ function ColorsDoc() {
             <AccessibilityNote
               criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
               requirement="4.5:1 for normal text · 3:1 for large text (≥18pt or ≥14pt bold)"
-              why="Users with low vision, color blindness, or who are in bright outdoor conditions need sufficient contrast between text and its background. 4.5:1 is the minimum for body-size text. The fuschia accent meets this threshold by the smallest margin — avoid pairing a fuschia button on a saturated surface."
+              why="Users with low vision, color blindness, or who are in bright outdoor conditions need sufficient contrast between text and its background. 4.5:1 is the minimum for body-size text. The default primary button uses `pink-vivid` in light theme — 6.1:1 AA — and `pink-500` in dark theme — 4.7:1 AA. All vertical CTAs clear AA. Formation (blue) requires `dark-900` text; white text on `blue-btn-bg` produces only 2.10:1 which is a hard WCAG Fail."
               href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
             />
             <AccessibilityNote

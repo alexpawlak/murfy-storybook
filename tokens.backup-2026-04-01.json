@@ -20,19 +20,12 @@
     "purple-navy": "#180d4d",
     "purple-500": "#9e8cf8",
     "purple-700": "#543bce",
+    "purple-800": "#432fa5",
     "pink-vivid": "#ffadd6",
     "pink-vivid-light": "#ffdeef",
     "pink-mist": "#FFF3F9",
     "fuschia-highlight": "#ff6492",
-    "fuschia-700": "#D33167",
-    "fuschia-hover": "#A82752",
     "fuschia-text": "#3a121e",
-    "purple-600": "#6D51F5",
-    "purple-hover": "#5840D4",
-    "blue-highlight": "#40AFFF",
-    "blue-btn-bg": "#5CBBFF",
-    "blue-btn-hover": "#2E9FEF",
-    "blue-navy": "#0A3A5C",
     "yellow-highlight": "#ffde73",
     "yellow-hover": "#e0be00",
     "brand-hover": "#093c3a",
@@ -48,7 +41,7 @@
       "text-2": "{primitives.light-100}",
       "border": "{primitives.dark-900}",
       "heading-accent": "{primitives.pink-600}",
-      "btn-bg": "{primitives.pink-vivid}",
+      "btn-bg": "{primitives.pink-500}",
       "btn-text": "{primitives.brand-text}",
       "btn-bg-hover": "{primitives.pink-accent}",
       "btn-text-hover": "{primitives.brand-text}",
@@ -142,9 +135,9 @@
       "accent-text": "{primitives.pink-accent}"
     },
     "violet": {
-      "btn-bg": "{primitives.purple-600}",
+      "btn-bg": "{primitives.purple-700}",
       "btn-text": "{primitives.light-100}",
-      "btn-bg-hover": "{primitives.purple-hover}",
+      "btn-bg-hover": "{primitives.purple-800}",
       "btn-text-hover": "{primitives.light-100}",
       "accent-highlight": "{primitives.purple-500}",
       "accent-pill-active": "{primitives.light-100}",
@@ -160,22 +153,13 @@
       "accent-text": "{primitives.dark-900}"
     },
     "fuschia": {
-      "btn-bg": "{primitives.fuschia-700}",
+      "btn-bg": "#e8006f",
       "btn-text": "{primitives.light-100}",
-      "btn-bg-hover": "{primitives.fuschia-hover}",
+      "btn-bg-hover": "#cc0062",
       "btn-text-hover": "{primitives.light-100}",
       "accent-highlight": "{primitives.fuschia-highlight}",
       "accent-pill-active": "{primitives.fuschia-highlight}",
       "accent-text": "{primitives.fuschia-text}"
-    },
-    "blue": {
-      "btn-bg": "{primitives.blue-btn-bg}",
-      "btn-text": "{primitives.dark-900}",
-      "btn-bg-hover": "{primitives.blue-btn-hover}",
-      "btn-text-hover": "{primitives.dark-900}",
-      "accent-highlight": "{primitives.blue-highlight}",
-      "accent-pill-active": "{primitives.blue-highlight}",
-      "accent-text": "{primitives.blue-navy}"
     }
   },
   "typography": {
@@ -192,23 +176,10 @@
         "lineHeight": 1
       }
     },
-    "display-xl": {
-      "fontWeight": 700,
-      "letterSpacing": -0.05,
-      "textTransform": "uppercase",
-      "desktop": {
-        "fontSize": 140,
-        "lineHeight": 1
-      },
-      "mobile": {
-        "fontSize": 84,
-        "lineHeight": 1
-      }
-    },
     "h1": {
       "fontWeight": 900,
       "letterSpacing": -0.05,
-      "textTransform": "uppercase",
+      "textTransform": "none",
       "desktop": {
         "fontSize": 61,
         "lineHeight": 1
@@ -221,7 +192,7 @@
     "h2": {
       "fontWeight": 700,
       "letterSpacing": -0.05,
-      "textTransform": "uppercase",
+      "textTransform": "none",
       "desktop": {
         "fontSize": 46,
         "lineHeight": 1
@@ -234,7 +205,7 @@
     "h3": {
       "fontWeight": 700,
       "letterSpacing": -0.05,
-      "textTransform": "uppercase",
+      "textTransform": "none",
       "desktop": {
         "fontSize": 32,
         "lineHeight": 1.3

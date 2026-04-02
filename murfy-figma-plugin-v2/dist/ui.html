@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 12px;
+      color: var(--figma-color-text, #333);
+      background: var(--figma-color-bg, #fff);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    h2 { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; }
+    .subtitle { font-size: 11px; opacity: 0.6; margin-top: 2px; }
+    label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; }
+    input { width: 100%; padding: 8px 10px; border: 1px solid var(--figma-color-border, #ddd); border-radius: 6px; font-size: 12px; background: var(--figma-color-bg-secondary, #f5f5f5); color: inherit; outline: none; }
+    input:focus { border-color: var(--figma-color-border-brand, #0b4744); }
+    .field { display: flex; flex-direction: column; }
+    .row { display: flex; gap: 8px; }
+    .row .field { flex: 1; }
+    button { width: 100%; padding: 10px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; background: #0b4744; color: white; transition: opacity 0.15s; }
+    button:hover:not(:disabled) { opacity: 0.9; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: var(--figma-color-text, #333); border: 1px solid var(--figma-color-border, #ddd); }
+    .progress-bar { display: none; height: 4px; background: var(--figma-color-bg-secondary, #eee); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: #0b4744; border-radius: 2px; transition: width 0.3s ease; }
+    .status { font-size: 12px; min-height: 18px; }
+    .status.success { color: #0a7; }
+    .status.error { color: #d33; }
+    #stats { font-size: 11px; line-height: 1.6; opacity: 0.8; }
+    .divider { border: none; border-top: 1px solid var(--figma-color-border, #eee); }
+    .or-divider { display: flex; align-items: center; gap: 10px; font-size: 11px; opacity: 0.5; }
+    .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--figma-color-border, #ddd); }
+    .drop-zone { border: 2px dashed var(--figma-color-border, #ddd); border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: #0b4744; background: var(--figma-color-bg-secondary, #f5f5f5); }
+    .drop-zone p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Murfy Design Tokens Sync V2</h2>
+    <p class="subtitle">Sync tokens.json into Figma Variables, Typography Variables & Text Styles</p>
+  </div>
+
+  <!-- Upload section -->
+  <div id="drop-zone" class="drop-zone">
+    <strong>Drop tokens.json here</strong>
+    <p>or click to browse</p>
+    <input type="file" id="file-input" accept=".json" style="display:none">
+  </div>
+
+  <div class="or-divider">or sync from GitHub</div>
+
+  <!-- GitHub section -->
+  <div class="field">
+    <label>GitHub Personal Access Token</label>
+    <input id="token-input" type="password" placeholder="ghp_... (required for private repos)">
+  </div>
+  <div class="row">
+    <div class="field">
+      <label>Repository</label>
+      <input id="repo-input" placeholder="owner/repo">
+    </div>
+    <div class="field" style="flex:0.5">
+      <label>Branch</label>
+      <input id="branch-input" placeholder="main">
+    </div>
+  </div>
+  <button id="sync-btn" class="btn-secondary" onclick="handleGitHubSync()">Sync from GitHub</button>
+
+  <hr class="divider">
+  <div id="progress-bar" class="progress-bar">
+    <div id="progress-fill" class="progress-fill"></div>
+  </div>
+  <div id="status" class="status"></div>
+  <div id="stats"></div>
+
+  <script>
+    // Safe localStorage wrappers — Figma iframes use data: URLs where localStorage is blocked
+    function safeGet(key, fallback) {
+      try { return localStorage.getItem(key) || fallback; } catch(e) { return fallback; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, val); } catch(e) {}
+    }
+
+    // Restore saved settings
+    var ti = document.getElementById('token-input');
+    var ri = document.getElementById('repo-input');
+    var bi = document.getElementById('branch-input');
+    ti.value = safeGet('github_pat', '');
+    ri.value = safeGet('github_repo', 'guillaume-sola/murfy-cms');
+    bi.value = safeGet('github_branch', 'main');
+
+    // ── Shared: start sync ──
+    function startSync(tokens) {
+      var statusEl = document.getElementById('status');
+      var progressBar = document.getElementById('progress-bar');
+      var progressFill = document.getElementById('progress-fill');
+      document.getElementById('stats').textContent = '';
+      statusEl.textContent = 'Syncing to Figma...';
+      statusEl.className = 'status';
+      progressBar.style.display = 'block';
+      progressFill.style.width = '10%';
+      parent.postMessage({ pluginMessage: { type: 'SYNC_TOKENS', tokens: tokens } }, '*');
+    }
+
+    function showError(msg) {
+      var statusEl = document.getElementById('status');
+      statusEl.textContent = 'Error: ' + msg;
+      statusEl.className = 'status error';
+      document.getElementById('progress-bar').style.display = 'none';
+    }
+
+    // ── File upload ──
+    var dropZone = document.getElementById('drop-zone');
+    var fileInput = document.getElementById('file-input');
+
+    dropZone.onclick = function() { fileInput.click(); };
+
+    dropZone.ondragover = function(e) {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    };
+    dropZone.ondragleave = function() {
+      dropZone.classList.remove('drag-over');
+    };
+    dropZone.ondrop = function(e) {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      var file = e.dataTransfer.files[0];
+      if (file) readFile(file);
+    };
+
+    fileInput.onchange = function() {
+      if (fileInput.files[0]) readFile(fileInput.files[0]);
+    };
+
+    function readFile(file) {
+      if (!file.name.endsWith('.json')) {
+        showError('Please select a .json file');
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var tokens = JSON.parse(e.target.result);
+          startSync(tokens);
+        } catch(err) {
+          showError('Invalid JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // ── GitHub sync ──
+    function handleGitHubSync() {
+      var syncBtn = document.getElementById('sync-btn');
+      var statusEl = document.getElementById('status');
+      var progressBar = document.getElementById('progress-bar');
+      var progressFill = document.getElementById('progress-fill');
+
+      var pat = ti.value.trim();
+      var repo = ri.value.trim() || 'guillaume-sola/murfy-cms';
+      var branch = bi.value.trim() || 'main';
+
+      safeSet('github_pat', pat);
+      safeSet('github_repo', repo);
+      safeSet('github_branch', branch);
+
+      syncBtn.disabled = true;
+      statusEl.textContent = 'Fetching tokens.json from GitHub...';
+      statusEl.className = 'status';
+      progressBar.style.display = 'block';
+      progressFill.style.width = '5%';
+      document.getElementById('stats').textContent = '';
+
+      var url = 'https://api.github.com/repos/' + repo + '/contents/tokens.json?ref=' + branch;
+      var opts = {
+        headers: {
+          'Accept': 'application/vnd.github.raw+json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      };
+      if (pat) {
+        opts.headers['Authorization'] = 'Bearer ' + pat;
+      }
+
+      fetch(url, opts)
+        .then(function(res) {
+          if (!res.ok) throw new Error('GitHub: ' + res.status + ' ' + res.statusText);
+          return res.json();
+        })
+        .then(function(tokens) {
+          startSync(tokens);
+        })
+        .catch(function(err) {
+          showError(err.message);
+          syncBtn.disabled = false;
+        });
+    }
+
+    // ── Messages from sandbox ──
+    window.onmessage = function(event) {
+      var msg = event.data.pluginMessage;
+      if (!msg) return;
+      var statusEl = document.getElementById('status');
+      var progressFill = document.getElementById('progress-fill');
+      var statsEl = document.getElementById('stats');
+      var syncBtn = document.getElementById('sync-btn');
+      var progressBar = document.getElementById('progress-bar');
+
+      if (msg.type === 'SYNC_PROGRESS') {
+        statusEl.textContent = msg.step;
+        progressFill.style.width = msg.progress + '%';
+      }
+      if (msg.type === 'SYNC_COMPLETE') {
+        var s = msg.stats;
+        statusEl.textContent = 'Sync complete!';
+        statusEl.className = 'status success';
+        progressFill.style.width = '100%';
+        statsEl.innerHTML =
+          '<strong>' + s.variablesCreated + '</strong> variables created<br>' +
+          '<strong>' + s.variablesUpdated + '</strong> variables updated<br>' +
+          '<strong>' + s.textStylesCreated + '</strong> text styles created<br>' +
+          '<strong>' + s.textStylesUpdated + '</strong> text styles updated<br>' +
+          '<strong>' + (s.specimenTextUpdated || 0) + '</strong> specimen text nodes updated';
+        syncBtn.disabled = false;
+      }
+      if (msg.type === 'SYNC_ERROR') {
+        showError(msg.error);
+        syncBtn.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

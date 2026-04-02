@@ -6,28 +6,20 @@ import { DocHeader, DocSection, GuidanceGrid, AccessibilityNote } from './doc-co
 
 const radii = [
   {
-    name: 'radius-pill',
-    label: 'Pill',
-    value: '9999px',
-    cssVar: '--radius-pill',
-    usage: 'Tags, badges, filter chips, status indicators',
-    tailwind: 'rounded-[var(--radius-pill)]',
+    name: 'radius-0',
+    label: 'None',
+    value: '0px',
+    cssVar: '--radius-0',
+    usage: 'Sharp-cornered elements, table cells, full-bleed banners',
+    tailwind: 'rounded-[var(--radius-0)]',
   },
   {
-    name: 'radius-section',
-    label: 'Section',
-    value: '48px',
-    cssVar: '--radius-section',
-    usage: 'Hero sections, full-bleed feature blocks, large card panels',
-    tailwind: 'rounded-[var(--radius-section)]',
-  },
-  {
-    name: 'radius-card',
-    label: 'Card',
-    value: '24px',
-    cssVar: '--radius-card',
-    usage: 'Product cards, service cards, review cards, pricing tiles',
-    tailwind: 'rounded-[var(--radius-card)]',
+    name: 'radius-small',
+    label: 'Small',
+    value: '8px',
+    cssVar: '--radius-small',
+    usage: 'Inputs, buttons, small UI controls, inline highlights',
+    tailwind: 'rounded-[var(--radius-small)]',
   },
   {
     name: 'radius-dropdown',
@@ -38,16 +30,52 @@ const radii = [
     tailwind: 'rounded-[var(--radius-dropdown)]',
   },
   {
-    name: 'radius-small',
-    label: 'Small',
-    value: '8px',
-    cssVar: '--radius-small',
-    usage: 'Inputs, buttons, small UI controls, inline highlights',
-    tailwind: 'rounded-[var(--radius-small)]',
+    name: 'radius-card',
+    label: 'Card',
+    value: '24px',
+    cssVar: '--radius-card',
+    usage: 'Product cards, service cards, review cards, pricing tiles',
+    tailwind: 'rounded-[var(--radius-card)]',
+  },
+  {
+    name: 'radius-section',
+    label: 'Section',
+    value: '48px',
+    cssVar: '--radius-section',
+    usage: 'Hero sections, full-bleed feature blocks, large card panels',
+    tailwind: 'rounded-[var(--radius-section)]',
+  },
+  {
+    name: 'radius-pill',
+    label: 'Pill',
+    value: '9999px',
+    cssVar: '--radius-pill',
+    usage: 'Tags, badges, filter chips, status indicators',
+    tailwind: 'rounded-[var(--radius-pill)]',
   },
 ]
 
 const spacingTokens = [
+  { name: 'space-0',   value: 0,   cssVar: '--space-0' },
+  { name: 'space-4',   value: 4,   cssVar: '--space-4' },
+  { name: 'space-8',   value: 8,   cssVar: '--space-8' },
+  { name: 'space-12',  value: 12,  cssVar: '--space-12' },
+  { name: 'space-16',  value: 16,  cssVar: '--space-16' },
+  { name: 'space-24',  value: 24,  cssVar: '--space-24' },
+  { name: 'space-32',  value: 32,  cssVar: '--space-32' },
+  { name: 'space-40',  value: 40,  cssVar: '--space-40' },
+  { name: 'space-48',  value: 48,  cssVar: '--space-48' },
+  { name: 'space-56',  value: 56,  cssVar: '--space-56' },
+  { name: 'space-64',  value: 64,  cssVar: '--space-64' },
+  { name: 'space-72',  value: 72,  cssVar: '--space-72' },
+  { name: 'space-80',  value: 80,  cssVar: '--space-80' },
+  { name: 'space-88',  value: 88,  cssVar: '--space-88' },
+  { name: 'space-96',  value: 96,  cssVar: '--space-96' },
+  { name: 'space-128', value: 128, cssVar: '--space-128' },
+  { name: 'space-160', value: 160, cssVar: '--space-160' },
+]
+
+const sectionSpacingTokens = [
   {
     name: 'spacing-section-y-mobile',
     label: 'Section Y — Mobile',
@@ -86,7 +114,7 @@ function RadiusShowcase() {
   return (
     <>
       {/* Visual showcase */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-10">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-6 mb-10">
         {radii.map(({ label, value, cssVar }) => (
           <div key={label} className="flex flex-col items-center gap-3">
             <div
@@ -150,39 +178,75 @@ function RadiusShowcase() {
 }
 
 function SpacingShowcase() {
+  const maxBarHeight = 120
   const maxVal = Math.max(...spacingTokens.map(t => t.value))
 
   return (
     <>
-      {/* Visual bar chart */}
-      <div className="flex items-end gap-10 mb-10">
-        {spacingTokens.map(({ label, value }) => (
-          <div key={label} className="flex flex-col items-center gap-3">
-            <div className="relative flex items-end" style={{ height: maxVal + 24 }}>
-              <div
-                className="w-20 rounded-t-[var(--radius-small)]"
-                style={{ height: value, background: 'var(--accent-btn-bg)', opacity: 0.85 }}
-              />
-              <div
-                className="absolute right-[-28px] top-0 flex flex-col items-center gap-0"
-                style={{ height: value }}
-              >
-                <div className="flex-1 border-r border-dashed border-border" />
+      {/* ── Space scale visual ── */}
+      <div className="overflow-x-auto pb-2 mb-10">
+        <div className="flex items-end gap-3" style={{ minWidth: 'max-content' }}>
+          {spacingTokens.map(({ name, value, cssVar }) => {
+            const barH = value === 0 ? 2 : Math.max(4, Math.round((value / maxVal) * maxBarHeight))
+            return (
+              <div key={name} className="flex flex-col items-center gap-2">
+                <span className="text-text-xsmall font-mono" style={{ color: 'var(--text)', opacity: 0.5 }}>{value}</span>
+                <div
+                  className="w-8 rounded-t-[var(--radius-small)]"
+                  style={{ height: barH, background: 'var(--accent-btn-bg)', opacity: value === 0 ? 0.25 : 0.85 }}
+                />
+                <span className="text-text-xsmall font-mono" style={{ color: 'var(--text)', opacity: 0.6, fontSize: 11 }}>
+                  {cssVar.replace('--', '')}
+                </span>
               </div>
-            </div>
-            <div className="text-center">
-              <p className="text-text-small-semibold text-text">{label}</p>
-              <p className="text-text-xsmall font-mono" style={{ color: 'var(--text)', opacity: 0.5 }}>{value}px</p>
-            </div>
-          </div>
-        ))}
+            )
+          })}
+        </div>
       </div>
 
-      {/* Detail table */}
+      {/* ── Token table ── */}
+      <div className="rounded-[var(--radius-card)] border border-border overflow-hidden mb-10">
+        <table className="w-full text-left text-text-small">
+          <thead>
+            <tr className="border-b border-border" style={{ background: 'var(--bg)' }}>
+              <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Token</th>
+              <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Value</th>
+              <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Preview</th>
+            </tr>
+          </thead>
+          <tbody>
+            {spacingTokens.map(({ name, cssVar, value }, i) => (
+              <tr
+                key={name}
+                className="border-b border-border last:border-0"
+                style={{ background: i % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--border) 40%, transparent)' }}
+              >
+                <td className="px-5 py-3"><Token>{`var(${cssVar})`}</Token></td>
+                <td className="px-5 py-3 font-mono text-text-xsmall text-text" style={{ opacity: 0.7 }}>{value}px</td>
+                <td className="px-5 py-3">
+                  <div
+                    style={{
+                      width: value === 0 ? 2 : value,
+                      height: 16,
+                      background: 'var(--accent-btn-bg)',
+                      opacity: value === 0 ? 0.2 : 0.75,
+                      borderRadius: 2,
+                      maxWidth: 160,
+                    }}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ── Section spacing ── */}
+      <p className="text-text-main-semibold text-text mb-4">Section spacing</p>
       <div className="rounded-[var(--radius-card)] border border-border overflow-hidden">
         <table className="w-full text-left text-text-small">
           <thead>
-            <tr className="border-b border-border">
+            <tr className="border-b border-border" style={{ background: 'var(--bg)' }}>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Token</th>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Value</th>
               <th className="px-5 py-3 text-text-xsmall-semibold uppercase tracking-[0.08em] text-text" style={{ opacity: 0.5 }}>Breakpoint</th>
@@ -190,7 +254,7 @@ function SpacingShowcase() {
             </tr>
           </thead>
           <tbody>
-            {spacingTokens.map(({ name, cssVar, value, usage }, i) => (
+            {sectionSpacingTokens.map(({ name, cssVar, value, usage, label }, i) => (
               <tr
                 key={name}
                 className="border-b border-border last:border-0"
@@ -229,7 +293,7 @@ function SpacingRadiusDoc() {
       <DocHeader
         layer="Foundation"
         title="Spacing & Radius"
-        description="The spatial vocabulary of the Murfy design system. Five radius tokens control every rounded shape; two spacing tokens regulate vertical rhythm across all page sections. These tokens are the same in code (CSS variables) and design (Figma variables)."
+        description="The spatial vocabulary of the Murfy design system. Six radius tokens control every rounded shape; 17 space tokens cover component gaps and paddings; two section tokens regulate vertical rhythm. All tokens are shared between code (CSS variables) and Figma (Dimensions collection)."
       />
 
       <div className="px-8 py-12 max-w-5xl">
@@ -237,7 +301,7 @@ function SpacingRadiusDoc() {
         {/* ── Border Radius ─────────────────────────────────────────────── */}
         <DocSection
           label="Border Radius"
-          subtitle="Five named radius tokens cover every shape in the Murfy UI. Always reference a token — never use a raw px value."
+          subtitle="Six named radius tokens cover every shape in the Murfy UI — from sharp corners (radius-0) to full pills. Always reference a token — never use a raw px value."
         >
           <RadiusShowcase />
         </DocSection>
@@ -245,7 +309,7 @@ function SpacingRadiusDoc() {
         {/* ── Spacing ───────────────────────────────────────────────────── */}
         <DocSection
           label="Spacing"
-          subtitle="Spacing tokens govern the vertical rhythm of the page — the breathing room between full-width sections. Consistent application keeps the page from feeling cramped on mobile or too spaced-out on desktop."
+          subtitle="17 space tokens (space-0 → space-160) cover component-level gaps, paddings, and margins. Two section tokens govern the vertical rhythm of full-width page sections across breakpoints."
         >
           <SpacingShowcase />
         </DocSection>

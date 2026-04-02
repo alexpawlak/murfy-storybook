@@ -61,6 +61,10 @@
 @tailwind utilities;
 
 @layer utilities {
+  .text-display-xl {
+    text-transform: var(--text-transform-display-xl);
+  }
+
   .text-display {
     text-transform: var(--text-transform-display);
   }

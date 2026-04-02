@@ -101,18 +101,18 @@ const pipelineSteps = [
 // ─── Theme reference data ─────────────────────────────────────────────────────
 
 const themes = [
-  { name: 'light', bg: '#ffffff' },
-  { name: 'dark', bg: '#032524' },
-  { name: 'light-pink', bg: '#FFF3F9' },
-  { name: 'pink-mist', bg: '#FFF3F9' },
-  { name: 'pink-vivid', bg: '#ffdeef' },
+  { name: 'light', bg: 'var(--light-100)' },
+  { name: 'dark', bg: 'var(--dark-900)' },
+  { name: 'light-pink', bg: 'var(--pink-vivid-light)' },
+  { name: 'pink-mist', bg: 'var(--pink-mist)' },
+  { name: 'pink-vivid', bg: 'var(--pink-vivid)' },
 ]
 
 const accents = [
-  { name: 'default', color: '#fd6c9f', label: 'Pink' },
-  { name: 'violet', color: '#9e8cf8', label: 'Violet' },
-  { name: 'yellow', color: '#ffd800', label: 'Yellow' },
-  { name: 'fuschia', color: '#e6007a', label: 'Fuschia' },
+  { name: 'default', color: 'var(--pink-accent)', label: 'Pink' },
+  { name: 'violet', color: 'var(--purple-500)', label: 'Violet' },
+  { name: 'yellow', color: 'var(--yellow-500)', label: 'Yellow' },
+  { name: 'fuschia', color: 'var(--fuschia-highlight)', label: 'Fuschia' },
 ]
 
 // ─── Story ────────────────────────────────────────────────────────────────────

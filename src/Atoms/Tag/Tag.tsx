@@ -17,7 +17,7 @@ export interface TagProps {
 const variantClasses: Record<TagVariant, string> = {
   pink:    'bg-pink-500 text-brand-text',
   outline: 'bg-transparent border-2 border-border text-text-default',
-  violet:  'bg-purple-700 text-light-100',
+  violet:  'bg-purple-600 text-light-100',
   yellow:  'bg-yellow-500 text-dark-900',
   fuschia: 'bg-pink-accent text-brand-text',
 }

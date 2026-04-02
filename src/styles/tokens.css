@@ -17,12 +17,19 @@
   --purple-navy: #180d4d;
   --purple-500: #9e8cf8;
   --purple-700: #543bce;
-  --purple-800: #432fa5;
   --pink-vivid: #ffadd6;
   --pink-vivid-light: #ffdeef;
   --pink-mist: #FFF3F9;
   --fuschia-highlight: #ff6492;
+  --fuschia-700: #D33167;
+  --fuschia-hover: #A82752;
   --fuschia-text: #3a121e;
+  --purple-600: #6D51F5;
+  --purple-hover: #5840D4;
+  --blue-highlight: #40AFFF;
+  --blue-btn-bg: #5CBBFF;
+  --blue-btn-hover: #2E9FEF;
+  --blue-navy: #0A3A5C;
   --yellow-highlight: #ffde73;
   --yellow-hover: #e0be00;
   --brand-hover: #093c3a;
@@ -38,21 +45,26 @@
   --line-height-display: 1;
   --letter-spacing-display: -0.05em;
   --text-transform-display: uppercase;
+  --font-size-display-xl: 84px;
+  --font-weight-display-xl: 700;
+  --line-height-display-xl: 1;
+  --letter-spacing-display-xl: -0.05em;
+  --text-transform-display-xl: uppercase;
   --font-size-h1: 40px;
   --font-weight-h1: 900;
   --line-height-h1: 1.05;
   --letter-spacing-h1: -0.05em;
-  --text-transform-h1: none;
+  --text-transform-h1: uppercase;
   --font-size-h2: 32px;
   --font-weight-h2: 700;
   --line-height-h2: 1.1;
   --letter-spacing-h2: -0.05em;
-  --text-transform-h2: none;
+  --text-transform-h2: uppercase;
   --font-size-h3: 28px;
   --font-weight-h3: 700;
   --line-height-h3: 1.2;
   --letter-spacing-h3: -0.05em;
-  --text-transform-h3: none;
+  --text-transform-h3: uppercase;
   --font-size-h4: 22px;
   --font-weight-h4: 700;
   --line-height-h4: 1.25;
@@ -131,7 +143,7 @@
   --text-2: var(--light-100);
   --border: var(--dark-900);
   --heading-accent: var(--pink-600);
-  --btn-bg: var(--pink-500);
+  --btn-bg: var(--pink-vivid);
   --btn-text: var(--brand-text);
   --btn-bg-hover: var(--pink-accent);
   --btn-text-hover: var(--brand-text);
@@ -229,9 +241,9 @@
 }
 
 [data-accent="violet"] {
-  --accent-btn-bg: var(--purple-700);
+  --accent-btn-bg: var(--purple-600);
   --accent-btn-text: var(--light-100);
-  --accent-btn-bg-hover: var(--purple-800);
+  --accent-btn-bg-hover: var(--purple-hover);
   --accent-btn-text-hover: var(--light-100);
   --accent-accent-highlight: var(--purple-500);
   --accent-accent-pill-active: var(--light-100);
@@ -249,13 +261,23 @@
 }
 
 [data-accent="fuschia"] {
-  --accent-btn-bg: #e8006f;
+  --accent-btn-bg: var(--fuschia-700);
   --accent-btn-text: var(--light-100);
-  --accent-btn-bg-hover: #cc0062;
+  --accent-btn-bg-hover: var(--fuschia-hover);
   --accent-btn-text-hover: var(--light-100);
   --accent-accent-highlight: var(--fuschia-highlight);
   --accent-accent-pill-active: var(--fuschia-highlight);
   --accent-accent-text: var(--fuschia-text);
+}
+
+[data-accent="blue"] {
+  --accent-btn-bg: var(--blue-btn-bg);
+  --accent-btn-text: var(--dark-900);
+  --accent-btn-bg-hover: var(--blue-btn-hover);
+  --accent-btn-text-hover: var(--dark-900);
+  --accent-accent-highlight: var(--blue-highlight);
+  --accent-accent-pill-active: var(--blue-highlight);
+  --accent-accent-text: var(--blue-navy);
 }
 
 :root {
@@ -272,6 +294,8 @@
   :root {
     --font-size-display: 112px;
     --line-height-display: 1;
+    --font-size-display-xl: 140px;
+    --line-height-display-xl: 1;
     --font-size-h1: 61px;
     --line-height-h1: 1;
     --font-size-h2: 46px;

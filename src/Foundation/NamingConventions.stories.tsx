@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-xl font-bold mb-1" style={{ color: '#032524' }}>
+    <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--dark-900)' }}>
       {children}
     </h2>
   )
@@ -40,19 +40,19 @@ function ConventionTable({ rows }: { rows: Row[] }) {
           <tr style={{ borderBottom: '2px solid #e5e7eb' }}>
             <th
               className="text-left py-2 pr-6 font-semibold w-1/4"
-              style={{ color: '#073331' }}
+              style={{ color: 'var(--dark-800)' }}
             >
               Concern
             </th>
             <th
               className="text-left py-2 pr-6 font-semibold w-1/3"
-              style={{ color: '#073331' }}
+              style={{ color: 'var(--dark-800)' }}
             >
               Convention
             </th>
             <th
               className="text-left py-2 font-semibold"
-              style={{ color: '#073331' }}
+              style={{ color: 'var(--dark-800)' }}
             >
               Example
             </th>
@@ -67,7 +67,7 @@ function ConventionTable({ rows }: { rows: Row[] }) {
                 backgroundColor: i % 2 === 0 ? 'transparent' : '#fafafa',
               }}
             >
-              <td className="py-2.5 pr-6 font-medium" style={{ color: '#073331' }}>
+              <td className="py-2.5 pr-6 font-medium" style={{ color: 'var(--dark-800)' }}>
                 {row.concern}
               </td>
               <td className="py-2.5 pr-6" style={{ color: '#374151' }}>
@@ -98,7 +98,7 @@ function NoteBlock({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="mt-3 px-4 py-3 rounded-lg text-sm"
-      style={{ backgroundColor: '#fff3f9', borderLeft: '3px solid #f59bbb', color: '#073331' }}
+      style={{ backgroundColor: 'var(--pink-mist)', borderLeft: '3px solid var(--pink-500)', color: 'var(--dark-800)' }}
     >
       {children}
     </div>
@@ -109,11 +109,11 @@ function NoteBlock({ children }: { children: React.ReactNode }) {
 
 function NamingConventionsDoc() {
   return (
-    <div className="p-8 space-y-14 max-w-4xl" style={{ color: '#073331' }}>
+    <div className="p-8 space-y-14 max-w-4xl" style={{ color: 'var(--dark-800)' }}>
 
       {/* Intro */}
       <section>
-        <h1 className="text-3xl font-bold mb-3" style={{ color: '#032524' }}>
+        <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--dark-900)' }}>
           Naming Conventions
         </h1>
         <p className="text-sm leading-relaxed max-w-2xl" style={{ color: '#6b7280' }}>

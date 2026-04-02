@@ -193,7 +193,7 @@ export const Overview: Story = {
             donts={[
               {
                 rule: 'Do not use yellow tags without verifying text contrast is dark.',
-                rationale: 'Yellow is a very light color (luminance ~0.93). Text on yellow must be dark (#032524 or equivalent) to pass WCAG AA at 4.5:1. White or light text on yellow fails.',
+                rationale: 'Yellow is a very light color (luminance ~0.93). Text on yellow must use `dark-900` or an equivalent dark token to pass WCAG AA at 4.5:1. White or light text on yellow fails.',
                 wcag: 'WCAG 2.1 AA 1.4.3',
               },
               {
@@ -219,7 +219,7 @@ export const Overview: Story = {
             <AccessibilityNote
               criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
               requirement="4.5:1 for tag label text (12px semibold counts as small text)"
-              why="Tag text at 12px (the label scale step) is below the 'large text' threshold (18pt / 14pt bold). This means it must meet the stricter 4.5:1 ratio. The pink and outline tags use dark brand text on light backgrounds — both pass comfortably. Yellow tags require dark text (#032524) to pass."
+              why="Tag text at 12px (the label scale step) is below the 'large text' threshold (18pt / 14pt bold). This means it must meet the stricter 4.5:1 ratio. The pink and outline tags use dark brand text on light backgrounds — both pass comfortably. Yellow tags require `dark-900` text to pass."
               href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
             />
             <AccessibilityNote

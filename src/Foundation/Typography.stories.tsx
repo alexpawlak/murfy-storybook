@@ -22,6 +22,7 @@ const WEIGHTS = [
 ]
 
 const HEADING_ROWS: TypographyRow[] = [
+  { name: 'display-xl', label: 'Display XL', sample: 'Murfy' },
   { name: 'display', label: 'Display', sample: 'Murfy' },
   { name: 'h1', label: 'H1', sample: 'Réparez, ne remplacez pas' },
   { name: 'h2', label: 'H2', sample: 'Nos services de réparation' },
@@ -124,6 +125,7 @@ function TypographySpecimen({ mode, widthClassName }: { mode: 'mobile' | 'deskto
       <div className="text-label font-semibold text-text" style={{ opacity: 0.6 }}>
         {mode === 'mobile' ? 'Mobile specimen' : 'Desktop specimen'}
       </div>
+      <div className="mt-4 text-display-xl font-bold text-text">Murfy</div>
       <div className="mt-4 text-display font-bold text-text">Murfy</div>
       <h2 className="mt-4 text-h2 font-bold text-text">Réparer plutôt que remplacer</h2>
       <p className="mt-4 text-text-main text-text" style={{ opacity: 0.8 }}>
@@ -152,7 +154,7 @@ function TypographyPage() {
       <DocHeader
         layer="Foundation"
         title="Typography"
-        description="Murfy A2 is the brand's custom typeface. The type system is mobile-first with a desktop override at the md breakpoint. Fourteen named steps cover every use case from display headings to micro labels — only one all-caps style exists by design."
+        description="Murfy A2 is the brand's custom typeface. The type system is mobile-first with a desktop override at the md breakpoint. Fifteen named steps cover every use case from oversized display headings to micro labels, with uppercase reserved for the display scales."
       />
 
       <div className="px-8 py-12 max-w-5xl">
@@ -191,7 +193,7 @@ function TypographyPage() {
         {/* ── Headings ──────────────────────────────────────────────────── */}
         <DocSection
           label="Headings"
-          subtitle="Only Display is uppercase by design. H1–H6 keep sentence case unless a component intentionally applies uppercase for a specific design purpose."
+          subtitle="Display XL and Display are uppercase by design. H1–H6 keep sentence case unless a component intentionally applies uppercase for a specific design purpose."
         >
           {HEADING_ROWS.map((row) => <TypeRow key={row.name} {...row} />)}
         </DocSection>
@@ -260,7 +262,7 @@ function TypographyPage() {
             <AccessibilityNote
               criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
               requirement="4.5:1 for normal text · 3:1 for large text (≥18pt or ≥14pt bold)"
-              why="Body text (text-main, text-small) must achieve 4.5:1 contrast against its background. Heading text at h3 and above (large text) requires 3:1. The Murfy dark green (#0b4744) on white achieves 9.1:1 — well above both thresholds."
+              why="Body text (text-main, text-small) must achieve 4.5:1 contrast against its background. Heading text at h3 and above (large text) requires 3:1. `brand-text` on white achieves 9.1:1 — well above both thresholds."
               href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
             />
             <AccessibilityNote

@@ -202,13 +202,13 @@ export const Overview: Story = {
           </p>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { label: 'light — #ffffff', bg: '#ffffff' },
-              { label: 'pink-mist — #FFF3F9', bg: '#FFF3F9' },
-              { label: 'light-pink — #ffdeef', bg: '#ffdeef' },
-              { label: 'pink-vivid — #ffadd6', bg: '#ffadd6' },
+              { label: 'light — var(--light-100)', bg: 'var(--light-100)' },
+              { label: 'pink-mist — var(--pink-mist)', bg: 'var(--pink-mist)' },
+              { label: 'light-pink — var(--pink-vivid-light)', bg: 'var(--pink-vivid-light)' },
+              { label: 'pink-vivid — var(--pink-vivid)', bg: 'var(--pink-vivid)' },
             ].map(({ label, bg }) => (
               <div key={bg} className="rounded-card p-5" style={{ backgroundColor: bg }}>
-                <p className="text-label uppercase tracking-[0.08em] mb-4" style={{ color: '#032524', opacity: 0.55 }}>{label}</p>
+                <p className="text-label uppercase tracking-[0.08em] mb-4" style={{ color: 'var(--dark-900)', opacity: 0.55 }}>{label}</p>
                 <Card
                   title="Techniciens salariés Murfy"
                   body="Pas de sous-traitance, pas de surprise."
