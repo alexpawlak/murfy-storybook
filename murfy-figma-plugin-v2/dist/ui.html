@@ -37,6 +37,20 @@
     .drop-zone { border: 2px dashed var(--figma-color-border, #ddd); border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
     .drop-zone:hover, .drop-zone.drag-over { border-color: #0b4744; background: var(--figma-color-bg-secondary, #f5f5f5); }
     .drop-zone p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+
+    /* Diff UI styles */
+    .diff-group { margin-top: 12px; border: 1px solid var(--figma-color-border, #eee); border-radius: 6px; overflow: hidden; }
+    .diff-group summary { padding: 8px 12px; background: var(--figma-color-bg-secondary, #f9f9f9); font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; list-style: none; }
+    .diff-group summary::-webkit-details-marker { display: none; }
+    .diff-group summary:hover { background: var(--figma-color-bg-hover, #f0f0f0); }
+    .diff-list { padding: 8px 12px; background: var(--figma-color-bg, #fff); max-height: 200px; overflow-y: auto; }
+    .diff-item { padding: 4px 0; border-bottom: 1px solid var(--figma-color-border, #eee); display: flex; justify-content: space-between; gap: 8px; }
+    .diff-item:last-child { border-bottom: none; }
+    .diff-name { font-family: monospace; font-size: 10px; word-break: break-all; flex: 1; }
+    .diff-badge { font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: bold; white-space: nowrap; }
+    .diff-badge.created { background: #e6f4ea; color: #0a7; }
+    .diff-badge.updated { background: #e8f0fe; color: #1a73e8; }
+    .diff-badge.deleted { background: #fce8e6; color: #d33; }
   </style>
 </head>
 <body>
@@ -92,7 +106,7 @@
     var ri = document.getElementById('repo-input');
     var bi = document.getElementById('branch-input');
     ti.value = safeGet('github_pat', '');
-    ri.value = safeGet('github_repo', 'guillaume-sola/murfy-cms');
+    ri.value = safeGet('github_repo', 'alexpawlak/murfy-storybook');
     bi.value = safeGet('github_branch', 'main');
 
     // ── Shared: start sync ──
@@ -164,7 +178,7 @@
       var progressFill = document.getElementById('progress-fill');
 
       var pat = ti.value.trim();
-      var repo = ri.value.trim() || 'guillaume-sola/murfy-cms';
+      var repo = ri.value.trim() || 'alexpawlak/murfy-storybook';
       var branch = bi.value.trim() || 'main';
 
       safeSet('github_pat', pat);
@@ -222,12 +236,43 @@
         statusEl.textContent = 'Sync complete!';
         statusEl.className = 'status success';
         progressFill.style.width = '100%';
-        statsEl.innerHTML =
-          '<strong>' + s.variablesCreated + '</strong> variables created<br>' +
+        
+        // Build base stats HTML
+        var html = '<strong>' + s.variablesCreated + '</strong> variables created<br>' +
           '<strong>' + s.variablesUpdated + '</strong> variables updated<br>' +
           '<strong>' + s.textStylesCreated + '</strong> text styles created<br>' +
           '<strong>' + s.textStylesUpdated + '</strong> text styles updated<br>' +
-          '<strong>' + (s.specimenTextUpdated || 0) + '</strong> specimen text nodes updated';
+          '<strong>' + (s.specimenTextUpdated || 0) + '</strong> specimen text nodes updated<br><br>';
+
+        // Render accordion diff UI
+        if (msg.changes && msg.changes.length > 0) {
+          // Group changes by category
+          var groups = {};
+          msg.changes.forEach(function(c) {
+            if (!groups[c.category]) groups[c.category] = [];
+            groups[c.category].push(c);
+          });
+          
+          Object.keys(groups).forEach(function(cat) {
+            var cList = groups[cat];
+            var createdCount = cList.filter(function(x) { return x.type === 'created'; }).length;
+            var updatedCount = cList.filter(function(x) { return x.type === 'updated'; }).length;
+            
+            html += '<details class="diff-group">';
+            html += '  <summary>' + cat + ' <span style="opacity:0.6; font-size:10px;">(+' + createdCount + ' / ~' + updatedCount + ')</span></summary>';
+            html += '  <div class="diff-list">';
+            cList.forEach(function(change) {
+              html += '    <div class="diff-item">';
+              html += '      <span class="diff-name">' + change.name + '</span>';
+              html += '      <span class="diff-badge ' + change.type + '">' + change.type + '</span>';
+              html += '    </div>';
+            });
+            html += '  </div>';
+            html += '</details>';
+          });
+        }
+        
+        statsEl.innerHTML = html;
         syncBtn.disabled = false;
       }
       if (msg.type === 'SYNC_ERROR') {

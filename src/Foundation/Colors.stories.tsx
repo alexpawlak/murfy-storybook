@@ -9,6 +9,12 @@ function primitive(name: keyof typeof tokens.primitives) {
   return tokens.primitives[name]
 }
 
+function resolvePrimitiveReference(value: string) {
+  const match = value.match(/^\{primitives\.([^}]+)\}$/)
+  if (!match) return value
+  return primitive(match[1] as keyof typeof tokens.primitives)
+}
+
 const brandNeutral = {
   'dark-900':   primitive('dark-900'),
   'dark-800':   primitive('dark-800'),
@@ -96,6 +102,8 @@ function Swatch({ name, value }: { name: string; value: string }) {
 }
 
 function AccentTokenRow({ accent }: { accent: string }) {
+  const accentValues = tokens.accents[accent as keyof typeof tokens.accents]
+
   return (
     <div className="flex flex-wrap gap-3 mt-3">
       {accentTokens.map(token => (
@@ -106,6 +114,9 @@ function AccentTokenRow({ accent }: { accent: string }) {
             style={{ backgroundColor: `var(--accent-${token})` }}
           />
           <span className="text-label font-mono text-text" style={{ opacity: 0.65 }}>{token}</span>
+          <span className="text-label font-mono text-text" style={{ opacity: 0.5 }}>
+            {resolvePrimitiveReference(accentValues[token as keyof typeof accentValues])}
+          </span>
         </div>
       ))}
     </div>

@@ -71,16 +71,22 @@
     const variableMap = /* @__PURE__ */ new Map();
     let created = 0;
     let updated = 0;
+    const changes = [];
     for (const [key, hex] of Object.entries(tokens.primitives)) {
       const name = `primitives/${key}`;
       const { variable, created: isNew } = findOrCreateVariable(name, collection.id, "COLOR", allVariables);
       const rgba = hexToFigmaRGBA(hex);
       variable.setValueForMode(modeId, rgba);
       variableMap.set(key, variable);
+      changes.push({
+        name,
+        type: isNew ? 'created' : 'updated',
+        category: 'Primitives'
+      });
       if (isNew) created++;
       else updated++;
     }
-    return { collection, variableMap, created, updated };
+    return { collection, variableMap, created, updated, changes };
   }
 
   // src/sync/semantic.ts
@@ -100,6 +106,7 @@
     var modeMap = ensureModes(collection, themeNames);
     var created = 0;
     var updated = 0;
+    const changes = [];
     var tokenKeys = Object.keys(tokens.themes[themeNames[0]]);
     for (var i = 0; i < tokenKeys.length; i++) {
       var tokenKey = tokenKeys[i];
@@ -116,10 +123,15 @@
         var resolved = resolveTokenValue(value, primitiveVars);
         variable.setValueForMode(modeId, resolved);
       }
+      changes.push({
+        name,
+        type: isNew ? 'created' : 'updated',
+        category: 'Themes'
+      });
       if (isNew) created++;
       else updated++;
     }
-    return { created, updated };
+    return { created, updated, changes };
   }
 
   // src/sync/accents.ts
@@ -140,6 +152,7 @@
     var variableMap = /* @__PURE__ */ new Map();
     var created = 0;
     var updated = 0;
+    const changes = [];
     var tokenKeys = Object.keys(tokens.accents[accentNames[0]]);
     for (var i = 0; i < tokenKeys.length; i++) {
       var tokenKey = tokenKeys[i];
@@ -157,10 +170,15 @@
         variable.setValueForMode(modeId, resolved);
       }
       variableMap.set(tokenKey, variable);
+      changes.push({
+        name,
+        type: isNew ? 'created' : 'updated',
+        category: 'Accents'
+      });
       if (isNew) created++;
       else updated++;
     }
-    return { variableMap, created, updated };
+    return { variableMap, created, updated, changes };
   }
 
   // src/sync/dimensions.ts
@@ -170,14 +188,20 @@
     const modeId = modeMap.get("Value");
     let created = 0;
     let updated = 0;
+    const changes = [];
     for (const [key, value] of Object.entries(tokens.dimensions)) {
       const name = `dimensions/${key}`;
       const { variable, created: isNew } = findOrCreateVariable(name, collection.id, "FLOAT", allVariables);
       variable.setValueForMode(modeId, value);
+      changes.push({
+        name,
+        type: isNew ? 'created' : 'updated',
+        category: 'Dimensions'
+      });
       if (isNew) created++;
       else updated++;
     }
-    return { created, updated };
+    return { created, updated, changes };
   }
 
   // src/sync/typography-variables.ts
@@ -193,6 +217,7 @@
     const modeMap = ensureModes(collection, ["Desktop", "Mobile"]);
     let created = 0;
     let updated = 0;
+    const changes = [];
     for (const [key, token] of Object.entries(tokens.typography)) {
       const variableSpecs = [
         { name: `typography/font-size/${key}`, valueForMode: (modeName) => getTypographyModeValue(token, modeName.toLowerCase(), "fontSize") },
@@ -210,11 +235,16 @@
             variable.setValueForMode(modeId, value);
           }
         }
+        changes.push({
+          name: spec.name,
+          type: isNew ? 'created' : 'updated',
+          category: 'Typography Variables'
+        });
         if (isNew) created++;
         else updated++;
       }
     }
-    return { created, updated };
+    return { created, updated, changes };
   }
 
   // src/sync/text-styles.ts
@@ -265,6 +295,7 @@
       }
       let created = 0;
       let updated = 0;
+      const changes = [];
       for (const [name, token] of Object.entries(tokens.typography)) {
         const styleName = (_a = STYLE_NAME_MAP[name]) != null ? _a : `Murfy/${name}`;
         const fontStyle = (_a = WEIGHT_MAP[token.fontWeight]) != null ? _a : "Regular";
@@ -291,10 +322,15 @@
         } else {
           style.fontSize = getTypographyModeValue(token, "desktop", "fontSize");
         }
+        changes.push({
+          name: styleName,
+          type: isNew ? 'created' : 'updated',
+          category: 'Text Styles'
+        });
         if (isNew) created++;
         else updated++;
       }
-      return { created, updated };
+      return { created, updated, changes };
     });
   }
 
@@ -410,37 +446,51 @@
           textStylesUpdated: 0,
           specimenTextUpdated: 0
         };
+        const allChanges = [];
         sendMessage({ type: "SYNC_PROGRESS", step: "Primitives...", progress: 10 });
-        const { variableMap: primitiveVars, created: primCreated, updated: primUpdated } = syncPrimitives(tokens, collections, allVariables);
-        stats.variablesCreated += primCreated;
-        stats.variablesUpdated += primUpdated;
+        const primResult = syncPrimitives(tokens, collections, allVariables);
+        const primitiveVars = primResult.variableMap;
+        stats.variablesCreated += primResult.created;
+        stats.variablesUpdated += primResult.updated;
+        if (primResult.changes) allChanges.push(...primResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Themes...", progress: 30 });
         const semResult = syncSemantic(tokens, primitiveVars, collections, allVariables);
         stats.variablesCreated += semResult.created;
         stats.variablesUpdated += semResult.updated;
+        if (semResult.changes) allChanges.push(...semResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Accents...", progress: 55 });
         const accResult = syncAccents(tokens, primitiveVars, collections, allVariables);
         stats.variablesCreated += accResult.created;
         stats.variablesUpdated += accResult.updated;
+        if (accResult.changes) allChanges.push(...accResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Dimensions...", progress: 70 });
         const dimResult = syncDimensions(tokens, collections, allVariables);
         stats.variablesCreated += dimResult.created;
         stats.variablesUpdated += dimResult.updated;
+        if (dimResult.changes) allChanges.push(...dimResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Typography variables...", progress: 80 });
         const typographyResult = syncTypographyVariables(tokens, collections, allVariables);
         stats.variablesCreated += typographyResult.created;
         stats.variablesUpdated += typographyResult.updated;
+        if (typographyResult.changes) allChanges.push(...typographyResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Text Styles...", progress: 90 });
         const tsResult = yield syncTextStyles(tokens);
         stats.textStylesCreated = tsResult.created;
         stats.textStylesUpdated = tsResult.updated;
+        if (tsResult.changes) allChanges.push(...tsResult.changes);
+        
         sendMessage({ type: "SYNC_PROGRESS", step: "Typography specimen...", progress: 97 });
         const specimenResult = yield updateTypographySpecimen(tokens);
         stats.specimenTextUpdated = specimenResult.updated;
         figma.root.setPluginData("lastSync", (/* @__PURE__ */ new Date()).toISOString());
         figma.root.setPluginData("tokensVersion", String(tokens.$version));
         sendMessage({ type: "SYNC_PROGRESS", step: "Done!", progress: 100 });
-        sendMessage({ type: "SYNC_COMPLETE", stats });
+        sendMessage({ type: "SYNC_COMPLETE", stats, changes: allChanges });
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         sendMessage({ type: "SYNC_ERROR", error: message });
