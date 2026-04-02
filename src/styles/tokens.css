@@ -8,10 +8,11 @@
   --pink-accent: #fd6c9f;
   --pink-600: #c47c96;
   --yellow-500: #ffd800;
+  --yellow-btn-bg: #FFDE73;
   --yellow-600: #ccad00;
   --dark-800: #073331;
   --dark-900: #032524;
-  --brand-text: #0b4744;
+  --brand-text: #0D4743;
   --light-100: #ffffff;
   --light-200: #f3f3f3;
   --purple-navy: #180d4d;
@@ -30,7 +31,7 @@
   --blue-btn-bg: #5CBBFF;
   --blue-btn-hover: #2E9FEF;
   --blue-navy: #0A3A5C;
-  --yellow-highlight: #ffde73;
+  --yellow-highlight: #FFF3BF;
   --yellow-hover: #e0be00;
   --brand-hover: #093c3a;
   --teal-100: #bae3e9;
@@ -231,13 +232,13 @@
 }
 
 [data-accent="default"] {
-  --accent-btn-bg: var(--pink-accent);
-  --accent-btn-text: var(--brand-text);
-  --accent-btn-bg-hover: var(--pink-600);
-  --accent-btn-text-hover: var(--brand-text);
-  --accent-accent-highlight: var(--pink-500);
-  --accent-accent-pill-active: var(--pink-accent);
-  --accent-accent-text: var(--pink-accent);
+  --accent-btn-bg: var(--brand-text);
+  --accent-btn-text: var(--light-100);
+  --accent-btn-bg-hover: var(--brand-hover);
+  --accent-btn-text-hover: var(--light-100);
+  --accent-accent-highlight: var(--light-100);
+  --accent-accent-pill-active: var(--light-100);
+  --accent-accent-text: var(--brand-text);
 }
 
 [data-accent="violet"] {
@@ -251,9 +252,9 @@
 }
 
 [data-accent="yellow"] {
-  --accent-btn-bg: var(--yellow-500);
+  --accent-btn-bg: var(--yellow-btn-bg);
   --accent-btn-text: var(--dark-900);
-  --accent-btn-bg-hover: var(--yellow-hover);
+  --accent-btn-bg-hover: var(--yellow-500);
   --accent-btn-text-hover: var(--dark-900);
   --accent-accent-highlight: var(--yellow-highlight);
   --accent-accent-pill-active: var(--yellow-highlight);
@@ -281,13 +282,13 @@
 }
 
 :root {
-  --accent-btn-bg: var(--pink-accent);
-  --accent-btn-text: var(--brand-text);
-  --accent-btn-bg-hover: var(--pink-600);
-  --accent-btn-text-hover: var(--brand-text);
-  --accent-accent-highlight: var(--pink-500);
-  --accent-accent-pill-active: var(--pink-accent);
-  --accent-accent-text: var(--pink-accent);
+  --accent-btn-bg: var(--brand-text);
+  --accent-btn-text: var(--light-100);
+  --accent-btn-bg-hover: var(--brand-hover);
+  --accent-btn-text-hover: var(--light-100);
+  --accent-accent-highlight: var(--light-100);
+  --accent-accent-pill-active: var(--light-100);
+  --accent-accent-text: var(--brand-text);
 }
 
 @media (min-width: 768px) {

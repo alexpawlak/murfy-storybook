@@ -64,7 +64,7 @@ function ThemeAccentsGrid() {
               {
                 icon: '⚡',
                 title: 'Accent = vertical identity',
-                body: 'Accents swap the brand action color: default (pink) for general Murfy, violet for électroménager, yellow for solaire, fuschia for chauffage. One CSS variable swap changes the entire vertical\'s identity.',
+                body: 'Accents swap the brand action color: default (Murfy green) for general Murfy, violet for chauffage, yellow for solaire, fuschia for électroménager. One CSS variable swap changes the entire vertical\'s identity.',
               },
               {
                 icon: '♿',
@@ -121,7 +121,7 @@ function ThemeAccentsGrid() {
             dos={[
               {
                 rule: 'Test components across all 4 accents when building anything new.',
-                rationale: 'A component that looks great with the default pink accent may be unreadable with yellow (light background) or fuschia (narrow contrast margin). Always run the accent switcher.',
+                rationale: 'A component that looks great with the default Murfy green accent may be unreadable with yellow (light background) or fuschia (narrow contrast margin). Always run the accent switcher.',
               },
               {
                 rule: 'Use the Storybook toolbar to preview themes and accents — it changes CSS vars globally.',

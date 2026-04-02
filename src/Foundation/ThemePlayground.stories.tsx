@@ -67,7 +67,7 @@ function PlaygroundSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-0">
           {[
             { label: 'Theme', desc: 'Controls the surface: light, dark, light-pink, pink-mist, pink-vivid.' },
-            { label: 'Accent', desc: 'Controls the vertical brand color: default (pink), violet, yellow, fuschia.' },
+            { label: 'Accent', desc: 'Controls the vertical brand color: default (Murfy green), violet, yellow, fuschia.' },
           ].map(({ label, desc }) => (
             <div key={label} className="rounded-[var(--radius-card)] border border-border px-5 py-4">
               <p className="text-text-small-semibold text-text mb-1">{label}</p>

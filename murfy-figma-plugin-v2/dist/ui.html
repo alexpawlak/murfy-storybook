@@ -38,6 +38,9 @@
     .drop-zone:hover, .drop-zone.drag-over { border-color: #0b4744; background: var(--figma-color-bg-secondary, #f5f5f5); }
     .drop-zone p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
 
+    .advanced-options summary { font-size: 11px; font-weight: 500; opacity: 0.7; cursor: pointer; user-select: none; transition: opacity 0.2s; display: inline-block; margin-top: 4px; margin-bottom: 4px; }
+    .advanced-options summary:hover { opacity: 1; }
+
     /* Diff UI styles */
     .diff-group { margin-top: 12px; border: 1px solid var(--figma-color-border, #eee); border-radius: 6px; overflow: hidden; }
     .diff-group summary { padding: 8px 12px; background: var(--figma-color-bg-secondary, #f9f9f9); font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; list-style: none; }
@@ -70,20 +73,24 @@
 
   <!-- GitHub section -->
   <div class="field">
-    <label>GitHub Personal Access Token</label>
-    <input id="token-input" type="password" placeholder="ghp_... (required for private repos)">
+    <label>Repository</label>
+    <input id="repo-input" placeholder="owner/repo">
   </div>
-  <div class="row">
-    <div class="field">
-      <label>Repository</label>
-      <input id="repo-input" placeholder="owner/repo">
+  <details class="advanced-options">
+    <summary>Advanced Options</summary>
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px; margin-bottom: 8px;">
+      <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input id="token-input" type="password" placeholder="ghp_... (required for private repos)">
+      </div>
+      <div class="field">
+        <label>Branch</label>
+        <input id="branch-input" placeholder="main">
+      </div>
     </div>
-    <div class="field" style="flex:0.5">
-      <label>Branch</label>
-      <input id="branch-input" placeholder="main">
-    </div>
-  </div>
-  <button id="sync-btn" class="btn-secondary" onclick="handleGitHubSync()">Sync from GitHub</button>
+  </details>
+  <button id="sync-btn" class="btn-secondary" onclick="handleGitHubSync()">Preview Changes from GitHub</button>
+  <button id="apply-btn" class="btn-success" onclick="applyChanges()" style="display:none; margin-top:8px; background:#0b4744; color:white; width:100%; padding:10px; border:none; border-radius:8px; font-weight:600; cursor:pointer;">Apply Changes to Figma</button>
 
   <hr class="divider">
   <div id="progress-bar" class="progress-bar">
@@ -111,15 +118,35 @@
 
     // ── Shared: start sync ──
     function startSync(tokens) {
+      window.pendingTokens = tokens;
       var statusEl = document.getElementById('status');
       var progressBar = document.getElementById('progress-bar');
       var progressFill = document.getElementById('progress-fill');
       document.getElementById('stats').textContent = '';
-      statusEl.textContent = 'Syncing to Figma...';
+      statusEl.textContent = 'Previewing changes...';
       statusEl.className = 'status';
       progressBar.style.display = 'block';
       progressFill.style.width = '10%';
-      parent.postMessage({ pluginMessage: { type: 'SYNC_TOKENS', tokens: tokens } }, '*');
+      parent.postMessage({ pluginMessage: { type: 'SET_DRY_RUN', value: true } }, '*');
+      setTimeout(function() {
+        parent.postMessage({ pluginMessage: { type: 'SYNC_TOKENS', isDryRun: true, tokens: tokens } }, '*');
+      }, 50);
+    }
+    
+    function applyChanges() {
+      var syncBtn = document.getElementById('sync-btn');
+      var applyBtn = document.getElementById('apply-btn');
+      if (applyBtn) applyBtn.disabled = true;
+      syncBtn.disabled = true;
+      var statusEl = document.getElementById('status');
+      var progressFill = document.getElementById('progress-fill');
+      statusEl.textContent = 'Applying changes to Figma...';
+      statusEl.className = 'status';
+      progressFill.style.width = '10%';
+      parent.postMessage({ pluginMessage: { type: 'SET_DRY_RUN', value: false } }, '*');
+      setTimeout(function() {
+        parent.postMessage({ pluginMessage: { type: 'SYNC_TOKENS', isDryRun: false, tokens: window.pendingTokens } }, '*');
+      }, 50);
     }
 
     function showError(msg) {
@@ -231,7 +258,12 @@
         statusEl.textContent = msg.step;
         progressFill.style.width = msg.progress + '%';
       }
-      if (msg.type === 'SYNC_COMPLETE') {
+      if (msg.type === 'PREVIEW_COMPLETE' || msg.type === 'SYNC_COMPLETE') {
+    var isPreview = msg.type === 'PREVIEW_COMPLETE';
+    if (isPreview) {
+        var applyBtn = document.getElementById('apply-btn');
+        if (applyBtn) { applyBtn.style.display = 'block'; applyBtn.disabled = false; }
+    }
         var s = msg.stats;
         statusEl.textContent = 'Sync complete!';
         statusEl.className = 'status success';

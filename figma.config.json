@@ -1,0 +1,8 @@
+{
+  "codeConnect": {
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "label": "React",
+    "parser": "react",
+    "interactiveSetupFigmaFileUrl": "https://www.figma.com/design/mAUdca2csMWlBqyQI0fIVl/Design-system-26"
+  }
+}

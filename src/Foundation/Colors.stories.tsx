@@ -28,8 +28,10 @@ const accentGroups = [
   {
     label: 'Default — Brand baseline',
     accent: 'default',
-    description: 'Pink tones used as the brand baseline. #FFADD6 (pink-vivid) is the primary brand color — it is the default CTA button background in light theme. #F59BBB (pink-500) is used in dark theme where the lighter surface calls for a more muted tone. Neither value is tied to a specific vertical.',
+    description: 'The default Murfy accent uses the dark green brand CTA (`brand-text`) with a darker green hover (`brand-hover`). Pink primitives remain part of the broader brand palette, but the default accent button itself is green and its lighter highlight surfaces resolve to white.',
     primitives: {
+      'brand-text':       primitive('brand-text'),
+      'brand-hover':      primitive('brand-hover'),
       'pink-mist':        primitive('pink-mist'),
       'pink-vivid-light': primitive('pink-vivid-light'),
       'pink-vivid':       primitive('pink-vivid'),
@@ -63,8 +65,9 @@ const accentGroups = [
   {
     label: 'Yellow — Solaire (installation)',
     accent: 'yellow',
-    description: 'Yellow tones for the solar energy vertical. Warm and energetic — communicates sun and sustainability. No change needed — already WCAG AAA.',
+    description: 'Yellow tones for the solar energy vertical. The CTA now uses `yellow-btn-bg` (#FFDE73) with a stronger hover step on `yellow-500`, while `yellow-highlight` stays lighter for pills and tinted surfaces.',
     primitives: {
+      'yellow-btn-bg':    primitive('yellow-btn-bg'),
       'yellow-highlight': primitive('yellow-highlight'),
       'yellow-500':       primitive('yellow-500'),
       'yellow-hover':     primitive('yellow-hover'),
@@ -152,9 +155,10 @@ function AccentButtonPreview({ accent }: { accent: string }) {
 
 const contrastPairs = [
   { bg: 'pink-vivid',   bgColor: primitive('pink-vivid'), fg: 'brand-text', fgColor: primitive('brand-text'), ratio: '6.1:1',  rating: 'AA'  as const, context: 'Primary button · thème clair (default accent)' },
+  { bg: 'brand-text',   bgColor: primitive('brand-text'), fg: 'white', fgColor: primitive('light-100'), ratio: '9.10:1', rating: 'AAA' as const, context: 'Accent CTA par défaut (Murfy green)' },
   { bg: 'fuschia-700',  bgColor: primitive('fuschia-700'), fg: 'white', fgColor: primitive('light-100'), ratio: '4.77:1', rating: 'AA'  as const, context: 'CTA Électroménager (fuschia)' },
   { bg: 'purple-600',   bgColor: primitive('purple-600'), fg: 'white', fgColor: primitive('light-100'), ratio: '5.07:1', rating: 'AA'  as const, context: 'CTA Chauffage (violet)' },
-  { bg: 'yellow-500',   bgColor: primitive('yellow-500'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '11.65:1',rating: 'AAA' as const, context: 'CTA Solaire (yellow)' },
+  { bg: 'yellow-btn-bg',bgColor: primitive('yellow-btn-bg'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '12.32:1',rating: 'AAA' as const, context: 'CTA Solaire (yellow)' },
   { bg: 'blue-btn-bg',  bgColor: primitive('blue-btn-bg'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '7.73:1', rating: 'AAA' as const, context: 'CTA Formation (blue) — texte foncé obligatoire' },
 ]
 

@@ -87,7 +87,7 @@ All components are exported from `src/Foundation/doc-components/index.ts`.
   bg="pink-500"
   bgColor="#f59bbb"
   fg="brand-text"
-  fgColor="#0b4744"
+  fgColor="#0D4743"
   ratio="4.7:1"
   rating="AA"          // 'AAA' | 'AA' | 'AA ⚠' | 'Fail'
   context="Primary button, light theme"  // optional

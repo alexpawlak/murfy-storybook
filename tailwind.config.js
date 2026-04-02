@@ -32,6 +32,7 @@ export default {
         'pink-accent': 'var(--pink-accent)',
         'pink-600': 'var(--pink-600)',
         'yellow-500': 'var(--yellow-500)',
+        'yellow-btn-bg': 'var(--yellow-btn-bg)',
         'yellow-600': 'var(--yellow-600)',
         'dark-800': 'var(--dark-800)',
         'dark-900': 'var(--dark-900)',
