@@ -262,7 +262,7 @@ function TypographyPage() {
             <AccessibilityNote
               criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
               requirement="4.5:1 for normal text · 3:1 for large text (≥18pt or ≥14pt bold)"
-              why="Body text (text-main, text-small) must achieve 4.5:1 contrast against its background. Heading text at h3 and above (large text) requires 3:1. `brand-text` on white achieves 9.1:1 — well above both thresholds."
+              why="Body text (text-main, text-small) must achieve 4.5:1 contrast against its background. Heading text at h3 and above (large text) requires 3:1. `brand-text` on white achieves 10.51:1 — well above both thresholds."
               href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
             />
             <AccessibilityNote

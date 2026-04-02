@@ -21,6 +21,8 @@
     });
   };
 
+  let IS_DRY_RUN = false;
+
   // src/sync/utils.ts
   function hexToFigmaRGBA(hex) {
     const h = hex.replace("#", "");
@@ -32,7 +34,33 @@
   }
   function findOrCreateCollection(name, collections) {
     const existing = collections.find((c) => c.name === name);
-    if (existing) return { collection: existing, created: false };
+    if (existing) {
+      if (IS_DRY_RUN) {
+        return {
+          collection: {
+            id: existing.id,
+            name: existing.name,
+            modes: existing.modes,
+            addMode: () => 'mock-mode',
+            renameMode: () => {}
+          },
+          created: false
+        };
+      }
+      return { collection: existing, created: false };
+    }
+    if (IS_DRY_RUN) {
+      return { 
+        collection: { 
+          id: "mock-coll-" + name, 
+          modes: [{ modeId: "mock-mode-0", name: "Mode 1" }], 
+          name, 
+          addMode: () => "mock-mode-new", 
+          renameMode: () => {} 
+        }, 
+        created: true 
+      };
+    }
     return { collection: figma.variables.createVariableCollection(name), created: true };
   }
   function findVariable(name, collectionId, variables) {
@@ -40,14 +68,24 @@
   }
   function findOrCreateVariable(name, collectionId, resolvedType, variables) {
     const existing = findVariable(name, collectionId, variables);
-    if (existing) return { variable: existing, created: false };
+    if (existing) {
+      if (IS_DRY_RUN) {
+        return { variable: { id: existing.id, name: existing.name, setValueForMode: () => {} }, created: false };
+      }
+      return { variable: existing, created: false };
+    }
+    if (IS_DRY_RUN) {
+      return { variable: { id: "mock-var-" + name, name, setValueForMode: () => {} }, created: true };
+    }
     return { variable: figma.variables.createVariable(name, collectionId, resolvedType), created: true };
   }
   function ensureModes(collection, modeNames) {
     const modeMap = /* @__PURE__ */ new Map();
     const existingModes = [...collection.modes];
     if (existingModes.length > 0 && modeNames.length > 0) {
-      collection.renameMode(existingModes[0].modeId, modeNames[0]);
+      if (!IS_DRY_RUN && typeof collection.renameMode === 'function') {
+        try { collection.renameMode(existingModes[0].modeId, modeNames[0]); } catch (e) {}
+      }
       modeMap.set(modeNames[0], existingModes[0].modeId);
     }
     for (let i = 1; i < modeNames.length; i++) {
@@ -56,7 +94,7 @@
       if (existing) {
         modeMap.set(name, existing.modeId);
       } else {
-        const modeId = collection.addMode(name);
+        const modeId = (IS_DRY_RUN || !collection.addMode) ? "mock-mode-" + i : collection.addMode(name);
         modeMap.set(name, modeId);
       }
     }
@@ -309,18 +347,24 @@
         let style = existingStyles.find((s) => s.name === styleName);
         const isNew = !style;
         if (!style) {
-          style = figma.createTextStyle();
-          style.name = styleName;
+          if (IS_DRY_RUN) {
+            style = { id: `mock-style-${name}`, name: styleName, setBoundVariable: () => {} };
+          } else {
+            style = figma.createTextStyle();
+            style.name = styleName;
+          }
         }
-        style.fontName = fontName;
-        style.letterSpacing = { value: token.letterSpacing * 100, unit: "PERCENT" };
-        style.textCase = getTextCase(token);
-        style.lineHeight = { value: getTypographyModeValue(token, "desktop", "lineHeight") * 100, unit: "PERCENT" };
-        const fsVar = fontSizeVarMap[name];
-        if (fsVar) {
-          style.setBoundVariable("fontSize", fsVar);
-        } else {
-          style.fontSize = getTypographyModeValue(token, "desktop", "fontSize");
+        if (!IS_DRY_RUN) {
+          style.fontName = fontName;
+          style.letterSpacing = { value: token.letterSpacing * 100, unit: "PERCENT" };
+          style.textCase = getTextCase(token);
+          style.lineHeight = { value: getTypographyModeValue(token, "desktop", "lineHeight") * 100, unit: "PERCENT" };
+          const fsVar = fontSizeVarMap[name];
+          if (fsVar) {
+            style.setBoundVariable("fontSize", fsVar);
+          } else {
+            style.fontSize = getTypographyModeValue(token, "desktop", "fontSize");
+          }
         }
         changes.push({
           name: styleName,
@@ -388,6 +432,8 @@
   }
   function updateTypographySpecimen(tokens) {
     return __async(this, null, function* () {
+      if (IS_DRY_RUN) return { updated: 0, skipped: true };
+      
       const target = yield figma.getNodeByIdAsync(TYPOGRAPHY_SPECIMEN_NODE_ID);
       if (!target || !("findAll" in target)) {
         return { updated: 0, skipped: true };
@@ -487,10 +533,12 @@
         sendMessage({ type: "SYNC_PROGRESS", step: "Typography specimen...", progress: 97 });
         const specimenResult = yield updateTypographySpecimen(tokens);
         stats.specimenTextUpdated = specimenResult.updated;
-        figma.root.setPluginData("lastSync", (/* @__PURE__ */ new Date()).toISOString());
-        figma.root.setPluginData("tokensVersion", String(tokens.$version));
+        if (!IS_DRY_RUN) {
+          figma.root.setPluginData("lastSync", (/* @__PURE__ */ new Date()).toISOString());
+          figma.root.setPluginData("tokensVersion", String(tokens.$version));
+        }
         sendMessage({ type: "SYNC_PROGRESS", step: "Done!", progress: 100 });
-        sendMessage({ type: "SYNC_COMPLETE", stats, changes: allChanges });
+        sendMessage({ type: IS_DRY_RUN ? "PREVIEW_COMPLETE" : "SYNC_COMPLETE", stats, changes: allChanges });
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         sendMessage({ type: "SYNC_ERROR", error: message });
@@ -498,7 +546,11 @@
     });
   }
   figma.ui.onmessage = (msg) => {
+    if (msg.type === "SET_DRY_RUN") {
+      IS_DRY_RUN = msg.value;
+    }
     if (msg.type === "SYNC_TOKENS") {
+      IS_DRY_RUN = msg.isDryRun || false;
       syncTokens(msg.tokens);
     }
     if (msg.type === "CANCEL") {

@@ -155,7 +155,7 @@ function AccentButtonPreview({ accent }: { accent: string }) {
 
 const contrastPairs = [
   { bg: 'pink-vivid',   bgColor: primitive('pink-vivid'), fg: 'brand-text', fgColor: primitive('brand-text'), ratio: '6.1:1',  rating: 'AA'  as const, context: 'Primary button · thème clair (default accent)' },
-  { bg: 'brand-text',   bgColor: primitive('brand-text'), fg: 'white', fgColor: primitive('light-100'), ratio: '9.10:1', rating: 'AAA' as const, context: 'Accent CTA par défaut (Murfy green)' },
+  { bg: 'brand-text',   bgColor: primitive('brand-text'), fg: 'white', fgColor: primitive('light-100'), ratio: '10.51:1', rating: 'AAA' as const, context: 'Accent CTA par défaut (Murfy green)' },
   { bg: 'fuschia-700',  bgColor: primitive('fuschia-700'), fg: 'white', fgColor: primitive('light-100'), ratio: '4.77:1', rating: 'AA'  as const, context: 'CTA Électroménager (fuschia)' },
   { bg: 'purple-600',   bgColor: primitive('purple-600'), fg: 'white', fgColor: primitive('light-100'), ratio: '5.07:1', rating: 'AA'  as const, context: 'CTA Chauffage (violet)' },
   { bg: 'yellow-btn-bg',bgColor: primitive('yellow-btn-bg'), fg: 'dark-900', fgColor: primitive('dark-900'), ratio: '12.32:1',rating: 'AAA' as const, context: 'CTA Solaire (yellow)' },
@@ -289,7 +289,7 @@ function ColorsDoc() {
             <AccessibilityNote
               criterion="WCAG 2.1 AA 1.4.3 — Contrast (Minimum)"
               requirement="4.5:1 for normal text · 3:1 for large text (≥18pt or ≥14pt bold)"
-              why="Users with low vision, color blindness, or who are in bright outdoor conditions need sufficient contrast between text and its background. 4.5:1 is the minimum for body-size text. The default primary button uses `pink-vivid` in light theme — 6.1:1 AA — and `pink-500` in dark theme — 4.7:1 AA. All vertical CTAs clear AA. Formation (blue) requires `dark-900` text; white text on `blue-btn-bg` produces only 2.10:1 which is a hard WCAG Fail."
+              why="Users with low vision, color blindness, or who are in bright outdoor conditions need sufficient contrast between text and its background. 4.5:1 is the minimum for body-size text. The default primary button uses `pink-vivid` in light theme — 6.1:1 AA — and `pink-500` in dark theme — 5.15:1 AA. All vertical CTAs clear AA. Formation (blue) requires `dark-900` text; white text on `blue-btn-bg` produces only 2.10:1 which is a hard WCAG Fail."
               href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
             />
             <AccessibilityNote

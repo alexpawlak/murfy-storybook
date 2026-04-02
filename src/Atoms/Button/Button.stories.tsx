@@ -242,9 +242,9 @@ export const Overview: Story = {
               <tbody>
                 {[
                   { variant: 'Primary', context: 'Light theme', bg: 'var(--pink-vivid)', bgLabel: 'pink-vivid', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '6.1:1', rating: 'AA', warn: false },
-                  { variant: 'Primary', context: 'Dark theme', bg: 'var(--pink-500)', bgLabel: 'pink-500', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '4.7:1', rating: 'AA', warn: false },
-                  { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '9.1:1', rating: 'AAA', warn: false },
-                  { variant: 'Accent', context: 'Default', bg: 'var(--brand-text)', bgLabel: 'brand-text', text: 'var(--light-100)', textLabel: 'white', ratio: '9.1:1', rating: 'AAA', warn: false },
+                  { variant: 'Primary', context: 'Dark theme', bg: 'var(--pink-500)', bgLabel: 'pink-500', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '5.15:1', rating: 'AA', warn: false },
+                  { variant: 'Secondary', context: 'Light bg', bg: 'transparent → white', bgLabel: '', text: 'var(--brand-text)', textLabel: 'brand-text', ratio: '10.51:1', rating: 'AAA', warn: false },
+                  { variant: 'Accent', context: 'Default', bg: 'var(--brand-text)', bgLabel: 'brand-text', text: 'var(--light-100)', textLabel: 'white', ratio: '10.51:1', rating: 'AAA', warn: false },
                   { variant: 'Accent', context: 'Violet', bg: 'var(--purple-600)', bgLabel: 'purple-600', text: 'var(--light-100)', textLabel: 'white', ratio: '5.07:1', rating: 'AA', warn: false },
                   { variant: 'Accent', context: 'Yellow', bg: 'var(--yellow-btn-bg)', bgLabel: 'yellow-btn-bg', text: 'var(--dark-900)', textLabel: 'dark-900', ratio: '12.32:1', rating: 'AAA', warn: false },
                   { variant: 'Accent', context: 'Fuschia', bg: 'var(--fuschia-700)', bgLabel: 'fuschia-700', text: 'var(--light-100)', textLabel: 'white', ratio: '4.77:1', rating: 'AA', warn: false },
