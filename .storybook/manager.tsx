@@ -15,11 +15,11 @@ const META_URL = '/storybook-update.json'
 
 const baseStyle: React.CSSProperties = {
   alignItems: 'center',
-  background: 'linear-gradient(135deg, rgba(255, 212, 128, 0.28), rgba(255, 241, 214, 0.96))',
-  border: '1px solid rgba(217, 119, 6, 0.28)',
+  background: 'rgba(17, 24, 39, 0.06)',
+  border: '1px solid rgba(17, 24, 39, 0.14)',
   borderRadius: 999,
-  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.7)',
-  color: '#7c2d12',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.5)',
+  color: '#111827',
   display: 'flex',
   fontFamily: 'inherit',
   fontSize: 12,
@@ -36,7 +36,7 @@ const baseStyle: React.CSSProperties = {
 }
 
 const prefixStyle: React.CSSProperties = {
-  color: '#9a3412',
+  color: 'rgba(17, 24, 39, 0.7)',
   fontSize: 11,
   fontWeight: 800,
   letterSpacing: '0.04em',
@@ -46,6 +46,14 @@ const prefixStyle: React.CSSProperties = {
 const textStyle: React.CSSProperties = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+}
+
+function getCompactLabel(meta: StorybookUpdateMeta) {
+  if (meta.date) {
+    return `Updated ${meta.date}`
+  }
+
+  return 'Update info'
 }
 
 function StorybookUpdateTool() {
@@ -92,7 +100,7 @@ function StorybookUpdateTool() {
   return (
     <div style={baseStyle} title={meta.tooltip} aria-label={meta.tooltip}>
       <span style={prefixStyle}>Storybook</span>
-      <span style={textStyle}>{meta.label}</span>
+      <span style={textStyle}>{getCompactLabel(meta)}</span>
     </div>
   )
 }

@@ -306,6 +306,390 @@ function ColorsDoc() {
   )
 }
 
+// ─── Accent usage guide data ──────────────────────────────────────────────────
+
+const accentTokenDefs = [
+  {
+    variable: '--accent-btn-bg',
+    use: 'CTA button background',
+    when: 'Primary action buttons, links styled as buttons',
+  },
+  {
+    variable: '--accent-btn-text',
+    use: 'CTA button text color',
+    when: 'Text/icons inside the primary CTA — always pair with btn-bg',
+  },
+  {
+    variable: '--accent-btn-bg-hover',
+    use: 'CTA button background on hover/focus',
+    when: ':hover and :focus-visible states on the primary CTA',
+  },
+  {
+    variable: '--accent-btn-text-hover',
+    use: 'CTA button text on hover/focus',
+    when: 'Text inside the CTA during hover — usually matches btn-text',
+  },
+  {
+    variable: '--accent-accent-highlight',
+    use: 'Tinted surface background',
+    when: 'Card tints, section backgrounds, colored banners — lighter than the CTA',
+  },
+  {
+    variable: '--accent-accent-pill-active',
+    use: 'Active pill / badge background',
+    when: 'Selected state in pill groups, category badges, active nav indicators',
+  },
+  {
+    variable: '--accent-accent-text',
+    use: 'Body text on tinted surfaces',
+    when: 'Readable text placed on top of accent-highlight or accent-pill-active backgrounds',
+  },
+]
+
+const accentVerticals = [
+  {
+    accent: 'default',
+    label: 'Default — Brand',
+    vertical: 'Murfy.fr generic / brand pages',
+    darkText: false,
+    note: null,
+  },
+  {
+    accent: 'fuschia',
+    label: 'Fuschia — Électroménager',
+    vertical: 'Appliance repair section',
+    darkText: false,
+    note: null,
+  },
+  {
+    accent: 'violet',
+    label: 'Violet — Chauffage',
+    vertical: 'Heating maintenance section',
+    darkText: false,
+    note: null,
+  },
+  {
+    accent: 'yellow',
+    label: 'Yellow — Solaire',
+    vertical: 'Solar energy section',
+    darkText: true,
+    note: 'Yellow is very light (luminance ~0.93). White text on yellow = 1.1:1 — hard WCAG fail. Always use dark text via var(--accent-btn-text).',
+  },
+  {
+    accent: 'blue',
+    label: 'Blue — Formation',
+    vertical: 'Training section',
+    darkText: true,
+    note: 'White text on blue-btn-bg = 2.10:1 — WCAG fail. Always use var(--accent-btn-text) which resolves to dark-900 for this accent.',
+  },
+]
+
+// ─── Accent usage guide component ─────────────────────────────────────────────
+
+function AccentUsageDoc() {
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Foundation"
+        title="Accent Color Usage Guide"
+        description="How to implement the accent color system in components. Covers CSS variable names, what each token is designed for, which accent maps to which vertical, and the rules you must follow when implementing CTAs and tinted surfaces."
+      />
+
+      <div className="px-8 py-12 max-w-5xl">
+
+        {/* ── How the system works ──────────────────────────────────────── */}
+        <DocSection
+          label="How it works"
+          subtitle="Accent colors are resolved through a three-layer chain. You write a CSS variable in your component — the active data-accent attribute on a parent element determines what it resolves to."
+        >
+          <div
+            className="rounded-[var(--radius-card)] border border-border px-6 py-5 mb-6"
+            style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 6%, var(--bg))' }}
+          >
+            <p className="text-text-small text-text mb-4" style={{ opacity: 0.85 }}>
+              Set <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>data-accent="yellow"</code> on
+              a parent element (page root, section wrapper, layout). All child components that
+              use <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>var(--accent-*)</code> variables
+              will automatically pick up that vertical's colors — no per-component changes required.
+            </p>
+            <div
+              className="font-mono text-text-xsmall rounded-[var(--radius-small)] px-5 py-4 overflow-x-auto"
+              style={{ background: 'color-mix(in srgb, var(--bg) 60%, var(--border))' }}
+            >
+              <div className="flex flex-col gap-1 text-text" style={{ opacity: 0.8 }}>
+                <span><span style={{ opacity: 0.45 }}>{'// Resolution chain'}</span></span>
+                <span>data-accent="yellow"</span>
+                <span style={{ opacity: 0.45 }}>{'  → [data-accent="yellow"] { --accent-btn-bg: var(--yellow-btn-bg) }'}</span>
+                <span style={{ opacity: 0.45 }}>{'  → var(--yellow-btn-bg) = #FFDE73'}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Correct usage */}
+            <div>
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-2" style={{ color: '#0B4744' }}>
+                Correct — uses CSS variables
+              </p>
+              <div
+                className="font-mono text-text-xsmall rounded-[var(--radius-small)] px-5 py-4 overflow-x-auto"
+                style={{ background: 'color-mix(in srgb, var(--bg) 60%, var(--border))' }}
+              >
+                <pre className="text-text whitespace-pre-wrap m-0" style={{ opacity: 0.85 }}>{`<section data-accent="yellow">
+  <button
+    style={{
+      background: 'var(--accent-btn-bg)',
+      color: 'var(--accent-btn-text)',
+    }}
+  >
+    Obtenir un devis
+  </button>
+</section>`}</pre>
+              </div>
+            </div>
+            {/* Wrong usage */}
+            <div>
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-2" style={{ color: '#D33167' }}>
+                Wrong — hardcoded hex
+              </p>
+              <div
+                className="font-mono text-text-xsmall rounded-[var(--radius-small)] px-5 py-4 overflow-x-auto"
+                style={{ background: 'color-mix(in srgb, var(--bg) 60%, var(--border))' }}
+              >
+                <pre className="text-text whitespace-pre-wrap m-0" style={{ opacity: 0.85 }}>{`<button
+  style={{
+    background: '#FFDE73',
+    color: '#032524',
+  }}
+>
+  Obtenir un devis
+</button>
+{/* Breaks on every other vertical */}`}</pre>
+              </div>
+            </div>
+          </div>
+        </DocSection>
+
+        {/* ── Token reference table ─────────────────────────────────────── */}
+        <DocSection
+          label="Token reference"
+          subtitle="All seven accent CSS variables, what they're designed for, and when to reach for each one."
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full text-text-small text-text border-collapse">
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-6" style={{ opacity: 0.5 }}>Variable</th>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-6" style={{ opacity: 0.5 }}>Designed for</th>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3" style={{ opacity: 0.5 }}>When to use</th>
+                </tr>
+              </thead>
+              <tbody>
+                {accentTokenDefs.map((row, i) => (
+                  <tr
+                    key={row.variable}
+                    style={{ borderBottom: i < accentTokenDefs.length - 1 ? '1px solid var(--border)' : 'none' }}
+                  >
+                    <td className="py-3 pr-6 align-top">
+                      <code
+                        className="font-mono text-text-xsmall px-2 py-0.5 rounded whitespace-nowrap"
+                        style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}
+                      >
+                        {row.variable}
+                      </code>
+                    </td>
+                    <td className="py-3 pr-6 align-top" style={{ opacity: 0.85 }}>{row.use}</td>
+                    <td className="py-3 align-top text-text-xsmall" style={{ opacity: 0.6 }}>{row.when}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </DocSection>
+
+        {/* ── Per-accent cards ──────────────────────────────────────────── */}
+        <DocSection
+          label="Accent by vertical"
+          subtitle="Live examples of every accent. Each card is isolated — it always shows its own accent regardless of the Storybook toolbar selection."
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {accentVerticals.map(({ accent, label, vertical, darkText, note }) => {
+              const accentValues = tokens.accents[accent as keyof typeof tokens.accents]
+              return (
+                <div
+                  key={accent}
+                  data-accent={accent}
+                  className="rounded-[var(--radius-card)] border border-border p-5 flex flex-col gap-4"
+                  style={{ background: 'var(--bg)' }}
+                >
+                  {/* Header */}
+                  <div>
+                    <p className="text-text-small-semibold text-text mb-0.5">{label}</p>
+                    <p className="text-text-xsmall text-text" style={{ opacity: 0.55 }}>{vertical}</p>
+                    <code
+                      className="font-mono text-label px-2 py-0.5 rounded mt-2 inline-block"
+                      style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 12%, var(--bg))', color: 'var(--accent-accent-text)' }}
+                    >
+                      data-accent="{accent}"
+                    </code>
+                  </div>
+
+                  {/* Live examples */}
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <button
+                      className="px-5 py-2.5 rounded-[var(--radius-pill)] text-text-xsmall-semibold"
+                      style={{ background: 'var(--accent-btn-bg)', color: 'var(--accent-btn-text)' }}
+                    >
+                      CTA default
+                    </button>
+                    <button
+                      className="px-5 py-2.5 rounded-[var(--radius-pill)] text-text-xsmall-semibold"
+                      style={{ background: 'var(--accent-btn-bg-hover)', color: 'var(--accent-btn-text-hover)' }}
+                    >
+                      Hover
+                    </button>
+                    <div
+                      className="px-3 py-1 rounded-[var(--radius-pill)] text-label uppercase tracking-[0.08em]"
+                      style={{ background: 'var(--accent-accent-highlight)', color: 'var(--accent-accent-text)' }}
+                    >
+                      Pill
+                    </div>
+                  </div>
+
+                  {/* Token values */}
+                  <div className="flex flex-col gap-1">
+                    {(['btn-bg', 'btn-text', 'accent-highlight'] as const).map(token => (
+                      <div key={token} className="flex justify-between items-center gap-2">
+                        <span className="font-mono text-label text-text" style={{ opacity: 0.55 }}>--accent-{token}</span>
+                        <span
+                          className="font-mono text-label px-1.5 py-0.5 rounded"
+                          style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}
+                        >
+                          {resolvePrimitiveReference(accentValues[token as keyof typeof accentValues])}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Dark text warning */}
+                  {darkText && note && (
+                    <div
+                      className="rounded-[var(--radius-small)] px-4 py-3 text-text-xsmall"
+                      style={{ background: 'color-mix(in srgb, #ff6492 12%, var(--bg))', color: 'var(--text)' }}
+                    >
+                      <span className="font-semibold">Dark text required. </span>
+                      {note}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </DocSection>
+
+        {/* ── When to use each accent ───────────────────────────────────── */}
+        <DocSection
+          label="When to use each accent"
+          subtitle="Map your page or section to its vertical, then set data-accent once on the outermost container. Every component inside inherits it."
+        >
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-text-small text-text border-collapse">
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-8" style={{ opacity: 0.5 }}>Page / section context</th>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-8" style={{ opacity: 0.5 }}>data-accent value</th>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3" style={{ opacity: 0.5 }}>Vertical</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { context: 'murfy.fr homepage, brand pages, 404', accent: 'default', vertical: 'Brand baseline (dark green CTA)' },
+                  { context: 'Électroménager — réparation, entretien', accent: 'fuschia', vertical: 'Appliance repair' },
+                  { context: 'Chauffage — entretien chaudière, clim', accent: 'violet', vertical: 'Heating maintenance' },
+                  { context: 'Solaire — installation panneaux', accent: 'yellow', vertical: 'Solar energy' },
+                  { context: 'Formation — cours & certifications', accent: 'blue', vertical: 'Training' },
+                ].map((row, i, arr) => (
+                  <tr key={row.accent} style={{ borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <td className="py-3 pr-8 align-top" style={{ opacity: 0.85 }}>{row.context}</td>
+                    <td className="py-3 pr-8 align-top">
+                      <code
+                        className="font-mono text-text-xsmall px-2 py-0.5 rounded"
+                        style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}
+                      >
+                        "{row.accent}"
+                      </code>
+                    </td>
+                    <td className="py-3 align-top text-text-xsmall" style={{ opacity: 0.6 }}>{row.vertical}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div
+            className="rounded-[var(--radius-card)] border border-border px-5 py-4"
+            style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))' }}
+          >
+            <p className="text-text-small text-text" style={{ opacity: 0.8 }}>
+              <strong>One attribute, whole section.</strong> Set <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>data-accent</code> once
+              on the outermost element of a section or page — a <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>{`<main>`}</code>,
+              a <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>{`<section>`}</code>, or a layout wrapper.
+              Every child component that uses <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>var(--accent-*)</code> inherits
+              the correct colors automatically via CSS cascade.
+            </p>
+          </div>
+        </DocSection>
+
+        {/* ── Common mistakes ───────────────────────────────────────────── */}
+        <DocSection
+          label="Common mistakes"
+          subtitle="Implementation errors that break the accent system or fail WCAG."
+        >
+          <GuidanceGrid
+            dos={[
+              {
+                rule: 'Set data-accent once on a parent — let CSS cascade handle children.',
+                rationale: 'The CSS variable system cascades automatically. Setting data-accent per-component is redundant and creates drift if the vertical changes.',
+              },
+              {
+                rule: 'Use --accent-accent-highlight (not --accent-btn-bg) for pill and badge backgrounds.',
+                rationale: 'The highlight token is a lighter tint calibrated for large surfaces and pills. The btn-bg token is intended for small high-contrast CTAs — at scale it becomes visually overwhelming.',
+              },
+              {
+                rule: 'Always read button text color from var(--accent-btn-text), never hardcode white or dark.',
+                rationale: 'Yellow and blue accents require dark text. White text on those accents fails WCAG at 1.1:1 and 2.1:1 respectively — far below the 4.5:1 minimum for normal text.',
+                wcag: 'WCAG 2.1 AA 1.4.3',
+              },
+              {
+                rule: 'Test new components at all five accents before shipping.',
+                rationale: 'A component that only works with one accent is fragile. The design system is built to serve all verticals — confirm every accent renders correctly.',
+              },
+            ]}
+            donts={[
+              {
+                rule: 'Do not mix accent colors from different verticals on the same page.',
+                rationale: 'Accent colors encode vertical identity. Showing yellow (solaire) CTAs alongside violet (chauffage) navigation confuses users about which service they are on.',
+              },
+              {
+                rule: 'Do not reach for primitives (var(--yellow-btn-bg)) in components.',
+                rationale: 'Primitives bypass the accent system. A component using a raw primitive is permanently locked to one vertical and cannot be reused across the system.',
+              },
+              {
+                rule: 'Do not apply --accent-btn-bg as a section or card background.',
+                rationale: 'The btn-bg token is calibrated for small, high-contrast interactive elements. As a large background it saturates the page and makes it impossible to visually identify the primary CTA.',
+              },
+              {
+                rule: 'Do not set data-accent on leaf components (buttons, pills, tags).',
+                rationale: 'Accent is a context, not a prop. It belongs on layout containers that define a vertical section — not on individual UI elements. Scoping it too narrowly defeats the cascade-based system.',
+              },
+            ]}
+          />
+        </DocSection>
+
+      </div>
+    </div>
+  )
+}
+
 // ─── Story ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
@@ -317,3 +701,4 @@ export default meta
 
 type Story = StoryObj
 export const Overview: Story = {}
+export const AccentUsage: Story = { render: () => <AccentUsageDoc /> }
