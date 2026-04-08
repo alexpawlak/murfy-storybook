@@ -690,6 +690,188 @@ function AccentUsageDoc() {
   )
 }
 
+// ─── Accent Matrix ────────────────────────────────────────────────────────────
+
+const allAccents: Array<{ accent: string; label: string }> = [
+  { accent: 'default', label: 'Default' },
+  { accent: 'fuschia', label: 'Fuschia' },
+  { accent: 'violet',  label: 'Violet'  },
+  { accent: 'yellow',  label: 'Yellow'  },
+  { accent: 'blue',    label: 'Blue'    },
+]
+
+const matrixTokens: Array<{ token: string; cssVar: string }> = [
+  { token: 'btn-bg',             cssVar: '--accent-btn-bg'             },
+  { token: 'btn-text',           cssVar: '--accent-btn-text'           },
+  { token: 'btn-bg-hover',       cssVar: '--accent-btn-bg-hover'       },
+  { token: 'btn-text-hover',     cssVar: '--accent-btn-text-hover'     },
+  { token: 'accent-highlight',   cssVar: '--accent-accent-highlight'   },
+  { token: 'accent-pill-active', cssVar: '--accent-accent-pill-active' },
+  { token: 'accent-text',        cssVar: '--accent-accent-text'        },
+]
+
+function MatrixCell({ accent, token }: { accent: string; token: string }) {
+  const accentValues = tokens.accents[accent as keyof typeof tokens.accents]
+  const rawValue = accentValues[token as keyof typeof accentValues] as string | undefined
+  const hex = rawValue ? resolvePrimitiveReference(rawValue) : '#ffffff'
+  // extract the primitive name from "{primitives.xxx}"
+  const primitiveName = rawValue?.match(/^\{primitives\.([^}]+)\}$/)?.[1] ?? rawValue ?? ''
+
+  return (
+    <td className="py-3 px-4 align-top" style={{ borderBottom: '1px solid var(--border)', minWidth: 160 }}>
+      <div className="flex items-center gap-2.5">
+        <div
+          className="shrink-0 w-8 h-8 rounded-[var(--radius-small)] border"
+          style={{ backgroundColor: hex, borderColor: 'var(--border)' }}
+        />
+        <div className="flex flex-col gap-0.5 min-w-0">
+          <span
+            className="font-mono text-label block truncate"
+            style={{ color: 'var(--text)', opacity: 0.75 }}
+          >
+            {primitiveName}
+          </span>
+          <span
+            className="font-mono text-label block uppercase tracking-[0.04em]"
+            style={{ color: 'var(--text)', opacity: 0.45 }}
+          >
+            {hex}
+          </span>
+        </div>
+      </div>
+    </td>
+  )
+}
+
+function AccentMatrixDoc() {
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Foundation"
+        title="Accent Token Matrix"
+        description="Every accent token value across all five verticals — a Webflow-ready reference. Each cell shows the primitive alias and its resolved hex value."
+      />
+
+      <div className="px-8 py-12 max-w-[1200px]">
+
+        {/* ── Webflow usage callout ─────────────────────────────────────── */}
+        <div
+          className="rounded-[var(--radius-card)] border border-border px-6 py-5 mb-10"
+          style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 6%, var(--bg))' }}
+        >
+          <p className="text-text-small-semibold text-text mb-2">Using this in Webflow</p>
+          <ol className="flex flex-col gap-1.5 list-decimal list-inside text-text-small text-text" style={{ opacity: 0.8 }}>
+            <li>
+              Paste the contents of <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>src/styles/tokens.css</code> into{' '}
+              <strong>Project Settings → Custom Code → Head Code</strong> (or a site-wide embed).
+            </li>
+            <li>
+              On any Webflow section or div, add a custom attribute:{' '}
+              <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>data-accent</code>{' '}
+              = <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>yellow</code>{' '}
+              (or <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>fuschia</code> · <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>violet</code> · <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>blue</code> · <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>default</code>).
+            </li>
+            <li>
+              In your element styles, use the CSS variables from the table below (e.g.{' '}
+              <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>background-color: var(--accent-btn-bg)</code>).
+              All children inherit the active accent automatically via CSS cascade.
+            </li>
+          </ol>
+        </div>
+
+        {/* ── Matrix table ──────────────────────────────────────────────── */}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse" style={{ minWidth: 860 }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid var(--border)' }}>
+                {/* Row label header */}
+                <th
+                  className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-6 pl-2 align-bottom"
+                  style={{ opacity: 0.5, color: 'var(--text)', minWidth: 230 }}
+                >
+                  CSS Variable
+                </th>
+                {allAccents.map(({ accent, label }) => (
+                  <th
+                    key={accent}
+                    className="pb-3 px-4 text-left align-bottom"
+                    style={{ minWidth: 160 }}
+                  >
+                    <div className="flex items-center gap-2">
+                      {/* Live color dot using CSS var — needs data-accent isolation */}
+                      <div
+                        data-accent={accent}
+                        className="w-3.5 h-3.5 rounded-full shrink-0 border"
+                        style={{ backgroundColor: 'var(--accent-btn-bg)', borderColor: 'var(--border)' }}
+                      />
+                      <span
+                        className="text-label uppercase tracking-[0.08em] font-semibold"
+                        style={{ color: 'var(--text)', opacity: 0.65 }}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                    <code
+                      className="font-mono text-label block mt-1 px-1.5 py-0.5 rounded w-fit"
+                      style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)', opacity: 0.55 }}
+                    >
+                      data-accent="{accent}"
+                    </code>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {matrixTokens.map(({ token, cssVar }, rowIdx) => (
+                <tr
+                  key={token}
+                  style={{
+                    background: rowIdx % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--border) 20%, var(--bg))',
+                  }}
+                >
+                  {/* Row label */}
+                  <td className="py-3 pl-2 pr-6 align-middle" style={{ borderBottom: '1px solid var(--border)' }}>
+                    <code
+                      className="font-mono text-text-xsmall px-2 py-0.5 rounded whitespace-nowrap"
+                      style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}
+                    >
+                      {cssVar}
+                    </code>
+                  </td>
+                  {/* Cells per accent */}
+                  {allAccents.map(({ accent }) => (
+                    <MatrixCell key={accent} accent={accent} token={token} />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ── Legend ────────────────────────────────────────────────────── */}
+        <div
+          className="mt-8 rounded-[var(--radius-card)] border border-border px-6 py-4 flex flex-wrap gap-x-8 gap-y-2"
+          style={{ background: 'color-mix(in srgb, var(--border) 15%, var(--bg))' }}
+        >
+          <div className="flex items-start gap-2 text-text-xsmall text-text" style={{ opacity: 0.7 }}>
+            <span className="font-semibold shrink-0">Primitive name</span>
+            <span>— the token alias in <code className="font-mono text-label px-1 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.08)' }}>tokens.json</code> (e.g. <code className="font-mono text-label">brand-text</code>)</span>
+          </div>
+          <div className="flex items-start gap-2 text-text-xsmall text-text" style={{ opacity: 0.7 }}>
+            <span className="font-semibold shrink-0">Hex</span>
+            <span>— the resolved hex value from <code className="font-mono text-label px-1 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.08)' }}>tokens.json → primitives</code></span>
+          </div>
+          <div className="flex items-start gap-2 text-text-xsmall text-text" style={{ opacity: 0.7 }}>
+            <span className="font-semibold shrink-0">Note on yellow &amp; blue</span>
+            <span>— <code className="font-mono text-label">btn-text</code> resolves to <code className="font-mono text-label">dark-900</code> (dark) for WCAG compliance. White text on these accents fails contrast.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
 // ─── Story ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
@@ -702,3 +884,4 @@ export default meta
 type Story = StoryObj
 export const Overview: Story = {}
 export const AccentUsage: Story = { render: () => <AccentUsageDoc /> }
+export const AccentMatrix: Story = { render: () => <AccentMatrixDoc /> }
