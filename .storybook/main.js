@@ -1,4 +1,3 @@
-import type { StorybookConfig } from '@storybook/react-vite'
 import { execSync } from 'node:child_process'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -8,15 +7,7 @@ import path from 'node:path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-type StorybookUpdateMeta = {
-  date: string | null
-  subject: string | null
-  hash: string | null
-  label: string
-  tooltip: string
-}
-
-function getStorybookUpdateMeta(): StorybookUpdateMeta {
+function getStorybookUpdateMeta() {
   try {
     const output = execSync(
       'git log -1 --date=short --pretty=format:%H%n%ad%n%s -- .storybook src tokens.json',
@@ -55,7 +46,8 @@ writeFileSync(
   JSON.stringify(getStorybookUpdateMeta(), null, 2)
 )
 
-const config: StorybookConfig = {
+/** @type {import('@storybook/react-vite').StorybookConfig} */
+const config = {
   stories: [
     '../src/Introduction.mdx',
     '../src/**/*.stories.@(ts|tsx)',
