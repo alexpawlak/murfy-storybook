@@ -1,11 +1,7 @@
-import { execSync } from 'node:child_process'
-import { mkdirSync, writeFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import os from 'node:os'
-import path from 'node:path'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const { execSync } = require('node:child_process')
+const { mkdirSync, writeFileSync } = require('node:fs')
+const os = require('node:os')
+const path = require('node:path')
 
 function getStorybookUpdateMeta() {
   try {
@@ -53,7 +49,7 @@ const config = {
     '../src/**/*.stories.@(ts|tsx)',
     '../src/**/*.mdx',
   ],
-  managerEntries: [fileURLToPath(new URL('./manager.tsx', import.meta.url))],
+  managerEntries: [path.resolve(__dirname, 'manager.tsx')],
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
@@ -66,4 +62,4 @@ const config = {
   staticDirs: ['../public', generatedStaticDir],
 }
 
-export default config
+module.exports = config
