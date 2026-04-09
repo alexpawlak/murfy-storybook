@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pacifica Maison | Activation</title>
+    <meta name="description" content="Prototype mobile Pacifica Maison pour l'ecran d'activation du service.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+    <div class="device-frame">
+        <div class="status-bar status-bar--dark">
+            <span>9:43</span>
+            <div class="status-icons">
+                <i class="ph-fill ph-cell-signal-full"></i>
+                <i class="ph-fill ph-wifi-high"></i>
+                <i class="ph-fill ph-battery-full"></i>
+            </div>
+        </div>
+        <header class="topbar topbar--light">
+            <a href="./offre.html" class="icon-button" aria-label="Retour a l'offre">
+                <i class="ph-bold ph-caret-left"></i>
+            </a>
+            <div class="topbar__center">
+                <p class="eyebrow">Activation</p>
+                <h1 class="topbar__title topbar__title--dark">Service pre-rempli</h1>
+            </div>
+            <div class="topbar__spacer"></div>
+        </header>
+        <main class="screen-scroll screen-stack section-bottom-space">
+            <section class="hero-panel hero-panel--light">
+                <span class="pill">1 tap seulement</span>
+                <h2 class="screen-heading screen-heading--tight">Votre service est pret a etre active</h2>
+                <p class="body-copy">Aucune re-saisie ni mot de passe supplementaire: nous reutilisons les informations deja presentes dans votre compte Pacifica.</p>
+            </section>
+            <section class="form-card screen-stack-sm">
+                <div class="data-row">
+                    <span class="data-row__label">Titulaire</span>
+                    <span class="data-row__value">Marie Dupont</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-row__label">Adresse du bien</span>
+                    <span class="data-row__value">12 rue des Lilas, 75011 Paris</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-row__label">Contrat MRH</span>
+                    <span class="data-row__value">Formule Optimale</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-row__label">Activation</span>
+                    <span class="data-row__value">Immediate</span>
+                </div>
+            </section>
+            <section class="confirmation-note">
+                <i class="ph-fill ph-seal-check"></i>
+                <p>Votre service Pacifica Maison vous donnera acces immediatement au depannage, au calendrier d'entretien et a vos avantages.</p>
+            </section>
+            <section class="screen-stack-sm">
+                <a href="./dashboard.html" class="cta-button cta-button--brand">
+                    Activer mon service
+                    <i class="ph-bold ph-check"></i>
+                </a>
+                <a href="./offre.html" class="secondary-link">Revenir a l'offre</a>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

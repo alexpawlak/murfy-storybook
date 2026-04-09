@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pacifica Maison | Dashboard</title>
+    <meta name="description" content="Prototype mobile Pacifica Maison pour le dashboard du service.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+    <div class="device-frame">
+        <div class="status-bar">
+            <span>9:44</span>
+            <div class="status-icons">
+                <i class="ph-fill ph-cell-signal-full"></i>
+                <i class="ph-fill ph-wifi-high"></i>
+                <i class="ph-fill ph-battery-full"></i>
+            </div>
+        </div>
+        <header class="topbar topbar--brand">
+            <div class="topbar__brand">
+                <div class="brand-badge">CA</div>
+                <div>
+                    <p class="eyebrow eyebrow--light">Maison</p>
+                    <h1 class="topbar__title">Pacifica Maison</h1>
+                </div>
+            </div>
+            <a href="./suivi.html" class="icon-button icon-button--light" aria-label="Voir le suivi"><i class="ph-bold ph-bell"></i></a>
+        </header>
+        <main class="screen-scroll screen-stack section-bottom-space">
+            <section class="section-tight">
+                <p class="subtle-label subtle-label--light">Service actif</p>
+                <h2 class="screen-heading">Votre maison est couverte</h2>
+            </section>
+            <section class="action-panel">
+                <div>
+                    <p class="eyebrow eyebrow--brand">Action rapide</p>
+                    <h3 class="action-panel__title">Besoin d'aide sur un appareil ?</h3>
+                    <p class="action-panel__text">Decrivez votre panne maintenant. Un expert vous repond sous 4h.</p>
+                </div>
+                <a href="./panne.html" class="cta-button cta-button--brand">
+                    Declarer une panne
+                    <i class="ph-bold ph-arrow-right"></i>
+                </a>
+            </section>
+            <section class="screen-stack-sm">
+                <div class="section-header">
+                    <h3 class="section-title">Calendrier entretien</h3>
+                    <a href="./suivi.html" class="text-link">Voir le suivi</a>
+                </div>
+                <article class="surface-card">
+                    <div class="calendar-item">
+                        <div class="calendar-item__date">
+                            <span>Oct.</span>
+                            <strong>12</strong>
+                        </div>
+                        <div>
+                            <h4 class="card-title">Purge des radiateurs</h4>
+                            <p class="card-meta">Recommandee selon votre profil logement et votre historique d'usage.</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            <section class="screen-stack-sm">
+                <h3 class="section-title">Mes avantages</h3>
+                <div class="stack-3">
+                    <article class="benefit-card">
+                        <span class="benefit-card__value">-20%</span>
+                        <p class="benefit-card__label">Filtres a air Brandt</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="benefit-card__value">-15%</span>
+                        <p class="benefit-card__label">Diagnostic confort chauffage</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="benefit-card__value">Prioritaire</span>
+                        <p class="benefit-card__label">Acces au reseau de pros Murfy</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <nav class="bottom-nav">
+            <a href="./index.html" class="bottom-nav__item">
+                <i class="ph ph-house"></i>
+                <span>Accueil</span>
+            </a>
+            <a href="./offre.html" class="bottom-nav__item">
+                <i class="ph ph-house-line"></i>
+                <span>Offre</span>
+            </a>
+            <a href="./dashboard.html" class="bottom-nav__item is-active">
+                <i class="ph-fill ph-squares-four"></i>
+                <span>Service</span>
+            </a>
+            <a href="./suivi.html" class="bottom-nav__item">
+                <i class="ph ph-path"></i>
+                <span>Suivi</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

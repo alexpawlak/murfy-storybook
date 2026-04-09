@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pacifica Maison | Suivi</title>
+    <meta name="description" content="Prototype mobile Pacifica Maison pour le suivi de la demande.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+    <div class="device-frame">
+        <div class="status-bar status-bar--dark">
+            <span>9:46</span>
+            <div class="status-icons">
+                <i class="ph-fill ph-cell-signal-full"></i>
+                <i class="ph-fill ph-wifi-high"></i>
+                <i class="ph-fill ph-battery-full"></i>
+            </div>
+        </div>
+        <header class="topbar topbar--light">
+            <a href="./dashboard.html" class="icon-button" aria-label="Retour au dashboard">
+                <i class="ph-bold ph-caret-left"></i>
+            </a>
+            <div class="topbar__center">
+                <p class="eyebrow">Suivi</p>
+                <h1 class="topbar__title topbar__title--dark">Votre demande</h1>
+            </div>
+            <div class="topbar__spacer"></div>
+        </header>
+        <main class="screen-scroll screen-stack section-bottom-space">
+            <section class="stepper-card">
+                <div class="stepper">
+                    <div class="step is-done">
+                        <span>1</span>
+                        <label>Declaration</label>
+                    </div>
+                    <div class="step is-active">
+                        <span>2</span>
+                        <label>Diagnostic</label>
+                    </div>
+                    <div class="step">
+                        <span>3</span>
+                        <label>Solution</label>
+                    </div>
+                </div>
+            </section>
+            <section class="status-card">
+                <p class="eyebrow eyebrow--brand">Statut</p>
+                <h2 class="screen-heading screen-heading--tight">En cours d'analyse</h2>
+                <p class="body-copy">Reponse avant 14h00 aujourd'hui. Votre demande a bien ete prise en charge.</p>
+            </section>
+            <section class="surface-card screen-stack-sm">
+                <h3 class="section-title">Resume de la panne</h3>
+                <p class="card-meta">Lave-linge Brandt qui s'interrompt au bout de 10 minutes avec code E03 et presence d'eau dans le tambour.</p>
+            </section>
+            <section class="surface-card screen-stack-sm">
+                <h3 class="section-title">Prochaine etape</h3>
+                <p class="card-meta">Un expert va verifier si un nettoyage du filtre ou une piece detachee peut resoudre le probleme a distance avant de proposer une intervention.</p>
+            </section>
+            <section class="screen-stack-sm">
+                <a href="./dashboard.html" class="cta-button cta-button--brand">
+                    Retour au dashboard
+                    <i class="ph-bold ph-arrow-right"></i>
+                </a>
+                <a href="./dashboard.html" class="secondary-link">Preferer une visio avec un expert</a>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

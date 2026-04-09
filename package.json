@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "build:pacifica-prototype-css": "tailwindcss -i ./public/prototypes/pacifica-maison/tailwind.input.css -o ./public/prototypes/pacifica-maison/prototype.css --content './public/prototypes/pacifica-maison/*.html'",
     "build-tokens": "npx tsx scripts/build-tokens.ts",
     "figma:parse": "figma connect parse --config figma.config.json",
     "figma:publish": "figma connect publish --config figma.config.json --token $FIGMA_ACCESS_TOKEN"

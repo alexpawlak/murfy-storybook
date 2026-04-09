@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pacifica Maison | Decouverte</title>
+    <meta name="description" content="Prototype mobile Pacifica Maison pour le parcours de decouverte dans l'espace client Pacifica.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+    <div class="device-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+                <i class="ph-fill ph-cell-signal-full"></i>
+                <i class="ph-fill ph-wifi-high"></i>
+                <i class="ph-fill ph-battery-full"></i>
+            </div>
+        </div>
+        <header class="topbar topbar--brand">
+            <div class="topbar__brand">
+                <div class="brand-badge">CA</div>
+                <div>
+                    <p class="eyebrow eyebrow--light">Espace client</p>
+                    <h1 class="topbar__title">Pacifica</h1>
+                </div>
+            </div>
+            <div class="avatar-shell">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Avatar Marie Dupont" class="avatar-shell__image">
+            </div>
+        </header>
+        <main class="screen-scroll screen-stack">
+            <section class="section-tight">
+                <span class="subtle-label">Bonjour,</span>
+                <h2 class="screen-heading">Marie Dupont</h2>
+            </section>
+            <section class="section-tight">
+                <div class="section-header">
+                    <h3 class="section-title">Mes contrats</h3>
+                    <a href="./offre.html" class="text-link">Voir le service maison</a>
+                </div>
+                <div class="stack-3">
+                    <a href="./offre.html" class="surface-card interactive-row">
+                        <div class="icon-tile"><i class="ph ph-house"></i></div>
+                        <div class="flex-1">
+                            <h4 class="card-title">Assurance Habitation</h4>
+                            <p class="card-meta">Formule Optimale · Renouv. 01/09/2026</p>
+                        </div>
+                        <i class="ph-bold ph-caret-right muted-caret"></i>
+                    </a>
+                    <div class="surface-card interactive-row is-static">
+                        <div class="icon-tile"><i class="ph ph-car-profile"></i></div>
+                        <div class="flex-1">
+                            <h4 class="card-title">Assurance Auto</h4>
+                            <p class="card-meta">Peugeot 308 · En cours</p>
+                        </div>
+                        <i class="ph-bold ph-caret-right muted-caret"></i>
+                    </div>
+                </div>
+            </section>
+            <section class="section-tight">
+                <div class="feature-banner">
+                    <div class="feature-banner__top">
+                        <span class="pill pill--light">Nouveau</span>
+                        <div class="round-icon round-icon--ghost"><i class="ph-fill ph-house-line"></i></div>
+                    </div>
+                    <div class="screen-stack-sm">
+                        <h3 class="feature-banner__title">Votre contrat MRH inclut maintenant Pacifica Maison</h3>
+                        <p class="feature-banner__text">Depannage a domicile, entretien preventif et avantages exclusifs, integres directement dans votre espace client.</p>
+                        <div class="partner-chip">
+                            <div class="partner-chip__mark">M</div>
+                            <span>Service opere avec Murfy</span>
+                        </div>
+                        <a href="./offre.html" class="cta-button cta-button--light">
+                            Decouvrir Pacifica Maison
+                            <i class="ph-bold ph-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section class="section-tight section-bottom-space">
+                <h3 class="section-title section-title--spaced">Acces rapides</h3>
+                <div class="quick-grid">
+                    <div class="quick-card">
+                        <div class="quick-card__icon"><i class="ph-fill ph-warning-circle"></i></div>
+                        <span>Sinistres</span>
+                    </div>
+                    <div class="quick-card">
+                        <div class="quick-card__icon"><i class="ph-fill ph-file-text"></i></div>
+                        <span>Documents</span>
+                    </div>
+                    <div class="quick-card">
+                        <div class="quick-card__icon"><i class="ph-fill ph-chat-circle-dots"></i></div>
+                        <span>Contact</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <nav class="bottom-nav">
+            <a href="./index.html" class="bottom-nav__item is-active">
+                <i class="ph-fill ph-house"></i>
+                <span>Accueil</span>
+            </a>
+            <a href="./offre.html" class="bottom-nav__item">
+                <i class="ph ph-house-line"></i>
+                <span>Maison</span>
+            </a>
+            <a href="./dashboard.html" class="bottom-nav__item">
+                <i class="ph ph-squares-four"></i>
+                <span>Service</span>
+            </a>
+            <a href="./suivi.html" class="bottom-nav__item">
+                <i class="ph ph-path"></i>
+                <span>Suivi</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

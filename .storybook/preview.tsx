@@ -6,8 +6,14 @@ import '../src/styles/global.css'
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme || 'light'
   const accent = context.globals.accent || 'default'
+  const isFullscreen = context.parameters.layout === 'fullscreen'
+
   return (
-    <div data-theme={theme} data-accent={accent} className="min-h-screen bg-bg text-text-default p-4">
+    <div
+      data-theme={theme}
+      data-accent={accent}
+      className={isFullscreen ? 'min-h-screen bg-bg text-text-default' : 'min-h-screen bg-bg text-text-default p-4'}
+    >
       <Story />
     </div>
   )
@@ -55,7 +61,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Introduction', 'Foundation', 'Atoms', 'Molecules', '*'],
+        order: ['Introduction', 'Foundation', 'Atoms', 'Molecules', 'Organisms', 'Templates', 'TestPages', 'Prototypes', '*'],
       },
     },
   },
