@@ -16,15 +16,15 @@ const verticals = [
   {
     name: 'Électroménager',
     emoji: '⚙️',
-    accent: 'violet' as const,
-    label: 'Violet',
+    accent: 'fuschia' as const,
+    label: 'Fuschia',
     description: "Appliance repair — Murfy's core activity",
   },
   {
     name: 'Chauffage',
     emoji: '🔥',
-    accent: 'fuschia' as const,
-    label: 'Fuschia',
+    accent: 'violet' as const,
+    label: 'Violet',
     description: 'Heating — new expansion vertical',
   },
   {

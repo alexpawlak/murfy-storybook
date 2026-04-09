@@ -34,9 +34,9 @@ function DocRow({ title, description, children }: { title: string; description: 
 // ─── Interactive demos ────────────────────────────────────────────────────────
 
 const VERTICALS: { label: string; variant: TagVariant; activity: string }[] = [
-  { label: 'Électroménager', variant: 'pink',   activity: 'appliance' },
-  { label: 'Chauffage',      variant: 'yellow', activity: 'heating'   },
-  { label: 'Solaire',        variant: 'violet', activity: 'solar'     },
+  { label: 'Électroménager', variant: 'fuschia', activity: 'appliance' },
+  { label: 'Chauffage',      variant: 'violet',  activity: 'heating'   },
+  { label: 'Solaire',        variant: 'yellow',  activity: 'solar'     },
 ]
 
 function VerticalSelector() {
@@ -91,7 +91,7 @@ export const Overview: Story = {
         >
           <DocRow
             title="Pink (default)"
-            description="Soft pink fill — the brand default. Used for active filter chips or general-purpose labels in the électroménager vertical."
+            description="Soft pink fill — the brand default. Used for active filter chips or general-purpose labels in non-vertical Murfy contexts."
           >
             <Tag variant="pink">Lave-linge</Tag>
             <Tag variant="pink">Sèche-linge</Tag>
@@ -127,11 +127,11 @@ export const Overview: Story = {
 
           <DocRow
             title="Fuschia"
-            description="Hot pink — for promotional highlights, special offers, or accent moments that need stronger contrast than the softer pink."
+            description="Hot pink — aligned with the électroménager vertical. Use it for appliance-repair navigation and accent moments tied to that service line."
           >
-            <Tag variant="fuschia">–20%</Tag>
-            <Tag variant="fuschia">Offre spéciale</Tag>
-            <Tag variant="fuschia">Urgent</Tag>
+            <Tag variant="fuschia">Électroménager</Tag>
+            <Tag variant="fuschia">Réparation</Tag>
+            <Tag variant="fuschia">Diagnostic</Tag>
           </DocRow>
 
           <DocRow
