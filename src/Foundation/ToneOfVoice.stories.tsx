@@ -2,157 +2,179 @@ import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { MessageText1 } from 'iconsax-react'
 import { DocHeader, DocSection, GuidanceGrid } from './doc-components'
-import { Button } from '../Atoms/Button/Button'
-import { TextLink } from '../Atoms/TextLink/TextLink'
 
-// ─── Pillar card ──────────────────────────────────────────────────────────────
+// ─── ToneChip ────────────────────────────────────────────────────────────────
 
-interface PillarProps {
-  number: string
-  title: string
-  description: string
-  quote: string
+type ToneVariant = 'always' | 'often' | 'sometimes' | 'never'
+
+const TONE_STYLES: Record<ToneVariant, { bg: string; color: string }> = {
+  always: {
+    bg: 'color-mix(in srgb, #22c55e 12%, transparent)',
+    color: '#15803d',
+  },
+  often: {
+    bg: 'color-mix(in srgb, var(--accent-btn-bg) 12%, transparent)',
+    color: 'var(--accent-btn-bg)',
+  },
+  sometimes: {
+    bg: 'color-mix(in srgb, #eab308 14%, transparent)',
+    color: '#92400e',
+  },
+  never: {
+    bg: 'color-mix(in srgb, #ef4444 10%, transparent)',
+    color: '#b91c1c',
+  },
 }
 
-function PillarCard({ number, title, description, quote }: PillarProps) {
+function ToneChip({ label, variant }: { label: string; variant: ToneVariant }) {
+  const s = TONE_STYLES[variant]
+  return (
+    <span
+      className="inline-block rounded-[var(--radius-pill)] px-3 py-1 text-text-small-semibold"
+      style={{ background: s.bg, color: s.color }}
+    >
+      {label}
+    </span>
+  )
+}
+
+// ─── ToneDial ────────────────────────────────────────────────────────────────
+
+interface ToneColumn {
+  label: string
+  variant: ToneVariant
+  items: string[]
+}
+
+function ToneDial({ columns }: { columns: ToneColumn[] }) {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {columns.map((col) => (
+        <div key={col.label} className="flex flex-col gap-3">
+          <p
+            className="text-label uppercase tracking-[0.08em] font-semibold pb-2"
+            style={{
+              color: TONE_STYLES[col.variant].color,
+              borderBottom: `2px solid ${TONE_STYLES[col.variant].color}`,
+            }}
+          >
+            {col.label}
+          </p>
+          <div className="flex flex-col gap-2">
+            {col.items.map((item) => (
+              <ToneChip key={item} label={item} variant={col.variant} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── TraitCloud ──────────────────────────────────────────────────────────────
+
+function TraitCloud({ traits }: { traits: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {traits.map((t) => (
+        <span
+          key={t}
+          className="rounded-[var(--radius-pill)] px-4 py-2 text-text-small-semibold"
+          style={{
+            background: 'color-mix(in srgb, var(--accent-btn-bg) 10%, transparent)',
+            color: 'var(--accent-btn-bg)',
+            border: '1px solid color-mix(in srgb, var(--accent-btn-bg) 25%, transparent)',
+          }}
+        >
+          {t}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+// ─── MissionKeyword ──────────────────────────────────────────────────────────
+
+function MissionKeyword({ label }: { label: string }) {
   return (
     <div
-      className="rounded-[var(--radius-card)] border border-border p-6 flex flex-col gap-3"
-      style={{ background: 'var(--bg)' }}
+      className="rounded-[var(--radius-card)] px-4 py-3 flex items-center gap-3"
+      style={{
+        background: 'var(--bg)',
+        border: '1px solid var(--border)',
+      }}
     >
       <span
-        className="text-label uppercase tracking-[0.08em] font-semibold"
-        style={{ color: 'var(--accent-btn-bg)' }}
+        className="w-2 h-2 rounded-full flex-shrink-0"
+        style={{ background: 'var(--accent-btn-bg)' }}
+      />
+      <span className="text-text-small text-text">{label}</span>
+    </div>
+  )
+}
+
+// ─── PunchlineCard ───────────────────────────────────────────────────────────
+
+function PunchlineCard({ quote }: { quote: string }) {
+  return (
+    <blockquote
+      className="pl-4 py-2 text-text-small-semibold text-text italic"
+      style={{
+        borderLeft: '3px solid var(--accent-btn-bg)',
+        opacity: 0.85,
+      }}
+    >
+      « {quote} »
+    </blockquote>
+  )
+}
+
+// ─── WordList ────────────────────────────────────────────────────────────────
+
+type WordListKind = 'allowed' | 'forbidden' | 'exception'
+
+const WORD_LIST_STYLES: Record<WordListKind, { label: string; dotColor: string; textColor?: string; strikethrough?: boolean }> = {
+  allowed: { label: 'Autorisé', dotColor: '#22c55e' },
+  forbidden: { label: 'Interdit', dotColor: '#ef4444', textColor: '#b91c1c', strikethrough: true },
+  exception: { label: 'Exception', dotColor: '#eab308', textColor: '#92400e' },
+}
+
+interface WordListProps {
+  kind: WordListKind
+  words: string[]
+  note?: string
+}
+
+function WordList({ kind, words, note }: WordListProps) {
+  const s = WORD_LIST_STYLES[kind]
+  return (
+    <div className="flex flex-col gap-2">
+      <p
+        className="text-label uppercase tracking-[0.08em] font-semibold mb-1"
+        style={{ color: s.dotColor }}
       >
-        {number}
-      </span>
-      <h3 className="text-h5 font-bold text-text">{title}</h3>
-      <p className="text-text-small text-text" style={{ opacity: 0.65 }}>
-        {description}
+        {s.label}
       </p>
-      <blockquote
-        className="mt-1 pl-3 text-text-small-semibold text-text italic"
-        style={{
-          borderLeft: '3px solid var(--accent-btn-bg)',
-          opacity: 0.85,
-        }}
-      >
-        "{quote}"
-      </blockquote>
-    </div>
-  )
-}
-
-// ─── Vocabulary table ─────────────────────────────────────────────────────────
-
-interface VocabRow {
-  say: string
-  avoid: string
-  note?: string
-}
-
-function VocabTable({ rows }: { rows: VocabRow[] }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-text-small">
-        <thead>
-          <tr style={{ borderBottom: '2px solid var(--border)' }}>
-            <th className="text-left py-2 pr-6 text-text-small-semibold text-text w-1/3">
-              On dit
-            </th>
-            <th className="text-left py-2 pr-6 text-text-small-semibold text-text w-1/3">
-              On évite
-            </th>
-            <th
-              className="text-left py-2 text-text-small-semibold text-text w-1/3"
-              style={{ opacity: 0.5 }}
-            >
-              Pourquoi
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr
-              key={i}
-              className="border-t border-border"
-              style={{ borderColor: 'var(--border)' }}
-            >
-              <td className="py-3 pr-6">
-                <span
-                  className="inline-block rounded-[var(--radius-pill)] px-2.5 py-0.5 text-label uppercase tracking-[0.08em] font-semibold"
-                  style={{
-                    background: 'color-mix(in srgb, #22c55e 12%, transparent)',
-                    color: '#15803d',
-                  }}
-                >
-                  {row.say}
-                </span>
-              </td>
-              <td className="py-3 pr-6">
-                <span
-                  className="inline-block rounded-[var(--radius-pill)] px-2.5 py-0.5 text-label uppercase tracking-[0.08em] font-semibold line-through"
-                  style={{
-                    background: 'color-mix(in srgb, #ef4444 10%, transparent)',
-                    color: '#b91c1c',
-                  }}
-                >
-                  {row.avoid}
-                </span>
-              </td>
-              <td className="py-3 text-text" style={{ opacity: 0.55 }}>
-                {row.note ?? '—'}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-// ─── CTA template block ───────────────────────────────────────────────────────
-
-interface CtaExample {
-  label: string
-  type: 'primary' | 'secondary' | 'link' | 'avoid'
-  note?: string
-  arrow?: boolean
-}
-
-const CTA_TYPE_LABEL: Record<CtaExample['type'], string> = {
-  primary: 'Bouton principal',
-  secondary: 'Bouton secondaire',
-  link: 'Lien texte',
-  avoid: 'À éviter',
-}
-
-function CtaRow({ label, type, note, arrow }: CtaExample) {
-  return (
-    <div className="flex items-center gap-4 py-3 border-t border-border">
-      <div className="w-36 flex-shrink-0">
-        <span
-          className="text-label uppercase tracking-[0.08em] font-semibold"
-          style={{ color: 'var(--text)', opacity: 0.4 }}
-        >
-          {CTA_TYPE_LABEL[type]}
-        </span>
-      </div>
-      <div className="flex-shrink-0">
-        {type === 'primary' && <Button variant="primary" size="sm">{label}</Button>}
-        {type === 'secondary' && <Button variant="secondary" size="sm">{label}</Button>}
-        {type === 'link' && <TextLink size="small" arrow={arrow}>{label}</TextLink>}
-        {type === 'avoid' && (
+      {words.map((w) => (
+        <div key={w} className="flex items-start gap-2">
           <span
-            className="text-text-small-semibold line-through"
-            style={{ color: '#b91c1c', opacity: 0.7 }}
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-[7px]"
+            style={{ background: s.dotColor }}
+          />
+          <span
+            className="text-text-small text-text"
+            style={{
+              color: s.textColor ?? 'var(--text)',
+              textDecoration: s.strikethrough ? 'line-through' : undefined,
+              opacity: s.strikethrough ? 0.7 : 1,
+            }}
           >
-            {label}
+            {w}
           </span>
-        )}
-      </div>
+        </div>
+      ))}
       {note && (
-        <p className="text-text-xsmall text-text" style={{ opacity: 0.5 }}>
+        <p className="text-text-xsmall mt-1" style={{ color: 'var(--text)', opacity: 0.5 }}>
           {note}
         </p>
       )}
@@ -160,498 +182,423 @@ function CtaRow({ label, type, note, arrow }: CtaExample) {
   )
 }
 
-// ─── Micro-copy block ─────────────────────────────────────────────────────────
+// ─── VocabBlock ──────────────────────────────────────────────────────────────
 
-interface MicroRow {
-  context: string
-  copy: string
-  avoid?: string
+interface VocabBlockProps {
+  title: string
+  allowed?: string[]
+  forbidden?: string[]
+  exception?: string[]
+  exceptionNote?: string
 }
 
-function MicroCopyTable({ rows }: { rows: MicroRow[] }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-text-small">
-        <thead>
-          <tr style={{ borderBottom: '2px solid var(--border)' }}>
-            <th className="text-left py-2 pr-6 text-text-small-semibold text-text w-1/4">
-              Contexte
-            </th>
-            <th className="text-left py-2 pr-6 text-text-small-semibold text-text w-1/3">
-              On écrit
-            </th>
-            <th
-              className="text-left py-2 text-text-small-semibold text-text w-1/3"
-              style={{ opacity: 0.5 }}
-            >
-              Pas ça
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr
-              key={i}
-              className="border-t border-border"
-              style={{ borderColor: 'var(--border)' }}
-            >
-              <td
-                className="py-3 pr-6 text-text-xsmall-semibold uppercase tracking-[0.06em] text-text"
-                style={{ opacity: 0.45 }}
-              >
-                {row.context}
-              </td>
-              <td className="py-3 pr-6 text-text font-medium">{row.copy}</td>
-              <td className="py-3 text-text" style={{ opacity: 0.4 }}>
-                {row.avoid ? (
-                  <span style={{ textDecoration: 'line-through' }}>{row.avoid}</span>
-                ) : (
-                  '—'
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-// ─── Banned phrase card ───────────────────────────────────────────────────────
-
-function BannedPhrase({ phrase, reason }: { phrase: string; reason: string }) {
+function VocabBlock({ title, allowed, forbidden, exception, exceptionNote }: VocabBlockProps) {
   return (
     <div
-      className="rounded-[var(--radius-card)] border px-5 py-4 flex flex-col gap-1"
-      style={{
-        borderColor: 'color-mix(in srgb, #ef4444 20%, var(--border))',
-        background: 'color-mix(in srgb, #ef4444 4%, var(--bg))',
-      }}
+      className="rounded-[var(--radius-card)] p-5 flex flex-col gap-5"
+      style={{ background: 'var(--bg)', border: '1px solid var(--border)' }}
     >
-      <p
-        className="text-text-small-semibold"
-        style={{ color: '#b91c1c', textDecoration: 'line-through' }}
-      >
-        "{phrase}"
-      </p>
-      <p className="text-text-xsmall text-text" style={{ opacity: 0.6 }}>
-        {reason}
-      </p>
-    </div>
-  )
-}
-
-// ─── Punctuation rule ─────────────────────────────────────────────────────────
-
-function PunctuationRule({
-  rule,
-  correct,
-  wrong,
-}: {
-  rule: string
-  correct: string
-  wrong?: string
-}) {
-  return (
-    <div className="border-t border-border pt-4 pb-1 flex flex-col gap-1">
-      <p className="text-text-small-semibold text-text">{rule}</p>
-      <div className="flex flex-wrap gap-3 mt-1">
-        <code
-          className="text-text-small px-2.5 py-1 rounded-[var(--radius-small)]"
-          style={{
-            background: 'color-mix(in srgb, #22c55e 10%, transparent)',
-            color: '#15803d',
-          }}
-        >
-          ✓ {correct}
-        </code>
-        {wrong && (
-          <code
-            className="text-text-small px-2.5 py-1 rounded-[var(--radius-small)]"
-            style={{
-              background: 'color-mix(in srgb, #ef4444 10%, transparent)',
-              color: '#b91c1c',
-              textDecoration: 'line-through',
-            }}
-          >
-            {wrong}
-          </code>
-        )}
+      <p className="text-h6 font-bold text-text">{title}</p>
+      <div className="flex flex-col gap-5">
+        {allowed && <WordList kind="allowed" words={allowed} />}
+        {forbidden && <WordList kind="forbidden" words={forbidden} />}
+        {exception && <WordList kind="exception" words={exception} note={exceptionNote} />}
       </div>
     </div>
   )
 }
 
-// ─── Story shell ──────────────────────────────────────────────────────────────
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 function ToneOfVoicePage() {
   return (
-    <div className="px-8 py-10 max-w-4xl" style={{ color: 'var(--text)' }}>
+    <div className="px-8 py-10 max-w-5xl" style={{ color: 'var(--text)' }}>
       <DocHeader
         layer="Foundation"
         title="Tone of Voice"
-        description="Comment Murfy parle — à ses clients, dans ses composants, dans ses micro-copies. Cette page est la référence pour designers et copywriters."
+        description="La voix officielle de Murfy — telle que définie dans la Charte Graphique 2.0. Référence pour tout contenu : site, composants, micro-copies, communications."
         icon={<MessageText1 size={20} />}
       />
 
-      {/* ── 1. Identité de voix ────────────────────────────────────────── */}
+      {/* ── 1. Le ton ──────────────────────────────────────────────────────── */}
       <div className="mt-10">
         <DocSection
-          label="Identité de voix"
-          subtitle="Murfy n'est pas une marque corporate. C'est une équipe de réparateurs qui ont décidé de s'attaquer à l'obsolescence programmée. Ça se sent dans chaque mot."
+          label="Le ton"
+          subtitle="Quatre registres qui définissent le spectre émotionnel de Murfy. Chaque contenu doit s'inscrire dans cette grille."
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <PillarCard
-              number="01"
-              title="Expert de terrain"
-              description="On parle depuis l'atelier, pas depuis un open-space. Ce qu'on dit est concret, fondé sur l'expérience du réparateur qui intervient chaque jour."
-              quote="Nos techniciens repèrent les signes d'usure invisibles et anticipent les pannes avant qu'elles n'arrivent."
-            />
-            <PillarCard
-              number="02"
-              title="Direct et sans détour"
-              description="Pas de formules creuses. On dit ce qu'on fait, on dit ce que ça coûte, on dit combien de temps ça prend. La clarté est un acte de respect envers le client."
-              quote="Rendez-vous sous 48h. Zéro sous-traitance. Bilan technique complet."
-            />
-            <PillarCard
-              number="03"
-              title="Rassurant, pas vendeur"
-              description="Le client a une panne — il est déjà stressé. Notre rôle est de supprimer l'anxiété, pas d'en profiter. On rassure sur le prix, le délai et ce qui se passe si ça ne se répare pas."
-              quote="Réparé ou remplacé : si ce n'est pas réparable, on prend le Bonus à notre charge."
-            />
-            <PillarCard
-              number="04"
-              title="Engagé, sans sermon"
-              description="On répare parce que c'est mieux pour la planète — et pour le portefeuille. On le dit une fois, clairement. On ne culpabilise pas le client qui hésite à réparer."
-              quote="97% des appareils sont réparables. Alors réparez, ne jetez pas."
-            />
-            <PillarCard
-              number="05"
-              title="Chaleureux, pas familier"
-              description={"On est accessibles, humains, proches. Mais on vouvoie toujours le client. Jamais de « tu », jamais d'argot, jamais d'émojis hors contexte marketing très ciblé."}
-              quote="Un réparateur chez vous dès demain. Payez le jour du RDV."
-            />
-          </div>
-        </DocSection>
-
-        {/* ── 2. Vocabulaire ──────────────────────────────────────────────── */}
-        <DocSection
-          label="Vocabulaire"
-          subtitle="Les mots qu'on préfère et ceux qu'on laisse aux autres. La cohérence du lexique construit la confiance."
-        >
-          <VocabTable
-            rows={[
+          <ToneDial
+            columns={[
               {
-                say: 'réparateur',
-                avoid: 'technicien',
-                note: "Pour l'électroménager. Pour le chauffage : « technicien Murfy ».",
+                label: 'Toujours',
+                variant: 'always',
+                items: ['Positif', 'Engagé & engageant', "Va de l'avant", 'Sûr', 'Objectif', 'Rassurant', 'Pratique', 'Incitatif'],
               },
               {
-                say: 'panne',
-                avoid: 'défaillance / dysfonctionnement',
-                note: 'Mot du quotidien, pas jargon SAV.',
+                label: 'Souvent',
+                variant: 'often',
+                items: ['Complice', 'Militant', 'Direct', 'Pragmatique', 'Astucieux'],
               },
               {
-                say: 'appareil',
-                avoid: 'machine / équipement',
-                note: 'Neutre, inclusif (lave-linge, chaudière, etc.).',
+                label: 'Parfois',
+                variant: 'sometimes',
+                items: ['Décalé', 'Drôle', 'Léger'],
               },
               {
-                say: 'entretien',
-                avoid: 'maintenance',
-                note: 'Maintenance est perçu comme industriel.',
-              },
-              {
-                say: 'forfait réparation',
-                avoid: 'devis / tarif',
-                note: 'Le forfait inclut les déplacements — insister sur ce différenciateur.',
-              },
-              {
-                say: 'chez vous',
-                avoid: 'à votre domicile',
-                note: 'Plus direct, plus chaleureux.',
-              },
-              {
-                say: 'RDV',
-                avoid: 'intervention planifiée',
-                note: 'Abréviation acceptée partout sauf CGV.',
-              },
-              {
-                say: 'Bonus Réparation',
-                avoid: 'aide / subvention',
-                note: 'Nom officiel du dispositif — avec majuscules.',
-              },
-              {
-                say: 'reconditionné',
-                avoid: 'occasion / d\'occasion',
-                note: 'Murfy sélectionne et garantit — pas du vide-grenier.',
-              },
-              {
-                say: 'garantie 6 mois',
-                avoid: 'SAV / service après-vente',
-                note: 'On nomme la promesse concrète, pas le processus interne.',
+                label: 'Jamais',
+                variant: 'never',
+                items: ['Donneur de leçon', 'Moralisateur', 'Pessimiste', 'Négatif', 'Racoleur', 'Déconneur'],
               },
             ]}
           />
         </DocSection>
 
-        {/* ── 3. Do / Don't ───────────────────────────────────────────────── */}
+        {/* ── 2. La personnalité ────────────────────────────────────────────── */}
         <DocSection
-          label="Dos & Don'ts rédactionnels"
-          subtitle="Règles d'écriture qui s'appliquent à tous les textes : titres, descriptions, labels de composants."
+          label="La personnalité"
+          subtitle="L'identité de Murfy en onze traits. Ces attributs guident le ton dans chaque prise de parole."
+        >
+          <TraitCloud
+            traits={[
+              'Expérimenté',
+              'Astucieux',
+              'Convaincu & convaincant',
+              "Ouvert d'esprit",
+              'Curieux',
+              'Altruiste',
+              'Bienveillant',
+              'Accessible',
+              "À l'écoute",
+              'Disponible',
+              'Confiant',
+            ]}
+          />
+        </DocSection>
+
+        {/* ── 3. La mission ─────────────────────────────────────────────────── */}
+        <DocSection
+          label="La mission — réparer au lieu de jeter"
+          subtitle="Les mots-clés qui ancrent le discours Murfy dans son engagement environnemental et sociétal."
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+            {[
+              'Écologie',
+              'Environnement',
+              'Durabilité',
+              'Économie circulaire',
+              'Responsable / Responsabilité',
+              'Valorisation du métier de technicien',
+              'Faire adopter un réflexe',
+              'Changer les habitudes',
+              'Lutter contre la surconsommation',
+              'Faire attention à nos déchets',
+              'Bonnes pratiques pour la planète',
+            ].map((kw) => (
+              <MissionKeyword key={kw} label={kw} />
+            ))}
+          </div>
+
+          <p
+            className="text-label uppercase tracking-[0.08em] font-semibold mb-4"
+            style={{ color: 'var(--accent-btn-bg)' }}
+          >
+            Expressions & punchlines officielles
+          </p>
+          <div className="flex flex-col gap-3">
+            <PunchlineCard quote="Réparer plutôt que de jeter" />
+            <PunchlineCard quote="Le meilleur déchet, c'est celui que l'on ne produit pas !" />
+            <PunchlineCard quote="MURFY c'est la nouvelle habitude à adopter pour diminuer nos déchets" />
+            <PunchlineCard quote="MURFY, la solution clé en main qui donne le réflexe de réparer plutôt que de jeter" />
+            <PunchlineCard quote="La mission de MURFY : installer le réflexe réparation chez tous les français." />
+            <PunchlineCard quote="En réparant plutôt qu'en rachetant du neuf, avec MURFY, vous adoptez le bon réflexe pour réduire les déchets d'électroménager, et envisager un monde plus durable" />
+            <PunchlineCard quote="Les héros de demain seront les réparateurs d'électroménager !" />
+            <PunchlineCard quote="Chez MURFY, on souhaite impulser le réflexe de la réparation chez tout le monde" />
+            <PunchlineCard quote="MURFY beaucoup" />
+            <PunchlineCard quote="MURFY, et ça répare !" />
+          </div>
+        </DocSection>
+
+        {/* ── 4. L'univers sémantique ────────────────────────────────────────── */}
+        <DocSection
+          label="L'univers sémantique"
+          subtitle="Les règles éditoriales qui s'appliquent à tous les textes Murfy, quel que soit le canal."
         >
           <GuidanceGrid
             dos={[
               {
-                rule: 'Commencer par le bénéfice, finir par le mécanisme.',
-                rationale:
-                  '"Chez vous dès demain — prenez rendez-vous en 3 minutes." Le client comprend d\'abord ce qu\'il gagne.',
+                rule: 'Vouvoiement',
+                rationale: 'Toujours vouvoyer le client — y compris sur les réseaux sociaux. Le « vous » est chaleureux et respectueux.',
               },
               {
-                rule: 'Utiliser des chiffres pour ancrer la promesse.',
-                rationale:
-                  '"Garantie 6 mois", "sous 48h", "à partir de 75 €" — les chiffres rassurent et différencient.',
+                rule: 'Phrases courtes & punchlines',
+                rationale: 'Une idée, une phrase. Les contenus Murfy sont scannés, pas lus linéairement.',
               },
               {
-                rule: 'Une idée par phrase. Une phrase par idée.',
-                rationale:
-                  'Les pages Murfy sont scannées, pas lues. Chaque phrase doit tenir seule.',
+                rule: 'Mots simples',
+                rationale: 'Pas de jargon technique. Ce que comprend un client non-initié est ce qu\'on écrit.',
               },
               {
-                rule: 'CTAs à l\'infinitif, verbe d\'action.',
-                rationale:
-                  '"Prendre rendez-vous", "Voir les disponibilités" — pas "En savoir plus" ni "Cliquez ici".',
+                rule: 'Ponctuation adaptée',
+                rationale: "Ponctuation juste et sobre — jamais excessive. L'emphase vient des mots, pas des points d'exclamation.",
               },
               {
-                rule: 'Voix active, sujet explicite.',
-                rationale:
-                  '"Nos réparateurs interviennent chez vous" plutôt que "Une intervention peut être organisée".',
+                rule: 'Proximité — ton amical & chaleureux',
+                rationale: 'Murfy est proche de ses clients. Le ton est accessible, humain, jamais froid ni distant.',
+              },
+              {
+                rule: 'Tournures toujours positives',
+                rationale: 'Reformuler le négatif en positif. « Votre appareil semble fonctionner normalement » plutôt que « Aucun problème détecté ».',
               },
             ]}
             donts={[
               {
-                rule: 'Ne pas entasser des qualificatifs vides.',
-                rationale:
-                  '"Rapide, efficace, professionnel, certifié" — si tout est qualifié, rien ne l\'est. Choisir 2 attributs max par bloc.',
+                rule: 'Tutoiement — même sur les réseaux sociaux',
+                rationale: 'Le « tu » n\'est jamais utilisé, quel que soit le canal ou la cible.',
               },
               {
-                rule: 'Ne pas utiliser le passif pour masquer la responsabilité.',
-                rationale:
-                  '"Votre RDV a été annulé" → "Nous avons annulé votre RDV. Voici pourquoi."',
+                rule: 'Jargon technique',
+                rationale: 'Les termes SAV, itinérant, planneur, créneau, intervention… sont réservés à l\'usage interne.',
               },
               {
-                rule: 'Ne pas promettre ce que la page ne tient pas.',
-                rationale:
-                  'Si le CTA dit "Voir les disponibilités", la page suivante doit montrer des créneaux.',
-              },
-              {
-                rule: 'Ne pas écrire pour le SEO au détriment de la lisibilité.',
-                rationale:
-                  'Le footer de murfy.fr actuel est un contre-exemple — une phrase bourrée de mots-clés n\'est ni lue ni utile.',
-              },
-              {
-                rule: "Ne pas abréger au point d'être ambigu.",
-                rationale:
-                  '"PAC" est acceptable après avoir écrit "pompe à chaleur (PAC)". En isolation sur un label : écrire en toutes lettres.',
+                rule: 'Leçons de morales',
+                rationale: 'Murfy ne culpabilise pas et ne prescrit pas de comportement. On propose, on ne moralise pas.',
               },
             ]}
           />
         </DocSection>
 
-        {/* ── 4. Formules à bannir ────────────────────────────────────────── */}
+        {/* ── 5. Qui est Murfy ? ────────────────────────────────────────────── */}
         <DocSection
-          label="Formules à bannir"
-          subtitle="Expressions héritées du corporate ou du marketing générique. Elles sonnent faux dans la voix Murfy."
+          label="Qui est Murfy ?"
+          subtitle="Le vocabulaire officiel pour parler de l'entreprise, de son secteur et de ses équipes."
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <BannedPhrase
-              phrase="à cœur de vous accompagner"
-              reason="Vague et corporate. Dire ce qu'on fait concrètement : « on répare, on entretient, on conseille »."
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <VocabBlock
+              title="Notre secteur d'activité"
+              allowed={[
+                "Monde d'après",
+                'Économie sociale et solidaire',
+                'Économie circulaire',
+                'Anti-gaspillage',
+                'Lutte contre la surconsommation',
+              ]}
             />
-            <BannedPhrase
-              phrase="adopter le réflexe"
-              reason="Condescendant. On propose, on ne prescrit pas un comportement."
+            <VocabBlock
+              title="L'entreprise"
+              allowed={[
+                'Entreprise',
+                'Entreprise française',
+                'Entreprise de demain',
+                'Acteur du changement',
+                'PME',
+                'Made in France',
+                'Entreprise régionale / locale',
+              ]}
+              forbidden={['Marque']}
+              exception={['Start-up', "Entreprise de l'ESS"]}
+              exceptionNote="Uniquement en communication corporate"
             />
-            <BannedPhrase
-              phrase="n'hésitez pas à nous contacter"
-              reason="Formule passe-partout. Préférer un CTA concret : « Posez-nous la question » ou « On vous rappelle »."
-            />
-            <BannedPhrase
-              phrase="dans les meilleurs délais"
-              reason="Flou et anxiogène. Murfy donne des délais réels : « sous 48h », « dès demain »."
-            />
-            <BannedPhrase
-              phrase="solution innovante / acteur de référence"
-              reason="Jargon startup. Murfy ne se dit pas innovant — il montre des preuves : 450 000 clients, label QualiRépar."
-            />
-            <BannedPhrase
-              phrase="votre satisfaction est notre priorité"
-              reason="Promesse vide entendue partout. La preuve : Trustpilot 4,6/5 sur 6 100 avis — c'est ça qui convainc."
-            />
-            <BannedPhrase
-              phrase="pensez-y !"
-              reason="Injonction paternaliste. Si l'argument est bon, le point d'exclamation est inutile."
-            />
-            <BannedPhrase
-              phrase="il y a forcément une solution pour vous"
-              reason="Trop vague, trop générique. Nommer la solution : « réparation, pièce, ou bon d'achat »."
+            <VocabBlock
+              title="Nos techniciens"
+              allowed={[
+                'Techniciens',
+                'Réparateurs',
+                'Experts',
+                'Experts de la réparation',
+                'Salariés MURFY',
+                'Service client',
+                'Héros / Super héros / Héros de demain',
+              ]}
+              forbidden={['Techniciens itinérants', 'Géo-trouve-tout']}
+              exceptionNote="« Techniciens itinérants » uniquement en RH / communication BtoB"
             />
           </div>
         </DocSection>
 
-        {/* ── 5. Ponctuation & style ──────────────────────────────────────── */}
+        {/* ── 6. Murfy Académie ─────────────────────────────────────────────── */}
         <DocSection
-          label="Ponctuation & style"
-          subtitle="Règles typographiques et stylistiques pour une cohérence visuelle entre tous les composants."
+          label="Murfy Académie"
+          subtitle="Comment parler de notre centre de formation et de notre programme de recrutement."
         >
-          <div className="flex flex-col gap-0">
-            <PunctuationRule
-              rule="Points d'exclamation — avec parcimonie."
-              correct="Réparé ou remplacé, c'est notre promesse."
-              wrong="Réparé ou remplacé, c'est notre promesse !"
-            />
-            <PunctuationRule
-              rule="Majuscule aux noms de marque et dispositifs officiels."
-              correct="Bonus Réparation, QualiRépar, Murfy Académie"
-              wrong="bonus réparation, qualirépar"
-            />
-            <PunctuationRule
-              rule="Chiffres en numériques pour les données clés."
-              correct="75 €, 6 mois, 24h, 450 000 clients"
-              wrong="soixante-quinze euros, six mois"
-            />
-            <PunctuationRule
-              rule="Espace insécable avant : ; ! ? et après «."
-              correct="Disponible sous 48 h ; sans supplément."
-              wrong="Disponible sous 48h; sans supplément."
-            />
-            <PunctuationRule
-              rule="Tiret long (—) pour les apartés, pas le tiret court."
-              correct="Forfait fixe — déplacements inclus."
-              wrong="Forfait fixe - déplacements inclus."
-            />
-            <PunctuationRule
-              rule="Pas de majuscule aux substantifs communs dans les titres."
-              correct="Expert de la réparation électroménager"
-              wrong="Expert de la Réparation Électroménager"
-            />
-            <PunctuationRule
-              rule="Abréviations : RDV accepté partout sauf documents légaux."
-              correct="Prenez RDV en 3 minutes."
-              wrong="Prenez un rendez-vous en 3 minutes. (labels)"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+            <VocabBlock
+              title="Murfy Académie"
+              allowed={[
+                'Académie',
+                'Académiciens',
+                'Centre de formation',
+                'Formation',
+                'Recrutement',
+                'Métier de demain',
+                'Revaloriser le métier de réparateur',
+              ]}
+              forbidden={['Écoles']}
             />
           </div>
         </DocSection>
 
-        {/* ── 6. Templates CTA ────────────────────────────────────────────── */}
+        {/* ── 7. Nos métiers ────────────────────────────────────────────────── */}
         <DocSection
-          label="Templates CTA"
-          subtitle="Formules validées pour les boutons et liens. Le CTA est le dernier mot que lit le client avant d'agir — il doit être précis."
+          label="Nos métiers"
+          subtitle="Le lexique précis pour chacun de nos domaines d'activité. La cohérence du vocabulaire construit la confiance."
         >
-          <div className="flex flex-col">
-            <CtaRow type="primary" label="Prendre rendez-vous" note="CTA principal universel" />
-            <CtaRow
-              type="primary"
-              label="Voir les disponibilités"
-              note="Quand le clic mène à un calendrier"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <VocabBlock
+              title="Cœur de métier"
+              allowed={[
+                'Service',
+                'Réparation',
+                'Reconditionnement',
+                'Forfait réparation',
+                'Forfait fixe / Unique',
+                'Prix juste',
+                "Bon d'achat",
+                'Électroménager',
+                'Appareil',
+                'Appareils électroménagers',
+                'Rendez-vous',
+                'Une solution pour 100% des pannes',
+              ]}
+              forbidden={[
+                'Avoir',
+                'Promo / Promotion',
+                'Affaire',
+                'Machine',
+                'Produit',
+                'Passage (1er passage / 2ème passage)',
+                'Intervention',
+                'Créneau',
+                'Pack « zéro risque »',
+              ]}
             />
-            <CtaRow type="primary" label="Commencer mon diagnostic" note="Funnel auto-diagnostic" />
-            <CtaRow
-              type="secondary"
-              label="En savoir plus"
-              note="Bouton secondaire — action alternative sur la même page"
+            <VocabBlock
+              title="La réparation"
+              allowed={[
+                'Réparation',
+                'Réparation à domicile',
+                'Service',
+                'Techniciens compétents',
+                'Forfait fixe / unique',
+                'Dépanner',
+                'Sauver',
+                'Prolonger la vie des appareils',
+                'Pièces détachées',
+                'Coup de la panne',
+                'Atelier de reconditionnement',
+                'Difficulté à réparer à domicile',
+                'Rendez-vous',
+                'Une solution pour 100% des pannes',
+              ]}
+              forbidden={[
+                'Baguette magique',
+                'Allo Maman Bobo',
+                'Non réparable',
+                'Machine',
+              ]}
             />
-            <CtaRow
-              type="link"
-              label="En savoir plus"
-              arrow
-              note="Lien texte avec flèche — navigation vers une autre page"
+            <VocabBlock
+              title="Le reconditionné"
+              allowed={[
+                'Reconditionner / reconditionné',
+                'Prolonger la durée de vie des appareils',
+                'Offrir une seconde vie',
+                'Offrir un nouveau foyer',
+                'Faire du neuf avec du vieux',
+                'Comme neuf / Comme du neuf',
+                'Reconditionné dans nos ateliers',
+                'Reconditionné par nos techniciens',
+                'Réemploi',
+                'Collecte',
+                'Remettre en état',
+                'Collecter / récupérer les appareils qui ne servent plus',
+              ]}
+              forbidden={['Approvisionnement', 'Récup\'']}
+              exception={['Rebush']}
+              exceptionNote="Uniquement en région parisienne"
             />
-            <CtaRow
-              type="link"
-              label="Voir le détail"
-              arrow
-              note="Fiches produit / tarifs"
-            />
-            <CtaRow type="link" label="Se faire rappeler" note="Action douce, sans engagement" />
-            <CtaRow type="link" label="Vérifier ma zone" note="Couverture géographique" />
-            <CtaRow
-              type="avoid"
-              label="Cliquez ici"
-              note="Ne décrit pas l'action ni la destination"
-            />
-            <CtaRow
-              type="avoid"
-              label="En savoir davantage"
-              note="Tournure alambiquée — « En savoir plus » suffit"
-            />
-            <CtaRow
-              type="avoid"
-              label="Découvrir nos offres"
-              note="Vague — préférer « Voir les tarifs » ou « Voir les formules »"
+            <VocabBlock
+              title="La collecte"
+              allowed={[
+                'Nouveau foyer',
+                'Déchets électroménager',
+                'Appareils oubliés',
+                'Appareils abandonnés',
+                'Appareils usagés',
+              ]}
+              forbidden={['Approvisionnement', 'Récupération / Récup\'']}
             />
           </div>
         </DocSection>
 
-        {/* ── 7. Micro-copy ────────────────────────────────────────────────── */}
+        {/* ── 8. Expérience client ──────────────────────────────────────────── */}
         <DocSection
-          label="Micro-copy produit"
-          subtitle="Messages système, états vides, confirmations et erreurs. Même ton que le reste du site — expert, direct, rassurant."
+          label="Expérience client"
+          subtitle="Le vocabulaire associé à chaque point de contact avec le client — du diagnostic à la boutique."
         >
-          <MicroCopyTable
-            rows={[
-              {
-                context: 'Confirmation RDV',
-                copy: 'Votre RDV est confirmé pour le [date] entre [h] et [h].',
-                avoid: 'Votre demande a bien été prise en compte.',
-              },
-              {
-                context: 'Erreur formulaire',
-                copy: 'Ce champ est obligatoire.',
-                avoid: 'Erreur de saisie détectée dans le formulaire.',
-              },
-              {
-                context: 'Erreur réseau',
-                copy: 'Quelque chose a bloqué. Réessayez ou contactez-nous.',
-                avoid: 'Une erreur technique est survenue (code 500).',
-              },
-              {
-                context: 'État vide – agenda',
-                copy: 'Aucun RDV prévu pour l\'instant.',
-                avoid: 'Vous n\'avez pas encore de rendez-vous enregistrés.',
-              },
-              {
-                context: 'Chargement',
-                copy: 'On cherche les disponibilités…',
-                avoid: 'Chargement en cours. Veuillez patienter.',
-              },
-              {
-                context: 'Succès paiement',
-                copy: 'C\'est réglé. À bientôt !',
-                avoid: 'Transaction validée avec succès.',
-              },
-              {
-                context: 'RDV annulé',
-                copy: 'Nous avons annulé votre RDV du [date]. Besoin d\'un nouveau créneau ?',
-                avoid: 'Votre rendez-vous a été annulé.',
-              },
-              {
-                context: 'Zone non couverte',
-                copy: 'On n\'est pas encore dans votre ville — mais on arrive.',
-                avoid: 'Votre code postal n\'est pas couvert par notre service.',
-              },
-              {
-                context: 'Diagnostic — aucune panne trouvée',
-                copy: 'Bonne nouvelle : votre appareil semble fonctionner normalement.',
-                avoid: 'Aucun problème détecté.',
-              },
-              {
-                context: 'Hors garantie',
-                copy: 'Votre appareil n\'est plus sous garantie — la réparation Murfy prend le relais.',
-                avoid: 'La garantie constructeur est expirée.',
-              },
-            ]}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <VocabBlock
+              title="Entretien des appareils"
+              allowed={[
+                'Prendre soin',
+                'Bichonner',
+                "S'occuper de",
+                'Comme neuf',
+                'Reparti pour un tour',
+                'Entretenir / Entretien',
+                'Prolonger la durée de vie',
+                'Éviter les pannes',
+              ]}
+            />
+            <VocabBlock
+              title="Auto-diagnostic"
+              allowed={[
+                'Outil',
+                'Auto réparation',
+                'Auto-diagnostic',
+                'Pré-diagnostic',
+              ]}
+            />
+            <VocabBlock
+              title="Blog Murfy"
+              allowed={[
+                'Blog / Blog Murfy',
+                'Tutos',
+                'Articles',
+                'Conseils',
+                'Astuces',
+              ]}
+              forbidden={['Tonton MURFY']}
+            />
+            <VocabBlock
+              title="Boutique en ligne"
+              allowed={[
+                'Boutique en ligne',
+                'Boutique MURFY / MURFY Boutique',
+                "S'équiper",
+                'Site E-commerce',
+                'Commande en ligne',
+              ]}
+              forbidden={['E-commerce']}
+              exception={['MURFY shop', 'E-shop']}
+              exceptionNote="Exceptions uniquement sur les réseaux sociaux"
+            />
+            <VocabBlock
+              title="Service client"
+              allowed={[
+                'Service client',
+                'Équipe « prise de rendez-vous »',
+                'Équipe « suivi rendez-vous »',
+                'Équipe « assistance client »',
+                'Équipe Collecte',
+                'SAV',
+              ]}
+              forbidden={[
+                'Opérateur / opératrice',
+                'Planneur',
+                'Support',
+                'Prise en charge',
+              ]}
+            />
+          </div>
         </DocSection>
       </div>
     </div>

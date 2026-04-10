@@ -872,6 +872,249 @@ function AccentMatrixDoc() {
   )
 }
 
+// ─── Theme Palettes ───────────────────────────────────────────────────────────
+
+const themeData = [
+  { theme: 'light',      label: 'Light',      whenToUse: 'Default surface. Use for most pages and components.' },
+  { theme: 'dark',       label: 'Dark',       whenToUse: 'Inverse surface. Use for footer, dark hero sections.' },
+  { theme: 'light-pink', label: 'Light Pink', whenToUse: 'Promotional surface. Use for marketing banners and campaign modules.' },
+  { theme: 'pink-mist',  label: 'Pink Mist',  whenToUse: 'Subtle warm tint. Use for section backgrounds with soft brand warmth.' },
+  { theme: 'pink-vivid', label: 'Pink Vivid', whenToUse: 'Bold brand pink. Use for high-impact CTAs and hero highlights.' },
+]
+
+const themeTokenGroups = [
+  { label: 'Backgrounds',      tokens: ['--bg', '--bg-2'] },
+  { label: 'Text & Border',    tokens: ['--text', '--border'] },
+  { label: 'Heading Accent',   tokens: ['--heading-accent'] },
+  { label: 'Primary Button',   tokens: ['--btn-bg', '--btn-text'] },
+  { label: 'Secondary Button', tokens: ['--btn2-text', '--btn2-border'] },
+]
+
+function ThemeSwatch({ cssVar }: { cssVar: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className="w-5 h-5 rounded flex-shrink-0 border"
+        style={{ backgroundColor: `var(${cssVar})`, borderColor: 'rgba(0,0,0,0.1)' }}
+      />
+      <span className="font-mono text-label" style={{ color: 'color-mix(in srgb, var(--text) 78%, var(--bg))' }}>{cssVar}</span>
+    </div>
+  )
+}
+
+function ThemePaletteCard({ theme, label, whenToUse }: { theme: string; label: string; whenToUse: string }) {
+  return (
+    <div
+      data-theme={theme}
+      className="flex flex-col rounded-[var(--radius-card)] overflow-hidden border"
+      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
+    >
+      {/* Header bar */}
+      <div
+        className="flex items-center gap-2 px-4 py-2.5 border-b"
+        style={{ backgroundColor: 'var(--bg-2)', borderColor: 'var(--border)' }}
+      >
+        <span className="text-text-xsmall-semibold uppercase tracking-[0.08em] text-text">{label}</span>
+        <code
+          className="ml-auto font-mono text-label px-1.5 py-0.5 rounded"
+          style={{ background: 'color-mix(in srgb, var(--text) 12%, var(--bg-2))', color: 'var(--text)' }}
+        >
+          {theme}
+        </code>
+      </div>
+
+      {/* Token groups */}
+      <div className="flex flex-col gap-3 p-4">
+        {themeTokenGroups.map(group => (
+          <div key={group.label}>
+            <p className="text-label uppercase tracking-[0.08em] font-semibold mb-1.5" style={{ color: 'color-mix(in srgb, var(--text) 72%, var(--bg))' }}>
+              {group.label}
+            </p>
+            <div className="flex flex-col gap-1">
+              {group.tokens.map(token => (
+                <ThemeSwatch key={token} cssVar={token} />
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Button preview */}
+        <div>
+          <p className="text-label uppercase tracking-[0.08em] font-semibold mb-2" style={{ color: 'color-mix(in srgb, var(--text) 72%, var(--bg))' }}>
+            Preview
+          </p>
+          <div className="flex flex-col gap-2">
+            <button
+              className="w-full py-2 rounded-[var(--radius-pill)] text-text-xsmall-semibold"
+              style={{ backgroundColor: 'var(--btn-bg)', color: 'var(--btn-text)' }}
+            >
+              Primary Button
+            </button>
+            <button
+              className="w-full py-2 rounded-[var(--radius-pill)] text-text-xsmall-semibold border"
+              style={{ backgroundColor: 'transparent', color: 'var(--btn2-text)', borderColor: 'var(--btn2-border)' }}
+            >
+              Secondary Button
+            </button>
+          </div>
+        </div>
+
+        {/* When to use */}
+        <p
+          className="text-text-xsmall border-t pt-3"
+          style={{ color: 'color-mix(in srgb, var(--text) 82%, var(--bg))', borderColor: 'var(--border)' }}
+        >
+          {whenToUse}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function ThemePalettesDoc() {
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <DocHeader
+        layer="Foundation"
+        title="Theme Palettes"
+        description="The Murfy design system ships 5 themes, each controlling the global surface: backgrounds, text, borders, and primary button colors. Apply data-theme to any wrapper element and all semantic tokens resolve automatically."
+      />
+
+      <div className="px-8 py-12 max-w-7xl">
+
+        {/* ── How to apply ──────────────────────────────────────────────── */}
+        <DocSection
+          label="How to apply a theme"
+          subtitle="Set data-theme once on any wrapper element. Every CSS variable inside — --bg, --text, --btn-bg, etc. — resolves to the correct value for that theme. No per-component code changes needed."
+        >
+          <div
+            className="rounded-[var(--radius-card)] border border-border px-6 py-5"
+            style={{ background: 'color-mix(in srgb, var(--btn-bg) 6%, var(--bg))' }}
+          >
+            <p className="text-text-small text-text mb-4" style={{ opacity: 0.85 }}>
+              Combine <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>data-theme</code> and{' '}
+              <code className="font-mono text-text-xsmall px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}>data-accent</code>{' '}
+              on the same element to control both the surface and the vertical identity color at once. All child components inherit automatically via CSS cascade.
+            </p>
+            <div
+              className="font-mono text-text-xsmall rounded-[var(--radius-small)] px-5 py-4"
+              style={{ background: 'color-mix(in srgb, var(--bg) 60%, var(--border))' }}
+            >
+              <pre className="text-text m-0" style={{ opacity: 0.85 }}>{`<section data-theme="pink-mist" data-accent="violet">
+  {/* --bg            → pink-mist (#fff3f9)      */}
+  {/* --btn-bg        → brand-text (#0b4744)     */}
+  {/* --accent-btn-bg → purple-600 (#6d51f5)    */}
+  <Button />   {/* picks up both automatically  */}
+</section>`}</pre>
+            </div>
+          </div>
+        </DocSection>
+
+        {/* ── Theme cards ───────────────────────────────────────────────── */}
+        <DocSection
+          label="Theme palette reference"
+          subtitle="Each card is a live preview — swatches use actual var() values that resolve based on the data-theme attribute. Button previews show real theme tokens."
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+            {themeData.map(({ theme, label, whenToUse }) => (
+              <ThemePaletteCard key={theme} theme={theme} label={label} whenToUse={whenToUse} />
+            ))}
+          </div>
+        </DocSection>
+
+        {/* ── Semantic token reference table ────────────────────────────── */}
+        <DocSection
+          label="Semantic token reference"
+          subtitle="Resolved hex values per theme. Use these CSS variables in components — never raw hex values."
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full text-text border-collapse">
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                  <th className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-6" style={{ color: 'color-mix(in srgb, var(--text) 72%, var(--bg))' }}>Token</th>
+                  {themeData.map(({ label }) => (
+                    <th key={label} className="text-left text-label uppercase tracking-[0.08em] font-semibold pb-3 pr-4" style={{ color: 'color-mix(in srgb, var(--text) 72%, var(--bg))' }}>{label}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { token: '--bg',             values: ['#ffffff', '#0b4744', '#ffdeef', '#fff3f9', '#ffadd6'] },
+                  { token: '--bg-2',           values: ['#f3f3f3', '#032524', '#ffffff', '#ffffff', '#ffffff'] },
+                  { token: '--bg-3',           values: ['#ffffff', '#0b4744', '#ffadd6', '#fff3f9', '#ffadd6'] },
+                  { token: '--text',           values: ['#0b4744', '#ffffff', '#0b4744', '#0b4744', '#0b4744'] },
+                  { token: '--border',         values: ['#032524', '#ffffff', '#0b4744', '#0b4744', '#0b4744'] },
+                  { token: '--heading-accent', values: ['#c47c96', '#ffffff', '#9e8cf8', '#9e8cf8', '#9e8cf8'] },
+                  { token: '--btn-bg',         values: ['#ffadd6', '#f59bbb', '#0b4744', '#0b4744', '#0b4744'] },
+                  { token: '--btn-text',       values: ['#0b4744', '#0b4744', '#ffffff', '#ffffff', '#ffffff'] },
+                  { token: '--btn-bg-hover',   values: ['#fd6c9f', '#f3f3f3', '#083b39', '#083b39', '#083b39'] },
+                  { token: '--btn2-text',      values: ['#0b4744', '#ffffff', '#0b4744', '#0b4744', '#0b4744'] },
+                  { token: '--btn2-border',    values: ['#0b4744', '#ffffff', '#0b4744', '#0b4744', '#0b4744'] },
+                ].map((row, i, arr) => (
+                  <tr key={row.token} style={{ borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <td className="py-2.5 pr-6 align-middle">
+                      <code
+                        className="font-mono text-text-xsmall px-2 py-0.5 rounded whitespace-nowrap"
+                        style={{ background: 'rgba(0,0,0,0.06)', color: 'var(--text)' }}
+                      >
+                        {row.token}
+                      </code>
+                    </td>
+                    {row.values.map((hex, idx) => (
+                      <td key={idx} className="py-2.5 pr-4 align-middle">
+                        <div className="flex items-center gap-1.5">
+                          <div
+                            className="w-4 h-4 rounded flex-shrink-0 border"
+                            style={{ backgroundColor: hex, borderColor: 'rgba(0,0,0,0.1)' }}
+                          />
+                          <span className="font-mono text-label" style={{ color: 'color-mix(in srgb, var(--text) 84%, var(--bg))' }}>{hex}</span>
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </DocSection>
+
+        {/* ── When to use ───────────────────────────────────────────────── */}
+        <DocSection
+          label="When to use each theme"
+          subtitle="Themes express the emotional tone of a page section. Light is neutral and universal — tinted themes are reserved for specific contexts."
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {themeData.map(({ theme, label, whenToUse }) => (
+              <div
+                key={theme}
+                data-theme={theme}
+                className="rounded-[var(--radius-card)] border border-border px-5 py-4 flex gap-4 items-start"
+                style={{ background: 'var(--bg)' }}
+              >
+                <div
+                  className="w-10 h-10 rounded-[var(--radius-small)] flex-shrink-0 border"
+                  style={{ background: 'var(--btn-bg)', borderColor: 'var(--border)' }}
+                />
+                <div>
+                  <p className="text-text-small-semibold text-text mb-0.5">{label}</p>
+                  <code
+                    className="font-mono text-label px-1.5 py-0.5 rounded"
+                    style={{ background: 'rgba(0,0,0,0.07)', color: 'var(--text)' }}
+                  >
+                    {`data-theme="${theme}"`}
+                  </code>
+                  <p className="text-text-xsmall mt-1.5" style={{ color: 'color-mix(in srgb, var(--text) 82%, var(--bg))' }}>{whenToUse}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </DocSection>
+
+      </div>
+    </div>
+  )
+}
+
 // ─── Story ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
@@ -883,5 +1126,6 @@ export default meta
 
 type Story = StoryObj
 export const Overview: Story = {}
+export const ThemePalettes: Story = { render: () => <ThemePalettesDoc /> }
 export const AccentUsage: Story = { render: () => <AccentUsageDoc /> }
 export const AccentMatrix: Story = { render: () => <AccentMatrixDoc /> }
