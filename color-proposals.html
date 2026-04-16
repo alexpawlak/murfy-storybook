@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Murfy — 5th Service Color Proposals</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fff8fb;
+      color: #0B4744;
+      padding: 48px 32px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #5a7a79;
+      margin-bottom: 48px;
+    }
+
+    /* ── Section ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5a7a79;
+      margin-bottom: 20px;
+    }
+
+    /* ── Palette row ── */
+    .palette-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Icon circle (mimics the image) ── */
+    .icon-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-circle svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* ── Chip (circle + label + hex) ── */
+    .chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100px;
+    }
+
+    .chip-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      color: #0B4744;
+    }
+
+    .chip-hex {
+      font-size: 11px;
+      color: #7a9a99;
+      font-family: monospace;
+    }
+
+    /* ── Divider ── */
+    hr {
+      border: none;
+      border-top: 1px solid #eadde8;
+      margin: 48px 0;
+    }
+
+    /* ── Proposal card ── */
+    .proposals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .proposal-card {
+      border: 2px solid #eadde8;
+      border-radius: 20px;
+      padding: 28px;
+      background: #fff;
+      transition: box-shadow 0.2s;
+    }
+
+    .proposal-card:hover {
+      box-shadow: 0 8px 32px rgba(11,71,68,0.08);
+    }
+
+    .proposal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .proposal-name {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .proposal-mood {
+      font-size: 13px;
+      color: #5a7a79;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* ── Full row (existing 4 + new) ── */
+    .full-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .new-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #0B4744;
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* accent on card border */
+    .card-green  { border-color: #7DDFC3; }
+    .card-orange { border-color: #FFB347; }
+    .card-coral  { border-color: #FF8C78; }
+
+    .token-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .token-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .token-name {
+      font-family: monospace;
+      font-size: 11px;
+      color: #0B4744;
+      flex: 1;
+    }
+
+    .token-hex {
+      font-family: monospace;
+      font-size: 11px;
+      color: #7a9a99;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Murfy — 5th Service Color</h1>
+  <p class="subtitle">Current palette (4 services) + 3 proposals for a fifth vertical</p>
+
+  <!-- ── CURRENT 4 ── -->
+  <div class="section-title">Current service colors</div>
+  <div class="palette-row">
+
+    <!-- Fuschia / Électroménager -->
+    <div class="chip">
+      <div class="icon-circle" style="background:#D33167;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="3.5"/>
+          <circle cx="17.5" cy="6.5" r="1"/>
+        </svg>
+      </div>
+      <span class="chip-label">Électroménager</span>
+      <span class="chip-hex">#D33167</span>
+    </div>
+
+    <!-- Violet / Chauffage -->
+    <div class="chip">
+      <div class="icon-circle" style="background:#6D51F5;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 20c0-4 2-6 2-10M10 20c0-4 2-6 2-10M14 20c0-4 2-6 2-10"/>
+          <path d="M4 20h16"/>
+        </svg>
+      </div>
+      <span class="chip-label">Chauffage</span>
+      <span class="chip-hex">#6D51F5</span>
+    </div>
+
+    <!-- Yellow / Solaire -->
+    <div class="chip">
+      <div class="icon-circle" style="background:#FFDE73;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0B4744" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </div>
+      <span class="chip-label">Solaire</span>
+      <span class="chip-hex">#FFDE73</span>
+    </div>
+
+    <!-- Blue / 4th service -->
+    <div class="chip">
+      <div class="icon-circle" style="background:#5CBBFF;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A3A5C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </svg>
+      </div>
+      <span class="chip-label">Service 4</span>
+      <span class="chip-hex">#5CBBFF</span>
+    </div>
+
+  </div>
+
+  <hr />
+
+  <!-- ── PROPOSALS ── -->
+  <div class="section-title">3 proposals for a 5th service</div>
+  <div class="proposals-grid">
+
+    <!-- ── PROPOSAL 1: MINT GREEN ── -->
+    <div class="proposal-card card-green">
+      <div class="proposal-header">
+        <div class="icon-circle" style="background:#7DDFC3;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0B4744" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="proposal-name">Mint / Vert doux <span class="new-badge">New</span></div>
+          <div style="font-size:12px;color:#5a7a79;margin-top:2px;">Option A</div>
+        </div>
+      </div>
+      <p class="proposal-mood">Fresh and eco-friendly. Signals sustainability, nature, and environmental services. Pairs very cleanly with the teal-based brand text (#0B4744). Great fit for a "green energy" or maintenance vertical.</p>
+      <div class="full-row" style="margin-top:16px;">
+        <div class="icon-circle" style="width:48px;height:48px;background:#D33167;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#6D51F5;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#FFDE73;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#5CBBFF;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#7DDFC3;border:3px solid #0B4744;"></div>
+      </div>
+      <div class="token-list">
+        <div class="token-row"><div class="token-swatch" style="background:#7DDFC3;"></div><span class="token-name">green-500 (btn-bg)</span><span class="token-hex">#7DDFC3</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#3DBFA0;"></div><span class="token-name">green-600 (btn-hover)</span><span class="token-hex">#3DBFA0</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#D4F7EE;"></div><span class="token-name">green-highlight</span><span class="token-hex">#D4F7EE</span></div>
+      </div>
+    </div>
+
+    <!-- ── PROPOSAL 2: ORANGE ── -->
+    <div class="proposal-card card-orange">
+      <div class="proposal-header">
+        <div class="icon-circle" style="background:#FFB347;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3a1a00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="proposal-name">Orange <span class="new-badge">New</span></div>
+          <div style="font-size:12px;color:#5a7a79;margin-top:2px;">Option B</div>
+        </div>
+      </div>
+      <p class="proposal-mood">Warm, energetic, and approachable. Analogous to yellow (already used for Solar) but distinct enough. Works well for a home services, plumbing, or installation vertical. High visibility.</p>
+      <div class="full-row" style="margin-top:16px;">
+        <div class="icon-circle" style="width:48px;height:48px;background:#D33167;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#6D51F5;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#FFDE73;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#5CBBFF;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#FFB347;border:3px solid #0B4744;"></div>
+      </div>
+      <div class="token-list">
+        <div class="token-row"><div class="token-swatch" style="background:#FFB347;"></div><span class="token-name">orange-500 (btn-bg)</span><span class="token-hex">#FFB347</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#E8922A;"></div><span class="token-name">orange-600 (btn-hover)</span><span class="token-hex">#E8922A</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#FFF0D6;"></div><span class="token-name">orange-highlight</span><span class="token-hex">#FFF0D6</span></div>
+      </div>
+    </div>
+
+    <!-- ── PROPOSAL 3: CORAL ── -->
+    <div class="proposal-card card-coral">
+      <div class="proposal-header">
+        <div class="icon-circle" style="background:#FF8C78;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <div>
+          <div class="proposal-name">Corail <span class="new-badge">New</span></div>
+          <div style="font-size:12px;color:#5a7a79;margin-top:2px;">Option C</div>
+        </div>
+      </div>
+      <p class="proposal-mood">Sits between the fuschia and orange, creating a natural gradient across the warm end of the palette. Energetic but softer than orange. Good for home, comfort, or interior services — distinct from the fuschia pink.</p>
+      <div class="full-row" style="margin-top:16px;">
+        <div class="icon-circle" style="width:48px;height:48px;background:#D33167;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#6D51F5;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#FFDE73;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#5CBBFF;"></div>
+        <div class="icon-circle" style="width:48px;height:48px;background:#FF8C78;border:3px solid #0B4744;"></div>
+      </div>
+      <div class="token-list">
+        <div class="token-row"><div class="token-swatch" style="background:#FF8C78;"></div><span class="token-name">coral-500 (btn-bg)</span><span class="token-hex">#FF8C78</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#E86A53;"></div><span class="token-name">coral-600 (btn-hover)</span><span class="token-hex">#E86A53</span></div>
+        <div class="token-row"><div class="token-swatch" style="background:#FFE4DF;"></div><span class="token-name">coral-highlight</span><span class="token-hex">#FFE4DF</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr />
+
+  <!-- ── FULL PALETTE SPREAD ── -->
+  <div class="section-title">Full palette overview — all 5 together</div>
+  <div style="display:flex;flex-direction:column;gap:20px;">
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:12px;font-weight:600;width:110px;color:#5a7a79;">+ Mint green</span>
+      <div class="icon-circle" style="width:52px;height:52px;background:#D33167;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#6D51F5;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#FFDE73;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#5CBBFF;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#7DDFC3;border:2.5px solid #0B4744;"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:12px;font-weight:600;width:110px;color:#5a7a79;">+ Orange</span>
+      <div class="icon-circle" style="width:52px;height:52px;background:#D33167;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#6D51F5;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#FFDE73;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#5CBBFF;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#FFB347;border:2.5px solid #0B4744;"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:12px;font-weight:600;width:110px;color:#5a7a79;">+ Corail</span>
+      <div class="icon-circle" style="width:52px;height:52px;background:#D33167;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#6D51F5;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#FFDE73;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#5CBBFF;"></div>
+      <div class="icon-circle" style="width:52px;height:52px;background:#FF8C78;border:2.5px solid #0B4744;"></div>
+    </div>
+
+  </div>
+
+</body>
+</html>

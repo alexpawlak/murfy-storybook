@@ -135,8 +135,8 @@ When adding or redesigning components, always consider how they behave across al
 ### Typography rules — MANDATORY
 
 **Font family**
-- `font-sans` and `font-brand` both map to Murfy A2 — it is already the default body font
-- **NEVER** set `fontFamily: 'GT Walsheim Pro'` or `fontFamily: '"Murfy A2"'` inline — it is already the default and inline overrides are redundant noise
+- `font-sans` and `font-brand` both map to Murfy Sans — it is already the default body font
+- **NEVER** set `fontFamily: 'GT Walsheim Pro'` or `fontFamily: '"Murfy Sans"'` inline — it is already the default and inline overrides are redundant noise
 - The only valid use of inline `fontFamily` is `monospace` for code/debug contexts
 
 **Font size — always use the mapped Tailwind classes, never `text-sm/xs/base/lg/xl` etc.**

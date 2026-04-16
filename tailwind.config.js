@@ -88,8 +88,8 @@ export default {
         'label': ['var(--font-size-label)', { lineHeight: 'var(--line-height-label)', letterSpacing: 'var(--letter-spacing-label)' }],
       },
       fontFamily: {
-        brand: ['Murfy A2', 'sans-serif'],
-        sans: ['Murfy A2', 'sans-serif'],
+        brand: ['Murfy Sans', 'sans-serif'],
+        sans: ['Murfy Sans', 'sans-serif'],
       },
       spacing: {
         'section-y': 'var(--spacing-section-y)',

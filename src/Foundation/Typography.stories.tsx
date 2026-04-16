@@ -154,14 +154,14 @@ function TypographyPage() {
       <DocHeader
         layer="Foundation"
         title="Typography"
-        description="Murfy A2 is the brand's custom typeface. The type system is mobile-first with a desktop override at the md breakpoint. Fifteen named steps cover every use case from oversized display headings to micro labels, with uppercase reserved for the display scales."
+        description="Murfy Sans is the brand's custom typeface. The type system is mobile-first with a desktop override at the md breakpoint. Fifteen named steps cover every use case from oversized display headings to micro labels, with uppercase reserved for the display scales."
       />
 
       <div className="px-8 py-12 max-w-5xl">
 
         {/* ── Typeface ──────────────────────────────────────────────────── */}
         <DocSection
-          label="Murfy A2 — Typeface"
+          label="Murfy Sans — Typeface"
           subtitle="The brand's custom typeface. Seven weights are available. Mobile values are the default; desktop values take over at the md breakpoint."
         >
           <div className="rounded-[var(--radius-card)] border border-border p-6 mb-6" style={{ background: 'color-mix(in srgb, var(--accent-btn-bg) 5%, var(--bg))' }}>
@@ -246,8 +246,8 @@ function TypographyPage() {
                 rationale: 'Raw px/rem values bypass the token system. Use the nearest Tailwind class, or var(--font-size-h4) if a size falls between scale steps — never a raw number.',
               },
               {
-                rule: 'Do not set fontFamily: "GT Walsheim Pro" or fontFamily: "Murfy A2" inline.',
-                rationale: 'Murfy A2 is already the default body font. Setting it inline creates redundant overrides that may conflict when the font stack changes in the future.',
+                rule: 'Do not set fontFamily: "GT Walsheim Pro" or fontFamily: "Murfy Sans" inline.',
+                rationale: 'Murfy Sans is already the default body font. Setting it inline creates redundant overrides that may conflict when the font stack changes in the future.',
               },
             ]}
           />
