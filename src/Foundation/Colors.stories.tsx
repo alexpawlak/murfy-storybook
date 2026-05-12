@@ -24,6 +24,18 @@ const brandNeutral = {
   'light-100':  primitive('light-100'),
 }
 
+const greyScale = {
+  'grey-100': primitive('grey-100'),
+  'grey-200': primitive('grey-200'),
+  'grey-300': primitive('grey-300'),
+  'grey-400': primitive('grey-400'),
+  'grey-500': primitive('grey-500'),
+  'grey-600': primitive('grey-600'),
+  'grey-700': primitive('grey-700'),
+  'grey-800': primitive('grey-800'),
+  'grey-900': primitive('grey-900'),
+}
+
 const accentGroups = [
   {
     label: 'Default — Brand baseline',
@@ -202,6 +214,136 @@ function ColorsDoc() {
             {Object.entries(brandNeutral).map(([name, value]) => (
               <Swatch key={name} name={name} value={value} />
             ))}
+          </div>
+        </DocSection>
+
+        {/* ── Neutral Greys ─────────────────────────────────────────────── */}
+        <DocSection
+          label="Neutral Greys"
+          subtitle="A 9-step neutral grey scale for UI elements: borders, dividers, disabled states, placeholder text, and secondary text. Use these instead of hardcoded hex values — they live in tokens.json under primitives."
+        >
+          <div className="flex flex-wrap gap-5">
+            {Object.entries(greyScale).map(([name, value]) => (
+              <Swatch key={name} name={name} value={value} />
+            ))}
+          </div>
+
+          {/* Live usage examples */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+            {/* grey-100 — Hover / row background */}
+            <div className="rounded-[var(--radius-card)] border border-border overflow-hidden">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold px-4 pt-4 pb-2 text-text" style={{ opacity: 0.45 }}>
+                grey-100 — Hover / row bg
+              </p>
+              <div>
+                <div className="px-4 py-3 text-text-small text-text">Normal row</div>
+                <div className="px-4 py-3 text-text-small text-text" style={{ backgroundColor: '#F5F5F5' }}>Hovered row</div>
+                <div className="px-4 py-3 text-text-small text-text">Normal row</div>
+              </div>
+            </div>
+
+            {/* grey-200 — Dividers */}
+            <div className="rounded-[var(--radius-card)] border border-border px-4 py-4">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-3 text-text" style={{ opacity: 0.45 }}>
+                grey-200 — Dividers
+              </p>
+              <div className="flex flex-col">
+                <p className="text-text-small text-text py-2.5">Section A</p>
+                <hr style={{ borderColor: '#E5E5E5', margin: 0 }} />
+                <p className="text-text-small text-text py-2.5">Section B</p>
+                <hr style={{ borderColor: '#E5E5E5', margin: 0 }} />
+                <p className="text-text-small text-text py-2.5">Section C</p>
+              </div>
+            </div>
+
+            {/* grey-300 border + grey-400 placeholder */}
+            <div className="rounded-[var(--radius-card)] border border-border px-4 py-4">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-3 text-text" style={{ opacity: 0.45 }}>
+                grey-300 border · grey-400 placeholder
+              </p>
+              <div className="flex flex-col gap-2">
+                <div
+                  className="rounded-[var(--radius-small)] px-3 py-2.5 text-text-small"
+                  style={{ border: '1.5px solid #D4D4D4', color: '#A3A3A3' }}
+                >
+                  Votre adresse e-mail
+                </div>
+                <div
+                  className="rounded-[var(--radius-small)] px-3 py-2.5 text-text-small"
+                  style={{ border: '1.5px solid #D4D4D4', color: '#A3A3A3' }}
+                >
+                  Code postal
+                </div>
+              </div>
+            </div>
+
+            {/* grey-500–700 — Secondary text scale */}
+            <div className="rounded-[var(--radius-card)] border border-border px-4 py-4">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-3 text-text" style={{ opacity: 0.45 }}>
+                grey-500–700 — Secondary text
+              </p>
+              <div className="flex flex-col gap-2">
+                <p className="text-text-small" style={{ color: '#737373' }}>
+                  <span className="font-mono text-label" style={{ opacity: 0.6 }}>grey-500</span> — Helper / hint text
+                </p>
+                <p className="text-text-small" style={{ color: '#525252' }}>
+                  <span className="font-mono text-label" style={{ opacity: 0.6 }}>grey-600</span> — Secondary body text
+                </p>
+                <p className="text-text-small" style={{ color: '#404040' }}>
+                  <span className="font-mono text-label" style={{ opacity: 0.6 }}>grey-700</span> — Strong secondary label
+                </p>
+              </div>
+            </div>
+
+            {/* grey-800–900 — High-contrast headings */}
+            <div className="rounded-[var(--radius-card)] border border-border px-4 py-4">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-3 text-text" style={{ opacity: 0.45 }}>
+                grey-800–900 — High-contrast text
+              </p>
+              <div className="flex flex-col gap-2">
+                <p className="text-h5 font-bold" style={{ color: '#262626' }}>
+                  grey-800 heading
+                </p>
+                <p className="text-h5 font-bold" style={{ color: '#171717' }}>
+                  grey-900 heading
+                </p>
+                <p className="text-text-xsmall mt-1" style={{ color: '#737373' }}>
+                  For headings on white/grey surfaces where brand-text feels too warm.
+                </p>
+              </div>
+            </div>
+
+            {/* grey-100/200/400 — Disabled state */}
+            <div className="rounded-[var(--radius-card)] border border-border px-4 py-4">
+              <p className="text-label uppercase tracking-[0.08em] font-semibold mb-3 text-text" style={{ opacity: 0.45 }}>
+                grey-100/200/400 — Disabled state
+              </p>
+              <div className="flex flex-col gap-2">
+                <button
+                  disabled
+                  className="px-5 py-2.5 rounded-[var(--radius-pill)] text-text-xsmall-semibold cursor-not-allowed"
+                  style={{ backgroundColor: '#E5E5E5', color: '#A3A3A3' }}
+                >
+                  Disabled button
+                </button>
+                <div
+                  className="rounded-[var(--radius-small)] px-3 py-2.5 text-text-small cursor-not-allowed"
+                  style={{ border: '1.5px solid #E5E5E5', backgroundColor: '#F5F5F5', color: '#A3A3A3' }}
+                >
+                  Disabled input
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Usage note */}
+          <div className="mt-4 rounded-[var(--radius-card)] border border-border px-5 py-4" style={{ background: 'color-mix(in srgb, var(--bg) 85%, var(--border))' }}>
+            <p className="text-label uppercase tracking-[0.08em] font-semibold mb-1.5 text-text" style={{ opacity: 0.5 }}>Usage note</p>
+            <p className="text-text-xsmall text-text" style={{ opacity: 0.8 }}>
+              Greys are <strong>pure neutral</strong> (no color cast). They sit outside the theme/accent system — use them for structural UI chrome that should remain visually neutral in all contexts. For theme-sensitive surfaces, prefer semantic tokens (<code className="font-mono text-label px-1 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)' }}>var(--bg)</code>, <code className="font-mono text-label px-1 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)' }}>var(--border)</code>, <code className="font-mono text-label px-1 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.06)' }}>var(--text)</code>) which adapt to the active theme.
+            </p>
           </div>
         </DocSection>
 
